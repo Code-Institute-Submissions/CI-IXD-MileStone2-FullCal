@@ -30,7 +30,7 @@ $(document).ready(function() {
           title: show.querySelector("name").childNodes[1].nodeValue,
           // title: show.getElementsByTagName("name")[0].childNodes[1].nodeValue,
           start: show.querySelector("opening_time_iso").textContent,
-          // url: show.querySelector("url").textContent.split("event")[0],
+          url: show.querySelector("url").textContent.split("event")[0],
           classNames: [...tags],
           extendedProps: {
             description: show.querySelector("description").textContent,
@@ -58,7 +58,9 @@ $(document).ready(function() {
             //var tooltip = new Tooltip(info.el, {
             // https://stackoverflow.com/questions/56866108/tooltips-not-working-in-fullcalendar-when-i-use-bootstrap-css
             $(info.el).tooltip({  
-              title: info.event.title,
+              title: `${info.event.title}\n@ ${info.event.start.toLocaleTimeString({},
+                {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'} // AM || PM
+              )}`,
               placement: 'top',
               trigger: 'hover',
               container: 'body'
