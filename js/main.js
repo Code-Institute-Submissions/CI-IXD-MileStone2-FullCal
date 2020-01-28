@@ -44,10 +44,18 @@ $(document).ready(function() {
     console.log(`GET error: ${error}` + jqXHR.responseJSON + textStatus); })// no returned error as fails at browser
     .always( function() {
       if (eventsList.length > 0) {
-        eventsList.forEach( event => {
-          $("#calendar").append(JSON.stringify(event) + "<br/><hr/>")
-        })
-      }
+        // eventsList.forEach( event => {
+        //   $("#calendar").append(JSON.stringify(event) + "<br/><hr/>")
+        // })
+      var calendarEl = document.getElementById('calendar') // needs to be here for event delegation?
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        locale: 'en-gb',
+          plugins: [ 'dayGrid', 'list' ],
+          //defaultView: 'listWeek',
+          events: eventsList
+      })
+      calendar.render();
+     }
     })
 // end doc ready
 });

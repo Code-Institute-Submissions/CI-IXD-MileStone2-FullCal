@@ -5,10 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Full Calendar Events</title>
+  <!-- Vendor CSS -->
+  <link href="./js/libs/bootstrap-4.4.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+  <link href="./js/libs/fullcalendar/packages/daygrid/main.css" type="text/css" rel="stylesheet" />
+  <link href="./js/libs/fullcalendar/packages/timegrid/main.css" type="text/css" rel="stylesheet" />
+  <link href="./js/libs/fullcalendar/packages/list/main.css" type="text/css" rel="stylesheet" />
+  <link href="./js/libs/fullcalendar/packages/core/main.css"  type="text/css" rel="stylesheet" />
+
 </head>
 <body>
-  <h1>Test Page</h1>
+ 
   <div class="container">
+    <div class="row">
+      <h1>Calendar Test</h1>
+    </div>
     <div class="row">
         <div class="col-xs-12">
           <div id="calendar"></div>
@@ -16,8 +26,17 @@
       </div>
     </div>
   </div>
-
+  <!-- Vendor JS -->
   <script src="js/libs/jquery/jquery-3.4.1.js"></script>
+    <!-- FullCalendar.io -->
+  <script src="./js/libs//fullcalendar/packages/core/main.js"></script>
+  <script src="./js/libs//fullcalendar/packages/core/locales/en-gb.js"></script>
+  <script src="./js/libs//fullcalendar/packages/daygrid/main.js"></script>
+  <script src="./js/libs//fullcalendar/packages/timegrid/main.js"></script> 
+  <script src="./js/libs//fullcalendar/packages/list/main.js"></script>
+  <script src="./js/libs//fullcalendar/packages/interaction/main.js"></script>
+
+  <!-- App JS -->
   <script src="js/main.js"></script>
 </body>
 </html>
