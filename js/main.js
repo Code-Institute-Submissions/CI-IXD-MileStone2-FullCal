@@ -30,7 +30,7 @@ $(document).ready(function() {
           title: show.querySelector("name").childNodes[1].nodeValue,
           // title: show.getElementsByTagName("name")[0].childNodes[1].nodeValue,
           start: show.querySelector("opening_time_iso").textContent,
-          url: show.querySelector("url").textContent.split("event")[0],
+          // url: show.querySelector("url").textContent.split("event")[0],
           classNames: [...tags],
           extendedProps: {
             description: show.querySelector("description").textContent,
@@ -50,14 +50,31 @@ $(document).ready(function() {
       var calendarEl = document.getElementById('calendar') // needs to be here for event delegation?
       var calendar = new FullCalendar.Calendar(calendarEl, {
         locale: 'en-gb',
-          plugins: [ 'dayGrid', 'list' ],
+          plugins: [ 'dayGrid', 'list', 'bootstrap'],
+          themeSystem: 'bootstrap',
           //defaultView: 'listWeek',
+
+          eventRender: function(info) {
+            //var tooltip = new Tooltip(info.el, {
+            // https://stackoverflow.com/questions/56866108/tooltips-not-working-in-fullcalendar-when-i-use-bootstrap-css
+            $(info.el).tooltip({  
+              title: info.event.title,
+              placement: 'top',
+              trigger: 'hover',
+              container: 'body'
+            });
+            //console.log(info.event.title)
+          },
+
           events: eventsList
       })
       calendar.render();
      }
     })
 // end doc ready
+
+
+
 });
 
 
