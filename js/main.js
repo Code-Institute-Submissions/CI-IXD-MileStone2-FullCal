@@ -34,6 +34,11 @@ $(document).ready(function() {
           classNames: [...tags],
           extendedProps: {
             description: show.querySelector("description").textContent,
+            images: {
+              thumb: "",
+              medium: show.querySelector("url[size='medium'] ").innerHTML,
+              large: ""
+            }
           }
 
          }
@@ -66,6 +71,19 @@ $(document).ready(function() {
               container: 'body'
             });
             //console.log(info.event.title)
+          },
+          eventClick:  function(info) {
+            info.jsEvent.preventDefault(); // don't let the browser navigate
+            $('#modalTitle').html(info.event.title);
+            $('#modalBody').html(`
+              <img src="${info.event.extendedProps.images.medium}" style="object-fit: cover; object-position: 20% 10%;" alt="${info.event.title}" />
+              <div class="card-body">
+              ${info.event.extendedProps.description} 
+              </div>
+            `);
+            $('#eventUrl').attr('href',info.event.url);
+            $('#fullCalModal').modal();
+            return false;
           },
 
           events: eventsList
