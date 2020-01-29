@@ -35,9 +35,9 @@ $(document).ready(function() {
           extendedProps: {
             description: show.querySelector("description").textContent,
             images: {
-              thumb: "",
-              medium: show.querySelector("url[size='medium'] ").innerHTML,
-              large: ""
+              thumb: show.querySelector("url[size='thumb']").innerHTML,
+              medium: show.querySelector("url[size='medium']").innerHTML,
+              large: show.querySelector("url[size='large']").innerHTML
             }
           }
 
@@ -73,17 +73,23 @@ $(document).ready(function() {
             //console.log(info.event.title)
           },
           eventClick:  function(info) {
-            info.jsEvent.preventDefault(); // don't let the browser navigate
-            $('#modalTitle').html(info.event.title);
+            document.querySelectorAll('.favourite').forEach(favouriteButton => {
+              favouriteButton.addEventListener('click', function(){console.log(this.dataset.event)})
+            })
+            const obj = eventsList.find(x => x.id == info.event.id) //cyclical object 
+            //console.log(obj)
+            info.jsEvent.preventDefault() // don't let the browser navigate
+            $('#modalTitle').html(info.event.title)
             $('#modalBody').html(`
               <img src="${info.event.extendedProps.images.medium}" style="object-fit: cover; object-position: 20% 10%;" alt="${info.event.title}" />
               <div class="card-body">
               ${info.event.extendedProps.description} 
               </div>
             `);
-            $('#eventUrl').attr('href',info.event.url);
-            $('#fullCalModal').modal();
-            return false;
+            $('.favourite').attr('data-event', JSON.stringify(obj))
+            $('#eventUrl').attr('href',info.event.url)
+            $('#fullCalModal').modal()
+            return false
           },
 
           events: eventsList
