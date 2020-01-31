@@ -10,12 +10,13 @@ class App {
 
     this.$calendar = document.querySelector("#calendar")
 
-    this.getEvents()
-    
+    //this.getEvents()
+    this.renderCal()
+
     }
   
     async getEvents(){
-      console.log(this)
+      //console.log(this)
       const App = this
       $.ajax({ // .done .fail .always
       url: this.proxy+this.origin,
@@ -49,8 +50,8 @@ class App {
           //console.log(this.eventsList.length())
           })
           // console.log(this) // ajax promise
-          // return eList //eList;
-          App.renderCal(eList)
+        
+          //App.renderCal(eList)
       })
       //.fail(function (jqXHR, textStatus, error) { console.log(`GET error: ${error}` + jqXHR.responseJSON + textStatus); })// no returned error as fails at browser
       //.always(eList) 
@@ -58,45 +59,58 @@ class App {
     }
       
     lprint(stuff){
-      this.$calendar.html(JSON.stringify(stuff));
+      console.log(stuff);
     }
       
       async renderCal(eventsList){
-      // if (eventsList.length > 0) {
-      //const Events = await this.getEvents()
-      
-      const calendarEl = this.$calendar // needs to be here for event delegation?
-      // const data = await this.getEvents()
-    
-    
 
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-        locale: 'en-gb',
-          plugins: [ 'dayGrid', 'list', 'bootstrap'],
-          themeSystem: 'bootstrap',   //defaultView: 'listWeek',
+      //const calendarEl = this.$calendar
+      const App = this
+      console.log('constructor ' + JSON.stringify(App))
+
+      let data = await this.getEvents();
+     
+      return data;
+
+      // var calendar = new FullCalendar.Calendar(this.$calendar, {
+        
+      //   locale: 'en-gb',
+      //     plugins: [ 'dayGrid', 'list', 'bootstrap'],
+      //     themeSystem: 'bootstrap',   //defaultView: 'listWeek',
        
-          eventRender: function(info) {
-            $(info.el).tooltip({  
-              title: `${info.event.title}\n@ ${info.event.start.toLocaleTimeString({},
-                {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'} // AM || PM
-              )}`,
-              placement: 'top',
-              trigger: 'hover',
-              container: 'body'
-            });
-            //console.log(info.event.title)
-          },
-          //eventCLick
+      //     eventRender: function(info) {
+      //       $(info.el).tooltip({  
+      //         title: `${info.event.title}\n@ ${info.event.start.toLocaleTimeString({},
+      //           {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'} // AM || PM
+      //         )}`,
+      //         placement: 'top',
+      //         trigger: 'hover',
+      //         container: 'body'
+      //       });
+      //       //console.log(info.event.title)
+      //     },
+      //     //eventCLick
 
-          events: eventsList
+      //     events: async function(info,successCallBack){
+      //       let data = App.getEvents()
+      //       let result = await data 
+      //       alert(JSON.stringify(result)).successCallBack()
+      //           //App.lprint(result)
+      //       }
+
+      //   })
+              
+              
+            
+
           // function(getEvents,
           //                  successCallBack(eList),
           //                   failureCallBack: function() { // callback if there's an error
           //                     alert("error");
           //                   })),
-      })
+        
      // console.log(data)
-      await calendar.render();
+      // await calendar.render();
 
      }
 

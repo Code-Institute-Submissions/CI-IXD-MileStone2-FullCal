@@ -1,2 +1,5 @@
 //var tooltip = new Tooltip(info.el, {
 // https://stackoverflow.com/questions/56866108/tooltips-not-working-in-fullcalendar-when-i-use-bootstrap-css
+
+.done is not .then
+https://makandracards.com/makandra/39543-jquery-promises-done-and-then-are-not-the-same
