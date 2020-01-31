@@ -4,7 +4,7 @@ class App {
     console.log('app works!')  
     //this.notes = []
     this.events = JSON.parse(localStorage.getItem("events")) || []
-    this.eventsList = []
+    //this.eventsList = []
     this.origin = "https://wexfordartscentre.ticketsolve.com/shows.xml"
     this.proxy  = "https://cors-anywhere.herokuapp.com/"
 
@@ -15,15 +15,14 @@ class App {
 
     }
   
-    async getEvents(){
+   getEvents(resolve){
       //console.log(this)
       const App = this
-      $.ajax({ // .done .fail .always
+     $.ajax({ // .done .fail .always
       url: this.proxy+this.origin,
       datatype: 'xml'
-      }).done(function(response) {
-        const eList = []//this.eventsList
-        console.log("ok")
+      }).then(function(response) {
+        console.log("fetched data ok")
         $(response).find("show").each((index, show) => {
           const tags = []
           $(show).find("tag").get().forEach(tag => tags.push(tag.textContent))
@@ -44,73 +43,62 @@ class App {
             }
 
           }
-          
-          //console.log(this) // this = Ajax Obj
-          eList.push(showObj)
-          //console.log(this.eventsList.length())
+
+          App.events.push(showObj)
           })
-          // console.log(this) // ajax promise
-        
-          //App.renderCal(eList)
+          console.log(App.events)
+          // return App.events
+          // let ents = new Promise (resolve => resolve(App.events))
+          // return ents
+          return App.events
       })
+      //.then(test => console.log(test))
       //.fail(function (jqXHR, textStatus, error) { console.log(`GET error: ${error}` + jqXHR.responseJSON + textStatus); })// no returned error as fails at browser
       //.always(eList) 
 
     }
-      
-    lprint(stuff){
-      console.log(stuff);
-    }
-      
-      async renderCal(eventsList){
 
-      //const calendarEl = this.$calendar
-      const App = this
-      console.log('constructor ' + JSON.stringify(App))
+      
+    renderCal(eventsList){
 
-      let data = await this.getEvents();
      
-      return data;
+      const App = this
 
-      // var calendar = new FullCalendar.Calendar(this.$calendar, {
+      var calendar = new FullCalendar.Calendar(this.$calendar, { //const calendarEl = this.$calendar
         
-      //   locale: 'en-gb',
-      //     plugins: [ 'dayGrid', 'list', 'bootstrap'],
-      //     themeSystem: 'bootstrap',   //defaultView: 'listWeek',
+        locale: 'en-gb',
+          plugins: [ 'dayGrid', 'list', 'bootstrap'],
+          themeSystem: 'bootstrap',   //defaultView: 'listWeek',
        
-      //     eventRender: function(info) {
-      //       $(info.el).tooltip({  
-      //         title: `${info.event.title}\n@ ${info.event.start.toLocaleTimeString({},
-      //           {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'} // AM || PM
-      //         )}`,
-      //         placement: 'top',
-      //         trigger: 'hover',
-      //         container: 'body'
-      //       });
-      //       //console.log(info.event.title)
-      //     },
-      //     //eventCLick
+          eventRender: function(info) {
+            $(info.el).tooltip({  
+              title: `${info.event.title}\n@ ${info.event.start.toLocaleTimeString({},
+                {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'} // AM || PM
+              )}`,
+              placement: 'top',
+              trigger: 'hover',
+              container: 'body'
+            });
+            //console.log(info.event.title)
+          },
+          //eventCLick
 
-      //     events: async function(info,successCallBack){
-      //       let data = App.getEvents()
-      //       let result = await data 
-      //       alert(JSON.stringify(result)).successCallBack()
-      //           //App.lprint(result)
-      //       }
+          events:  function(fetchInfo,successCallback){
+                // await App.getEvents()
+                // successCallback(App.events)
 
-      //   })
-              
-              
-            
-
-          // function(getEvents,
-          //                  successCallBack(eList),
-          //                   failureCallBack: function() { // callback if there's an error
-          //                     alert("error");
-          //                   })),
-        
-     // console.log(data)
-      // await calendar.render();
+                async function firstFunc (){
+                   return await new Promise (
+                     async resolve => resolve(await App.getEvents())
+                   )
+               
+                }
+                
+               firstFunc().then(val => console.error(val+"!!!") ) 
+              }
+        //varCal     
+        })
+        calendar.render();
 
      }
 

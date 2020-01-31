@@ -3,3 +3,20 @@
 
 .done is not .then
 https://makandracards.com/makandra/39543-jquery-promises-done-and-then-are-not-the-same
+
+cyclic like trying to JSON.stringify(this
+
+
+
+  async function firstFunc (){
+                  const thenable = {
+                    then: function(resolve, _reject){
+                      resolve('resolved')
+                    }
+                  }
+                  return await thenable
+                 // console.log(await thenable)
+                }
+                
+               firstFunc().then(val => console.log(val+"!") ) 
+              })
