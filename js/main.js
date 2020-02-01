@@ -15,43 +15,51 @@ class App {
 
     }
   
-   getEvents(resolve){
+   async getEvents(){
       //console.log(this)
       const App = this
-     $.ajax({ // .done .fail .always
-      url: this.proxy+this.origin,
-      datatype: 'xml'
-      }).then(function(response) {
-        console.log("fetched data ok")
-        $(response).find("show").each((index, show) => {
-          const tags = []
-          $(show).find("tag").get().forEach(tag => tags.push(tag.textContent))
-          const showObj = {
-            id: show.getAttribute("id"),
-            title: show.querySelector("name").childNodes[1].nodeValue,
-            // title: show.getElementsByTagName("name")[0].childNodes[1].nodeValue,
-            start: show.querySelector("opening_time_iso").textContent,
-            url: show.querySelector("url").textContent.split("event")[0],
-            classNames: [...tags],
-            extendedProps: {
-              description: show.querySelector("description").textContent,
-              images: {
-                thumb: show.querySelector("url[size='thumb']").innerHTML,
-                medium: show.querySelector("url[size='medium']").innerHTML,
-                large: show.querySelector("url[size='large']").innerHTML
+    //  await $.ajax({ // .done .fail .always
+    //   url: this.proxy+this.origin,
+    //   datatype: 'xml'
+    //   }).then(function(response) {
+    //     console.log("fetched data ok")
+    //     $(response).find("show").each((index, show) => {
+    await fetch(this.proxy+this.origin)
+              .then( response => response.text())
+              .then( function(data){
+                console.log("fetched data ok")
+              const xmlDOM = new DOMParser().parseFromString(data, 'text/xml') // DOM tree from XML
+              xmlDOM.querySelectorAll("show").forEach(show => { 
+              const tags = []
+              $(show).find("tag").get().forEach(tag => tags.push(tag.textContent))
+              const showObj = {
+                id: show.getAttribute("id"),
+                title: show.querySelector("name").childNodes[1].nodeValue,
+                // title: show.getElementsByTagName("name")[0].childNodes[1].nodeValue,
+                start: show.querySelector("opening_time_iso").textContent,
+                url: show.querySelector("url").textContent.split("event")[0],
+                classNames: [...tags],
+                extendedProps: {
+                  description: show.querySelector("description").textContent,
+                  images: {
+                    thumb: show.querySelector("url[size='thumb']").innerHTML,
+                    medium: show.querySelector("url[size='medium']").innerHTML,
+                    large: show.querySelector("url[size='large']").innerHTML
+                  }
+                }
+
               }
-            }
 
-          }
-
-          App.events.push(showObj)
+              App.events.push(showObj)
+              })
+              return App.events
+              // return App.events
+              //let ents = new Promise (resolve => resolve(App.events))
+              // return new Promise (resolve => resolve(App.events))
+              // return ents
+              //return [{ title: "Slow Flow Mindful Yoga" , start: "2020-01-07T19:30:00+00:00" }]
+              // return App.events
           })
-          console.log(App.events)
-          // return App.events
-          // let ents = new Promise (resolve => resolve(App.events))
-          // return ents
-          return App.events
-      })
       //.then(test => console.log(test))
       //.fail(function (jqXHR, textStatus, error) { console.log(`GET error: ${error}` + jqXHR.responseJSON + textStatus); })// no returned error as fails at browser
       //.always(eList) 
@@ -83,19 +91,10 @@ class App {
           },
           //eventCLick
 
-          events:  function(fetchInfo,successCallback){
-                // await App.getEvents()
-                // successCallback(App.events)
-
-                async function firstFunc (){
-                   return await new Promise (
-                     async resolve => resolve(await App.getEvents())
-                   )
-               
-                }
-                
-               firstFunc().then(val => console.error(val+"!!!") ) 
-              }
+          events:  async function(fetchInfo,successCallback){
+                await App.getEvents()
+               successCallback(App.events) // successCallback([{ title: "Slow Flow Mindful Yoga" , start: "2020-02-07T19:30:00+00:00" }])
+                } 
         //varCal     
         })
         calendar.render();

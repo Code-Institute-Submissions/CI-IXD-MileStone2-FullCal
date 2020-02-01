@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Full Calendar Events</title>
+  <!-- Vendor CSS -->
+  <link href="./js/libs/bootstrap-4.4.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <!-- fa -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link href="./js/libs/fullcalendar/packages/daygrid/main.css" type="text/css" rel="stylesheet" />
+  <link href="./js/libs/fullcalendar/packages/timegrid/main.css" type="text/css" rel="stylesheet" />
+  <link href="./js/libs/fullcalendar/packages/list/main.css" type="text/css" rel="stylesheet" />
+  <link href="./js/libs/fullcalendar/packages/core/main.css"  type="text/css" rel="stylesheet" />
+  <link href="./js/libs/fullcalendar/packages/bootstrap/main.css"  type="text/css" rel="stylesheet" />
+  <style>
+.tooltip-inner {
+    white-space:pre-wrap;
+}
+  
+  </style>
+</head>
+<body>
+ 
+  <div class="container">
+    <div class="row">
+      <h1>Calendar Test</h1>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+          <div id="calendar"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal -->
+  <div id="fullCalModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h4 id="modalTitle" class="modal-title"></h4>  
+              <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">×</span>
+                <span class="sr-only">close</span>
+              </button>
+            </div>
+            <div id="modalBody" class="modal-body card">
+            </div>
+            <div class="modal-footer">
+              <span class="favourite">
+                <img class="heart" src="https://icon.now.sh/heart/ccc">
+                Add to Favs
+                <!-- ${story.isFavourite ? "Remove From Favourites" : "Add To Favourites"} -->
+              </span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <a class="btn btn-success" id="eventUrl" target="_blank">Event Page</a>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Vendor JS -->
+  <script src="js/libs/jquery/jquery-3.4.1.js"></script>
+    <!-- FullCalendar.io -->
+  <script src="./js/libs/fullcalendar/packages/core/main.js"></script>
+  <script src="./js/libs/fullcalendar/packages/core/locales/en-gb.js"></script>
+  <script src="./js/libs/fullcalendar/packages/daygrid/main.js"></script>
+  <script src="./js/libs/fullcalendar/packages/timegrid/main.js"></script> 
+  <script src="./js/libs/fullcalendar/packages/list/main.js"></script>
+  <script src="./js/libs/fullcalendar/packages/interaction/main.js"></script>
+  
+  <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
+  <!-- <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script> -->
+
+  <script src="./js/libs/bootstrap-4.4.1/js/bootstrap.min.js"></script>
+  <script src="./js/libs/fullcalendar/packages/bootstrap/main.js"></script>
+   <!-- Tooltip -->
+  <!-- <script src="./js/libs/popper/popper.min.js"></script>
+  <script src="./js/libs/tooltip/tooltip-3.3.min.js"></script> -->
+
+
+
+   <!-- App JS -->
+  <script src="js/main.js"></script>
+  <!-- <script src="js/test.js"></script> -->
+<!-- Code injected by live-server -->
+<script type="text/javascript">
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script></body>
+</html>
