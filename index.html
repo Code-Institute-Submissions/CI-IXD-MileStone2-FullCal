@@ -26,6 +26,12 @@
   <div class="container">
     <div class="row">
       <h1>Calendar Test</h1>
+      <select id="color_selector">
+        <option value="all">All categories</option>
+        <option value="presentationcentre">Presentation</option>
+        <!-- <option value="orange">Orange schools</option>
+        <option value="green">Green schools</option> -->
+      </select>
     </div>
     <div class="row">
         <div class="col-xs-12">
@@ -50,10 +56,10 @@
             <div id="modalBody" class="modal-body card">
             </div>
             <div class="modal-footer">
-              <span class="favourite">
+              <span class="favourite btn">
                 <img class="heart" src="https://icon.now.sh/heart/ccc">
-                Add to Favs
-                <!-- ${story.isFavourite ? "Remove From Favourites" : "Add To Favourites"} -->
+                <!-- Add to Favs -->
+                
               </span>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <a class="btn btn-success" id="eventUrl" target="_blank">Event Page</a>
@@ -85,6 +91,11 @@
 
    <!-- App JS -->
   <script src="js/main.js"></script>
+  <script>
+  $('#color_selector').on('change', function() {
+          this.calendar('rerenderEvents');
+        })  
+  </script>
   <!-- <script src="js/test.js"></script> -->
 </body>
 </html>
