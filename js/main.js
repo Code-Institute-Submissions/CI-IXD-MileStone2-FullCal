@@ -14,11 +14,58 @@ class App {
     this.$calendar = document.querySelector("#calendar")
     this.$favIcon = document.querySelector(".favourite")
     this.$selecta = document.querySelector("#color_selector")
+    const App = this
+    this.calendar = new FullCalendar.Calendar(this.$calendar, { //const calendarEl = this.$calendar
+        
+      locale: 'en-gb',
+        plugins: [ 'dayGrid', 'list', 'bootstrap'],
+        themeSystem: 'bootstrap', 
+
+          eventRender: function (info) {
+        
+            // var test = App.$selecta.selectedIndex
+            //     console.log(test)
+            var test2 = App.$selecta.options[App.$selecta.selectedIndex].value
+            console.log(test2)
+            if(App.$selecta.selectedIndex === 0){
+              return true
+            }else if(info.event.classNames.includes(test2)){
+              return true
+            }else{
+              return false
+            }
+
+   
+            
+          },
+        eventClick: function(info){
+          info.jsEvent.preventDefault() // don't let the browser navigate
+          App.renderEventModal(info)
+        },
+        events:  async function(fetchInfo,successCallback){
+               await App.getEvents()
+                successCallback(App.events)
+            //  successCallback([{ title: "Slow Flow Mindful Yoga" , start: "2020-02-07T19:30:00+00:00" }])
+              } 
+      //varCal     
+      })
+
 
     //this.getEvents()
     this.renderCal()
-
+    this.addEventListeners();
     }
+
+
+  addEventListeners(){
+    const App = this
+    App.$selecta.addEventListener('change', function() { // this changes cntx
+      //console.log(this.options[this.selectedIndex].value)
+      console.log("change")
+      App.renderCal(true)
+      // App.FullCalender.render()
+     })  
+  }
   
   async getEvents(){
       const App = this
@@ -114,59 +161,23 @@ class App {
         }
 
       
-    renderCal(){
+    renderCal(x){
+
 
      
-      const App = this
+      // const App = this
 
-      var calendar = new FullCalendar.Calendar(this.$calendar, { //const calendarEl = this.$calendar
+      
+
+      //   if(x){
+      //     console.log("ReRenderEvents")
+      //     return this.calendar.rerenderEvents()
+      //   }else{
+          this.calendar.render();
+
+        // }
+    
         
-        locale: 'en-gb',
-          plugins: [ 'dayGrid', 'list', 'bootstrap'],
-          themeSystem: 'bootstrap',   //defaultView: 'listWeek',
-       
-          // eventRender: function(info) {
-            // $(info.el).tooltip({  
-            //   title: `${info.event.title}\n@ ${info.event.start.toLocaleTimeString({},
-            //     {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'} // AM || PM
-            //   )}`,
-            //   placement: 'top',
-            //   trigger: 'hover',
-            //   container: 'body'
-            // });
-
-            eventRender: function (info) {
-              // console.log(info.event.title + " " + info.event.className[0])
-              // console.log(info.event.title)
-              if(info.event.classNames.includes("presentationcentre")){
-                console.log(info.event.classNames)
-                return true
-              }else{
-                return false
-              }
-              // // console.log($('#color_selector').val())
-              // if(info.event.classNames.contains("presentationcentre")){
-              //   console.log(info.event.title)
-              //   console.log("Pres Centre")
-
-              // }
-   
-              
-            },
-          eventClick: function(info){
-            info.jsEvent.preventDefault() // don't let the browser navigate
-            App.renderEventModal(info)
-          },
-          events:  async function(fetchInfo,successCallback){
-                await App.getEvents()
-               successCallback(App.events)
-              //  successCallback(App.favourites) // successCallback([{ title: "Slow Flow Mindful Yoga" , start: "2020-02-07T19:30:00+00:00" }])
-                } 
-        //varCal     
-        })
-        console.log(this.$selecta)
-        calendar.render();
-
      }
 
 
@@ -209,7 +220,7 @@ class App {
       render(){
         this.saveEvents()
       }
-
+   
 
 }
 
