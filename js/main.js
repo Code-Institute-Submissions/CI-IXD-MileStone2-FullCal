@@ -14,27 +14,45 @@ class App {
     this.$calendar = document.querySelector("#calendar")
     this.$favIcon = document.querySelector(".favourite")
     this.$selecta = document.querySelector("#color_selector")
+    this.$categories = document.querySelector("#checkboxes")
+    this.cats = []
+
     const App = this
-    this.calendar = new FullCalendar.Calendar(this.$calendar, { //const calendarEl = this.$calendar
+    App.calendar = new FullCalendar.Calendar(App.$calendar, { //const calendarEl = this.$calendar
         
       locale: 'en-gb',
         plugins: [ 'dayGrid', 'list', 'bootstrap'],
         themeSystem: 'bootstrap', 
 
           eventRender: function (info) {
-        
-            // var test = App.$selecta.selectedIndex
+            // info.event.classNames.forEach( x => App.cats.push[x]).then(printUnique(App.cats))
+            
+              // info.event.classNames.forEach( x => App.cats.push[x])
+              // info.event.classNames.forEach(x => console.log(x))
+            
+            
+            
+            //  var test = App.$selecta.selectedIndex
             //     console.log(test)
             var test2 = App.$selecta.options[App.$selecta.selectedIndex].value
-            console.log(test2)
+            // console.log(test2)
+            
             if(App.$selecta.selectedIndex === 0){
+              // printCheckBoxes()
+              // info.event.classNames.forEach(cb => {
+              //   var cb = App.$categories.createElement("span")
+              //   // cb.setAttribute("type", "checkbox")
+              //   cb.textContent("test")
+              //   App.$categories.appendChild(cb)
+              // }
+              // )
               return true
             }else if(info.event.classNames.includes(test2)){
               return true
             }else{
               return false
             }
-
+            
    
             
           },
@@ -43,7 +61,13 @@ class App {
           App.renderEventModal(info)
         },
         events:  async function(fetchInfo,successCallback){
+              
                await App.getEvents()
+               App.printUnique(App.cats)
+         
+
+               
+
                 successCallback(App.events)
             //  successCallback([{ title: "Slow Flow Mindful Yoga" , start: "2020-02-07T19:30:00+00:00" }])
               } 
@@ -62,8 +86,7 @@ class App {
     App.$selecta.addEventListener('change', function() { // this changes cntx
       //console.log(this.options[this.selectedIndex].value)
       console.log("change")
-      App.renderCal(true)
-      // App.FullCalender.render()
+      App.calendar.rerenderEvents()      // App.FullCalender.render()
      })  
   }
   
@@ -77,7 +100,10 @@ class App {
               const xmlDOM = new DOMParser().parseFromString(data, 'text/xml') // DOM tree from XML
               xmlDOM.querySelectorAll("show").forEach(show => { 
               const tags = []
-              $(show).find("tag").get().forEach(tag => tags.push(tag.textContent))
+              $(show).find("tag").get().forEach(tag => {
+                tags.push(tag.textContent)
+                App.cats.push(tag.textContent)
+              })
               const showObj = {
                 id: show.getAttribute("id"),
                 title: show.querySelector("name").childNodes[1].nodeValue, // title: show.getElementsByTagName("name")[0].childNodes[1].nodeValue,
@@ -160,24 +186,38 @@ class App {
           return false
         }
 
+    printCheckBoxes(x){
+
+      $('<input />', {
+        'type': 'checkbox',
+        'value': x,
+        'name': 'someName'
+    }).after(x).appendTo(this.$categories);
+      // console.log(cb)
+      // .append(cb)
+
+ 
+    }
+    printUnique(arr){
       
-    renderCal(x){
-
-
+      let unique = [...new Set(arr)]; 
+      console.log(unique)
+      unique.forEach( x =>  {
+        $('<input />', {
+          'type': 'checkbox',
+          'value': x,
+          'name': 'someName'
+      })  
+        .wrap('<label></label>').closest('label').append('<span>'+x+'</span>').appendTo(this.$categories);
+        });
      
-      // const App = this
 
+
+    }
       
+    renderCal(){
 
-      //   if(x){
-      //     console.log("ReRenderEvents")
-      //     return this.calendar.rerenderEvents()
-      //   }else{
-          this.calendar.render();
-
-        // }
-    
-        
+          this.calendar.render()
      }
 
 
@@ -221,6 +261,8 @@ class App {
         this.saveEvents()
       }
    
+
+      
 
 }
 

@@ -7,6 +7,20 @@ https://makandracards.com/makandra/39543-jquery-promises-done-and-then-are-not-t
 cyclic like trying to JSON.stringify(this
 
 
+unique array values
+https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates
+
+// usage example:
+var myArray = ['a', 1, 'a', 2, '1'];
+var unique = myArray.filter((v, i, a) => a.indexOf(v) === i); 
+
+// unique is ['a', 1, 2, '1']
+
+var myArray = ['a', 1, 'a', 2, '1'];
+
+let unique = [...new Set(myArray)]; 
+
+
 
   async function firstFunc (){
                   const thenable = {
