@@ -15,7 +15,7 @@ class App {
     this.$favIcon = document.querySelector(".favourite")
     this.$selecta = document.querySelector("#color_selector")
     this.$categories = document.querySelector("#checkboxes")
-    this.cats = []
+    this.cats = new Set
 
     const App = this
     App.calendar = new FullCalendar.Calendar(App.$calendar, { //const calendarEl = this.$calendar
@@ -23,38 +23,34 @@ class App {
       locale: 'en-gb',
         plugins: [ 'dayGrid', 'list', 'bootstrap'],
         themeSystem: 'bootstrap', 
+        // defaultView: 'list',
 
           eventRender: function (info) {
-            // info.event.classNames.forEach( x => App.cats.push[x]).then(printUnique(App.cats))
-            
-              // info.event.classNames.forEach( x => App.cats.push[x])
-              // info.event.classNames.forEach(x => console.log(x))
-            
-            
-            
-            //  var test = App.$selecta.selectedIndex
-            //     console.log(test)
-            var test2 = App.$selecta.options[App.$selecta.selectedIndex].value
+         
+            // var test2 = App.$selecta.options[App.$selecta.selectedIndex].value
             // console.log(test2)
+            // console.log(App.cats)
+            let truthy = []
             
-            if(App.$selecta.selectedIndex === 0){
-              // printCheckBoxes()
-              // info.event.classNames.forEach(cb => {
-              //   var cb = App.$categories.createElement("span")
-              //   // cb.setAttribute("type", "checkbox")
-              //   cb.textContent("test")
-              //   App.$categories.appendChild(cb)
-              // }
-              // )
-              return true
-            }else if(info.event.classNames.includes(test2)){
-              return true
-            }else{
-              return false
-            }
-            
-   
-            
+            // if(App.$selecta.selectedIndex === 0){
+              // console.log(info.event.classNames)
+            info.event.classNames.forEach(x => App.cats.has(x)? truthy.push(true) : truthy.push(false) )
+
+            // console.log(truthy.every((x) => x == true))
+            return truthy.every((x) => x == true)
+
+
+              // info.event.classNames.forEach(x => {
+              //   console.log(App.cats.includes(x))
+              // })
+            //   console.log(App.cats)
+            //   return true
+            // }else if(info.event.classNames.includes(test2 && !"presentationcentre")){
+            //   return true
+            // }else{
+            //   return false
+            // }
+      
           },
         eventClick: function(info){
           info.jsEvent.preventDefault() // don't let the browser navigate
@@ -64,14 +60,10 @@ class App {
               
                await App.getEvents()
                App.printUnique(App.cats)
-         
-
-               
-
                 successCallback(App.events)
             //  successCallback([{ title: "Slow Flow Mindful Yoga" , start: "2020-02-07T19:30:00+00:00" }])
               } 
-      //varCal     
+      //end App.Cal{}     
       })
 
 
@@ -83,11 +75,19 @@ class App {
 
   addEventListeners(){
     const App = this
-    App.$selecta.addEventListener('change', function() { // this changes cntx
-      //console.log(this.options[this.selectedIndex].value)
-      console.log("change")
-      App.calendar.rerenderEvents()      // App.FullCalender.render()
-     })  
+    // App.$selecta.addEventListener('change', function() { // this changes cntx
+    //   //console.log(this.options[this.selectedIndex].value)
+    //   console.log("change")
+    //   App.calendar.rerenderEvents()      // App.FullCalender.render()
+    //  })
+    App.$categories.addEventListener("change", function() {
+     
+      let checkboxes = [...this.querySelectorAll("input[type=checkbox")].filter(x => x.checked ).map(x => x.value)
+      App.cats = new Set(checkboxes)
+      // console.log(App.cats)
+      // App.cats = [...checkboxes.values]
+      App.calendar.rerenderEvents()  
+    })
   }
   
   async getEvents(){
@@ -102,7 +102,7 @@ class App {
               const tags = []
               $(show).find("tag").get().forEach(tag => {
                 tags.push(tag.textContent)
-                App.cats.push(tag.textContent)
+                App.cats.add(tag.textContent)
               })
               const showObj = {
                 id: show.getAttribute("id"),
@@ -142,13 +142,8 @@ class App {
           const obj = App.events.filter(x => x.id == info.event.id)[0] //cyclical object returning an array
           
           this.$favIcon.addEventListener('click', function(){
-              
-
-              //console.log(JSON.parse(this.dataset.story)) //(this.dataset.event)
-              //console.log(info.event.id === Number("873611604"))
+            
               if(App.checkFavourites(App.favourites, info.event.id)){
-              //if(App.favourites.some(x => x.id === info.event.id)) {
-                //
                 console.log("true")
               //  App.deleteEvent(info.event.id)
               }else{
@@ -158,8 +153,7 @@ class App {
          
 
             })
-          // })
-          //console.log(obj)
+
 
           
           $('#modalTitle').html(info.event.title)
@@ -173,15 +167,9 @@ class App {
           $('.favourite').html(`${App.favourites.some(x => x.id == info.event.id) ? "Remove From Favourites" : "Add To Favourites"}`)
           $('#eventUrl').attr('href',info.event.url)
           $('#fullCalModal').modal()
-          // console.log(obj)
-          // console.log(JSON.stringify(obj))
 
-          // console.log(App.events)
           console.log("Event Id: "+info.event.id)
-          // App.favourites.forEach(x => console.log(x.id == info.event.id))
-          // console.log(App.favourites[1])
-          // var testArr = [{id:7},{id:2},{id:4}]
-          // console.log(testArr[1])
+
     
           return false
         }
@@ -191,6 +179,7 @@ class App {
       $('<input />', {
         'type': 'checkbox',
         'value': x,
+        
         'name': 'someName'
     }).after(x).appendTo(this.$categories);
       // console.log(cb)
@@ -200,15 +189,17 @@ class App {
     }
     printUnique(arr){
       
-      let unique = [...new Set(arr)]; 
-      console.log(unique)
-      unique.forEach( x =>  {
+      // let unique = [...new Set(arr)]; 
+      // console.log(unique)
+
+      this.cats.forEach( x =>  {
         $('<input />', {
           'type': 'checkbox',
           'value': x,
+          // 'checked': 'checked',
           'name': 'someName'
-      })  
-        .wrap('<label></label>').closest('label').append('<span>'+x+'</span>').appendTo(this.$categories);
+      }).prop("checked", true) 
+        .wrap('<label class="mr-2"></label>').closest('label').append('<span class="ml-2">'+x+'</span>').appendTo(this.$categories);
         });
      
 
@@ -234,12 +225,7 @@ class App {
 
     addEvent(newEvent){ // destructor note{}
        console.log("passed: "+JSON.stringify(newEvent))
-          // const newEvent = {
-          //     title,//title: note.title,
-          //     text,//text: note.text,
-          //     color: "white",
-          //     id: this.notes.length > 0 ? this.notes[this.notes.length -1].id + 1 : 1
-          // }
+
           newEvent.isFavourited = "true"
           //console.log(JSON.stringify(this.favourites))
           this.favourites = [...this.favourites, newEvent ] //nesting! [] {...newEvent, isFavourited: "true"}
