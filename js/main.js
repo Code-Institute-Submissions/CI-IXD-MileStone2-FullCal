@@ -27,29 +27,10 @@ class App {
 
           eventRender: function (info) {
          
-            // var test2 = App.$selecta.options[App.$selecta.selectedIndex].value
-            // console.log(test2)
-            // console.log(App.cats)
-            let truthy = []
+
+
+            return App.cats.has(info.event.extendedProps.category)? true : false
             
-            // if(App.$selecta.selectedIndex === 0){
-              // console.log(info.event.classNames)
-            info.event.classNames.forEach(x => App.cats.has(x)? truthy.push(true) : truthy.push(false) )
-
-            // console.log(truthy.every((x) => x == true))
-            return truthy.every((x) => x == true)
-
-
-              // info.event.classNames.forEach(x => {
-              //   console.log(App.cats.includes(x))
-              // })
-            //   console.log(App.cats)
-            //   return true
-            // }else if(info.event.classNames.includes(test2 && !"presentationcentre")){
-            //   return true
-            // }else{
-            //   return false
-            // }
       
           },
         eventClick: function(info){
@@ -92,8 +73,8 @@ class App {
   
   async getEvents(){
       const App = this
-    // await fetch(this.proxy+this.origin)
-    await fetch(this.local)
+     await fetch(this.proxy+this.origin)
+    // await fetch(this.local)
               .then( response => response.text())
               .then( function(data){
                 console.log("fetched data ok")
@@ -102,8 +83,9 @@ class App {
               const tags = []
               $(show).find("tag").get().forEach(tag => {
                 tags.push(tag.textContent)
-                App.cats.add(tag.textContent)
               })
+              const category = show.querySelector("event_category").textContent
+              App.cats.add(category)
               const showObj = {
                 id: show.getAttribute("id"),
                 title: show.querySelector("name").childNodes[1].nodeValue, // title: show.getElementsByTagName("name")[0].childNodes[1].nodeValue,
@@ -112,6 +94,7 @@ class App {
                 classNames: [...tags],
                 extendedProps: {
                   description: show.querySelector("description").textContent,
+                  category, // k+v
                   images: {
                     thumb: show.querySelector("url[size='thumb']").innerHTML,
                     medium: show.querySelector("url[size='medium']").innerHTML,
@@ -120,7 +103,7 @@ class App {
                 }
 
               }
-
+              console.log(showObj)
               App.events.push(showObj)
               })
               return App.events
