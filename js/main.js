@@ -128,37 +128,43 @@ class App {
     App.$checkboxes.addEventListener("change", function(event) {
       
       let checkboxes = [...this.querySelectorAll("input[type=checkbox]")].slice(1)
-      
       App.categories.clear()
 
-      const cb = event.target.closest("input[type=checkbox]")
-      console.log(cb.value)
-      if(cb.value != "all"){
-        console.log("All not checked")
-        $("#checkAll").prop("indeterminate", true)
-        checkboxes.forEach(x => {
-          App.categories.set(x.value, x.checked)
-        })
-      }else if(cb.value == "all" && cb.checked == true){
-        $("input:checkbox").prop("checked", true)
-        console.log("checkAll On")
-        checkboxes.forEach(x => {
-          App.categories.set(x.value, true)
-        }) 
-      } else {
-        console.log("unchecked All?")
-        // randomly ste a cate
-      }
-      
+      const clicked = event.target.closest("input[type=checkbox]")
 
-      // if(App.$checkAll.checked){
+      if(clicked.value != "all"){
+        const checked = checkboxes.filter(input => input.checked).length
+        switch(checked){
+          case checkboxes.length : 
+            checkAll()
+            break
+          case 0 :
+            unCheckAll()
+            break
+          default:
+            someCheck()
+        }
+      }else{
+        clicked.checked == true ? checkAll() : unCheckAll()
+      }
+
+      function someCheck(){
+        $("#checkAll").prop("indeterminate", true)
+        $("input:checkbox").prop("checked", $(this).checked)
+        checkboxes.forEach(x => App.categories.set(x.value, x.checked) )
+      }
         
-       
-      // }else{
-      //   // $("#checkAll").prop("indeterminate", true)
-      //   console.log("checkAll Off")
-        
-      
+      function checkAll(){
+        $("#checkAll").prop("indeterminate", false)
+        $("input:checkbox").prop("checked", true)
+        checkboxes.forEach(x => App.categories.set(x.value, true) )
+      }  
+
+      function unCheckAll(){
+        $("#checkAll").prop("indeterminate", false)
+        $("input:checkbox").prop("checked", false)
+        checkboxes.forEach(x => App.categories.set(x.value, false) )
+      }  
       
       App.calendar.rerenderEvents()  
 
