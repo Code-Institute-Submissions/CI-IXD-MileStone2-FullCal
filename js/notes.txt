@@ -99,3 +99,18 @@ let unique = [...new Set(myArray)];
 
                firstFunc()
               }
+
+
+
+
+
+              
+
+    //   getFavourites(){
+    //     console.log(this.favourites)
+    //       return this.favourites
+    //   }
+
+    //   checkFavourites(favourites, event) {  // returns T/F
+    //     return favourites.some(favourite => favourite.id === event.id) // given story obj is in favs
+    // }
