@@ -1,10 +1,10 @@
 import renderEventModal from "../components/modal.js";
-import addEventListeners from "../components/EventListeners.js"
+import {printCheckboxes, checkboxListeners} from "../components/Checkboxes.js"
 import {default as getEvents, categories} from "../components/Events.js"
+import store from "./store.js"
 
 
-let cats = false
-let favourites = JSON.parse(localStorage.getItem("favourites")) || []
+
  
     // const origin = "https://wexfordartscentre.ticketsolve.com/shows.xml"
     // const proxy  = "https://cors-anywhere.herokuapp.com/"
@@ -42,7 +42,7 @@ let calendar = new FullCalendar.Calendar($calendar, {
         customButtons: {
           favourites: {
             text: 'Favourites!',
-            click: function(){
+            click: function(){   // turn on all cats!
               calendar.getEventSourceById(1).remove()
               calendar.addEventSource(sources.favs)
               console.log(calendar.getEventSources()[0])
@@ -78,83 +78,7 @@ let calendar = new FullCalendar.Calendar($calendar, {
             
             
 calendar.render()
-addEventListeners()
+checkboxListeners()
 
-        
-export {calendar}
+export { calendar }
   
-
-
-  
-
-
-
-
-    function printCheckboxes(){
-      const $checkboxes = document.querySelector("#checkboxes")
-      if (cats == false) {
-          categories.forEach( (v, k) =>  {
-          $('<input />', {
-            'type': 'checkbox',
-            'value': k,
-            'name': 'someName'
-          })
-          .prop("checked", v) 
-          .wrap('<label class="mr-2"></label>')
-          .closest('label')
-          .append('<span class="ml-2">'+k+'</span>')
-          .appendTo($checkboxes);
-          })
-          cats = true
-      }
-    }
-
-
-
-    // // Methods
-    // saveEvents(){
-    //   console.log("saved")
-    //   localStorage.setItem("favourites", JSON.stringify(this.favourites))
-    //   console.log("Current Favs:")
-    //   console.log(this.favourites)
-      
-    // }
-
-
-
-    // addEvent(newEvent){ // destructor note{}
-    //    console.log("passed: "+JSON.stringify(newEvent))
-
-    //       newEvent.extendedProps.isFavourited = "true"
-    //       //console.log(JSON.stringify(this.favourites))
-    //       this.favourites = [...this.favourites, newEvent ] //nesting! [] {...newEvent, isFavourited: "true"}
-    //       console.log(this.favourites)
-    //       //console.log(this.notes)
-    //       this.render()
-    //   }
-
-
-    //   deleteEvent(eid){
-    //     // console.log("Delete Event : " + String(id ))
-    //     // console.log(Number(id))
-    //     this.favourites = this.favourites.filter( ent => ent.id !== eid)
-
-    //     this.render()
-    //   }
-
-      // render(){
-      //   this.saveEvents()
-      // }
-   
-
-
-// new App()
-          // eventClick: 
-
-
-
-      
-      //   });
- 
-      //   
-      // });
