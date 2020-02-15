@@ -1,4 +1,4 @@
-import {categories} from "./Events.js"
+import {categories} from "../js/requests.js"
 // import {calendar} from "../js/main.js"
 
 let printedCheckboxes = false

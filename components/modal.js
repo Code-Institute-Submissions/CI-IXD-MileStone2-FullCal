@@ -15,18 +15,18 @@ export default function renderEventModal(info){
           
 
           const showObj = {
-            id: info.event.id,
-            title: info.event.title, // title: show.getElementsByTagName("name")[0].childNodes[1].nodeValue,
-            start: info.event.start,
-            url: info.event.url,
+            id: info.id,
+            title: info.title, // title: show.getElementsByTagName("name")[0].childNodes[1].nodeValue,
+            start: info.start,
+            url: info.url,
             // classNames: [...tags],
             extendedProps: {
-              description: info.event.extendedProps.description,
-              category: info.event.extendedProps.category,
+              description: info.extendedProps.description,
+              category: info.extendedProps.category,
               images: {
-                thumb: info.event.extendedProps.images.thumb,
-                medium: info.event.extendedProps.images.medium,
-                large: info.event.extendedProps.images.large
+                thumb: info.extendedProps.images.thumb,
+                medium: info.extendedProps.images.medium,
+                large: info.extendedProps.images.large
                 },
               // isFavourite: checkFavourites(favourites, showObj)
               }
@@ -52,7 +52,7 @@ export default function renderEventModal(info){
               renderEventModal(info)
             })
             
-          $('#modalTitle').html(info.event.title)
+          $('#modalTitle').html(info.title)
           // $('#modalBody').html(`
           //   <img src="${info.event.extendedProps.images.medium}" style="object-fit: cover; object-position: 20% 10%;" alt="${info.event.title}" />
           //   <div class="card-body">
@@ -62,7 +62,7 @@ export default function renderEventModal(info){
           $('.favourite').attr('data-event', JSON.stringify(showObj))
           
           $('.favourite-text').html(`${isFavourited? "Remove from Favourites" : "Add to Favourites" }`)
-          $('#eventUrl').attr('href',info.event.url)
+          $('#eventUrl').attr('href',info.url)
           $('#fullCalModal').modal()
 
           // console.log("Event Id: "+info.event.id)
@@ -71,37 +71,3 @@ export default function renderEventModal(info){
         }
 
 
-//         // Methods
-//    function saveEvents(){
-//       console.log("saved")
-//       localStorage.setItem("favourites", JSON.stringify(favourites))
-//       console.log("Current Favs:")
-//       console.log(favourites)
-//     }
-
-
-
-//   function addEvent(newEvent){ // destructor note{}
-//        console.log("passed: "+JSON.stringify(newEvent))
-
-//           newEvent.extendedProps.isFavourited = "true"
-//           //console.log(JSON.stringify(this.favourites))
-//          favourites = [...favourites, newEvent ] //nesting! [] {...newEvent, isFavourited: "true"}
-//           console.log(favourites)
-//           //console.log(this.notes)
-//          render()
-//       }
-
-
-// function  deleteEvent(eid){
-//         // console.log("Delete Event : " + String(id ))
-//         // console.log(Number(id))
-//         favourites = favourites.filter( ent => ent.id !== eid)
-
-//         render()
-//       }
-
-// function render(){
-//         saveEvents()
-//       }
-   
