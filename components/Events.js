@@ -41,7 +41,7 @@ export default async function getEvents(){
          }
      events.push(showObj)
      })
-     console.log(events)
+    //  console.log(events)
    })
    // .catch()
    return events

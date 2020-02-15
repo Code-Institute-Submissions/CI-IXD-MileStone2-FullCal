@@ -6,6 +6,11 @@ https://makandracards.com/makandra/39543-jquery-promises-done-and-then-are-not-t
 
 cyclic like trying to JSON.stringify(this
 
+ 
+    // const origin = "https://wexfordartscentre.ticketsolve.com/shows.xml"
+    // const proxy  = "https://cors-anywhere.herokuapp.com/"
+    // const proxy = "https://cors.x7.workers.dev/"
+
 
 unique array values
 https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates

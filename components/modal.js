@@ -1,6 +1,6 @@
 import checkFavourites from "../utils/checkFavourites.js" // helper func
 import store from "../js/store.js";
-import { calendar } from "../js/main.js";
+// import { calendar } from "../js/main.js";
 
 // import getEvents from "../components/Events.js"
 

@@ -1,5 +1,5 @@
 import {categories} from "./Events.js"
-import {calendar} from "../js/main.js"
+// import {calendar} from "../js/main.js"
 
 let printedCheckboxes = false
 
@@ -66,7 +66,7 @@ export function checkboxListeners(){
       checkboxes.forEach(x => categories.set(x.value, false) )
     }  
     
-    calendar.rerenderEvents()  
+    // calendar.rerenderEvents()  
 
   })
 
