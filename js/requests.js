@@ -41,8 +41,9 @@ export default async function getEvents(){
          }
      events.push(showObj)
      })
-    //  console.log(events)
+     console.log(categories)
    })
    // .catch()
-   return events
+  //  return events
+   sessionStorage.setItem("events", JSON.stringify(events))
  }
