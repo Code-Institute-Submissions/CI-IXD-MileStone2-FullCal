@@ -39,6 +39,8 @@ export default async function getEvents(){
              }
            }
          }
+         let jdata = JSON.stringify(showObj)
+         showObj.extendedProps.jdata = jdata
      events.push(showObj)
      })
      console.log(events)
@@ -46,3 +48,4 @@ export default async function getEvents(){
    // .catch()
    return events
  }
+
