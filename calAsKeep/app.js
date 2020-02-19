@@ -19,20 +19,7 @@ class Ent {
 /* event displays/removed show an alert */
 class UI {
   static displayEvents() {
-    // const StoredEvents = [
-    //   {
-    // title: "Besties, Dark Waters & What Next Mother- Film Premiere",
-    // id: "873612231",
-    // date: "2020-02-07T19:30:00+00:00"
-    //   },
-    //   {
 
-    //     title: "SONGS & TALL TALES OF JERRY FISH",
-    //     id:"873610985",
-    //     date: "2020-03-13T20:30:00+00:00"
-
-
-    //   }];
 
       const events = Store.getFavEvents() //StoredEvents
 
@@ -76,9 +63,6 @@ class UI {
 
   static clearFields() {
 
-    // document.querySelector('#title').value = '';
-    // document.querySelector('#author').value = '';
-    // document.querySelector('#isbn').value = '';
     $('#fullCalModal').modal("toggle")
 
 
@@ -96,16 +80,6 @@ document.addEventListener("DOMContentLoaded", UI.displayEvents)
 
 // Event to Add Event = UI and Storage
 document.querySelector(".favourite-text").addEventListener("click", (e) => {
-
-  // e.preventDefault() if submit
-    // Get 'Form' / Modal values
-    // const title = document.querySelector("#modalTitle").textContent
-    // const date = document.querySelector(".edate").textContent
-    // const id = document.querySelector(".eid").textContent
-// Validate
-  //  if(title === "" || author === "" || isbn === ""){
-    //  UI.showAlert("Please fill in all fields", "danger")
-  //  }else{ /* stuff below */  }
 
 
     const jdata = JSON.parse(document.querySelector(".favourite").getAttribute("data-event"))
@@ -127,6 +101,7 @@ document.querySelector(".favourite-text").addEventListener("click", (e) => {
 
     
     calendar.rerenderEvents()
+    favCal.rerenderEvents()
     UI.showAlert("Event Added to Favourites", "success")
 
     UI.clearFields()
@@ -162,6 +137,7 @@ document.querySelector("#event-list").addEventListener("click", e => { // event 
   
      locale: 'en-gb',
      plugins: [ 'dayGrid', 'list', 'bootstrap'],
+   
      customButtons: {
        favourites: {
          text: 'Favourites!',
@@ -175,6 +151,19 @@ document.querySelector("#event-list").addEventListener("click", e => { // event 
      header: {
        right: 'favourites today prev,next ',
      },
+     views: {
+      dayGridMonth: { // name of view
+        // titleFormat: { year: 'numeric', month: '2-digit', day: '2-digit' }
+        // other view-specific options here
+        eventTimeFormat: {
+        hour: 'numeric',
+        minute: '2-digit',
+        meridiem: true,
+        omitZeroMinute: true,
+        hour12: true
+        },
+      }
+     },
     //  defaultView: 'list', no events to display??
     eventRender: function (info) {
        //return categories.get(info.event.extendedProps.category)
@@ -183,7 +172,7 @@ document.querySelector("#event-list").addEventListener("click", e => { // event 
         // info.el.querySelector(".fc-title").style.border = "1px solid black"
         info.el.style.backgroundColor  = "plum";
         info.el.style.borderColor = "plum"
-        var heartEl = document.createElement("span")
+        var heartEl = document.createElement("span")    // css.text see notejoy
         heartEl.innerHTML = "<img class='heart' src='https://icon.now.sh/heart/ccc'/>"
         var container = info.el.querySelector(".fc-content")
         container.style.padding = "2px 18px"
@@ -194,31 +183,86 @@ document.querySelector("#event-list").addEventListener("click", e => { // event 
         // container.insertAfter(heartEl, timex)
         
         // var elem =  info.el.find(".fc-content") //.prepend("<i>F</i>");
-         console.log(info.el)
+        //  console.log(info.el)
         //  console.log(info.event._instance.range.start.getTime())
        }
      },
     eventClick: function({event, el, jsEvent, view}){
       jsEvent.preventDefault()
       el.style.borderColor = 'red' // animate this
-      // alert("Yp!")
-      // var inter = Object.assign({},info.event)
-      // var stringer = JSON.stringify(inter)
-      // console.log(info.event._instance.range.start.toISOString())  //info.event._instance.range.start.toUTCString()
-    //  console.log(inter)
-    //  var inter2 = JSON.stringify(inter)
-    //  console.log(inter2)
+
       openForm(event)
   
     },
     events: async function(fetchInfo,successCallback){
       let result = await getEvents()
       // printCheckboxes()
+      // intervalStart = calendar.view.currentStart
+      // favCal() // T/F flag if create
       successCallback(await result) 
       },
      
    })
 
+ 
+
+  let $favCal = document.querySelector("#favCal")
+
+  var intervalStart
+  var closest
+function favCal(){
+  let favCal = new FullCalendar.Calendar($favCal, {
+    header: { center: '', right: 'prev,next' }, // buttons for switching between views
+    plugins: [ 'dayGrid', 'list', 'bootstrap', 'timeGrid'],
+    // defaultDate: intervalStart,
+    // defaultView: 'list',
+    // views: {
+    //   timeGridFourDay: {
+    //     titleFormat: { year: 'numeric', month: 'short', day: 'numeric' },
+    //     type: 'list',
+    //     // start: intervalStart, // customStart??
+    //     duration: { days: 21 },
+    //     buttonText: '4 day'
+    //   }
+    // },
+    locale: 'en-gb',
+    defaultView: 'listWeek',
+    // defaultDate: intervalStart,
+    
+    events: function(fetchInfo, successCallback){
+      // [{"id":"873612231","title":"Besties, Dark Waters & What Next Mother- Film Premiere","start":"2020-02-07T19:30:00+00:00","url":"https://wexfordartscentre.ticketsolve.com/shows/873612231/","classNames":["presentationcentre","wexfordartscentre"],"extendedProps":{"description":"\n          <p><span>Three New Short Wexford Films to be screened in aid of FOCUS Ireland. The World Premiere of a new short film,&nbsp;<strong>BESTIES</strong>, featuring members of the Enniscorthy Drama Group, will be shown in the Presentation Centre, on Friday 7<sup>th</sup>&nbsp;of February, at 7.30pm in aid of FOCUS Ireland.The cast includes, Karen Franklin, Jennafer Boyd, Fintan Kelly, Maeve Ennis, Summer Keane and Jennifer Kelly. Written and directed by Dick Donaghue and produced by Jer Ennis. Filmed in Enniscorthy.</span></p>\n<p><span>Two other short films will also be premiered. </span><strong><span>DARK WATERS</span></strong><span>, starring Sharon Griffiths with David Parsons which was filmed in Bridgetown. </span><strong><span>WHAT NEXT MOTHER</span></strong><span>, a comedy, filmed in Bunclody. Starring Mary Gibson, Elaine Jordan, Niall Kennedy and Lauren Jordan, will feature on the night also.</span></p>\n<p><span>All proceeds will be donated to FOCUS Ireland, the aim of the night is to shine a light on the homelessness issue, raise much needed funds and also to show off the writing and acting talent in our locality</span></p>\n<p><strong>&nbsp;</strong></p>\n<p><strong>&nbsp;</strong></p>\n        ","category":"Film","images":{"thumb":"https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/LXoGhVKjEdUogGVvXQNMp1UB/42108e2ccaa9cbeaed96ff70f4f71abb3e953a28352072c0afd65721f1c07e2b","medium":"https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/LXoGhVKjEdUogGVvXQNMp1UB/db985b134426e3a0a042b6dc139e02b7924a669da4f6434c9c9c4b9553d63a33","large":"https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/LXoGhVKjEdUogGVvXQNMp1UB/d82b4c5034021c15162868846a860fc142237fb62f146ef228d6181ef8a17941"}}}]
+      const ents  = Store.getFavEvents() 
+      const now = new Date()
+      let closest = Infinity
+      ents.forEach( d => {
+        const date = new Date(d.start)
+        
+        if (date >= now && (date < new Date(closest) || date < closest)){
+          closest = d.start
+        }
+      })
+      closest = new Date(closest)
+      // console.log(calendar.view.currentStart)
+      successCallback(ents)
+    },
+    datesRender: function({view, el}) {
+      // intervalStart = view.currentStart
+      // console.log(intervalStart)
+    },
+    views: {
+      listWeek: {
+        noEventsMessage: "Non " + Store.getFavEvents().length + " Future Events " + intervalStart ,
+      }
+    },
+  })
+  favCal.render()
+  // console.log(timeBetween - favCal.view.currentStart)
+}
+
+
+
+
+ 
    calendar.render()
 
 
@@ -242,10 +286,32 @@ document.querySelector("#event-list").addEventListener("click", e => { // event 
     // $('.favourite-text').html(`${isFavourited? "Remove from Favourites" : "Add to Favourites" }`)
     $('#eventUrl').attr('href',event.url)
     $('#fullCalModal').modal()
-  // document.querySelector("#form").classList.add("form-open")
-  //     document.querySelector("#note-title").style.display = "block"
-  //     document.querySelector("#note-title").value = info.event.title
-  //     document.querySelector("#note-text").value = info.event.extendedProps.description
-  //     document.querySelector("#form-buttons").style.display = "block"
+
 }
 
+
+async function nextEvent(){
+  await favCal()
+  const ents  = Store.getFavEvents() 
+  const now = new Date()
+  let closest = Infinity
+  ents.forEach( d => {
+    const date = new Date(d.start)
+    
+    if (date >= now && (date < new Date(closest) || date < closest)){
+      closest = d.start
+    }
+  })
+  // closest = new Date(closest)
+  if(document.querySelector(".fc-list-empty")){
+
+    // document.querySelector(".fc-list-empty").innerHTML = `<a href="#" class="btn">${closest}</a>`
+    // document.querySelector(".fc-list-empty").addEventListener("click", () => {
+    //   $("#favCal").fullCalendar('gotoDate', "2021-01-09")
+    
+    // })
+
+  }
+}
+
+nextEvent()
