@@ -135,6 +135,7 @@ const sources = {
   
      locale: 'en-gb',
      plugins: [  'list', 'bootstrap'],
+     defaultDate: '2020-02-16',
      defaultView: 'listWeek',
      themeSystem: 'bootstrap', 
    
@@ -152,7 +153,7 @@ const sources = {
        right: 'favourites, today, prev,next ',
       },
       // eventSources: [sources.favs],
-    //  views: {
+     views: {
     //   dayGridMonth: { // name of view
     //     // titleFormat: { year: 'numeric', month: '2-digit', day: '2-digit' }
     //     // other view-specific options here
@@ -165,7 +166,46 @@ const sources = {
     //     },
     //   }
 
-    //  },
+
+    listWeek: {
+
+        eventTimeFormat: {
+        hour: 'numeric',
+        minute: '2-digit',
+        meridiem: true,
+        // omitZeroMinute: true,
+        hour12: true
+    }
+  },
+},
+    eventRender: function (info) {
+      // console.log(info.event.start)
+      // console.log(info.event._instance.range.start.getTime())  // moment.js?
+      // <td class="fc-list-item-marker "><span class="fc-event-dot"></span></td>
+      // console.log(desc)
+      // try {
+        //   const firstParaDesc = new DOMParser().parseFromString(desc, "text/xml");
+        //   console.log(firstParaDesc)
+        // } catch (error) {
+          //   console.log(desc)
+          // }
+          info.el.innerHTML = `
+          <td class="fc-list-item-time ">${info.event.start.getHours() >= 12? info.event.start.getHours()-12 : info.event.start.getHours()  }:${(info.event.start.getMinutes() === 0? '00': info.event.start.getMinutes()) + (info.event.start.getHours() >= 12? 'pm' : 'am')  }&nbsp;</td>
+          <td class="fc-list-item-marker ">${info.event.extendedProps.category}</td>
+          <td class="fc-list-item-title "><a href="${info.event.url}">${info.event.title}</a></td>
+          `
+          
+        },
+    eventPositioned: function(info){
+      var desc = info.event.extendedProps.description.replace(/<\/?(?!a)(?!p)(?!img)\w*\b[^>]*>/ig, '');
+      console.log(info.el.parentElement)
+      var newRow = info.el.parentElement.insertRow(info.el.rowIndex+1)
+      newRow.innerHTML = `
+      <td class="fc-list-item-time "></td>
+      <td class="fc-list-item-marker "></td>
+      <td class="fc-list-item-title ">${desc.slice(0,240)}</a></td>
+   `
+    },
     // eventRender: function (info) {
        //return categories.get(info.event.extendedProps.category)
       //  if(Store.checkFavs(info.event)){ // el - is the anchor wrapper, div.fc-content > span.fc-time + span.fc-title
