@@ -134,10 +134,10 @@ const sources = {
   let calendar = new FullCalendar.Calendar($calendar, {
   
      locale: 'en-gb',
-     plugins: [  'list', 'bootstrap'],
+     plugins: [ 'list', 'bootstrap'],
      defaultDate: '2020-02-16',
      defaultView: 'listWeek',
-     themeSystem: 'bootstrap', 
+     themeSystem: 'bootstrap', // black table borders! 
    
     //  customButtons: {
     //    favourites: {
@@ -178,63 +178,57 @@ const sources = {
     }
   },
 },
+
+
+
+
     eventRender: function (info) {
-      // console.log(info.event.start)
-      // console.log(info.event._instance.range.start.getTime())  // moment.js?
-      // <td class="fc-list-item-marker "><span class="fc-event-dot"></span></td>
-      // console.log(desc)
-      // try {
-        //   const firstParaDesc = new DOMParser().parseFromString(desc, "text/xml");
-        //   console.log(firstParaDesc)
-        // } catch (error) {
-          //   console.log(desc)
-          // }
+     
+
+          
+          var desc = info.event.extendedProps.description.replace(/<\/?(?!a)(?!p)(?!img)\w*\b[^>]*>/ig, '');
+
           info.el.innerHTML = `
-          <td class="fc-list-item-time ">${info.event.start.getHours() >= 12? info.event.start.getHours()-12 : info.event.start.getHours()  }:${(info.event.start.getMinutes() === 0? '00': info.event.start.getMinutes()) + (info.event.start.getHours() >= 12? 'pm' : 'am')  }&nbsp;</td>
-          <td class="fc-list-item-marker ">${info.event.extendedProps.category}</td>
-          <td class="fc-list-item-title "><a href="${info.event.url}">${info.event.title}</a></td>
-          `
+            <td class="fc-list-item-title" colspan="3">
+
+  <div class="card rounded-right m-2 border border-muted event-card">
+    <div class="row no-gutters">
+      <div class="col-auto " style="z-index: 9;">
+        <div class="img-left rounded-left" style="background:url(${info.event.extendedProps.images.medium}); background-size: cover; background-clip: border-box;"></div>
+      </div>
+      <div class="col d-flex flex-column justify-content-between" data-target="#show-${info.event.id}" data-toggle="collapse" aria-expanded="false">
+        <div class="card-block py-1 px-3">
+            <h4 class="card-title" >${(info.event.title).length >= 42? '<small>'+info.event.title+'</small>' : info.event.title}</h4>
+            <h6>${info.event.start.getHours() >= 12? info.event.start.getHours()-12 : info.event.start.getHours()  }:${(info.event.start.getMinutes() === 0? '00': info.event.start.getMinutes()) + (info.event.start.getHours() >= 12? 'pm' : 'am')  }</h6>
+            <div id="show-${info.event.id}" class="card-text collapse">${desc}</div>
+        </div>
+        <div class="card-footer d-flex flex-row justify-content-around" style=" z-index: 5">
+          <a href="#" class="btn btn-danger text-light"><i class="fa fa-ticket"></i> Definitely !</a>
+          <button class="btn btn-info addToFavourites">Maybe</button>
+          <button class="btn btn-success addToFavourites">Share</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+            </td>
+           `
+         
           
         },
     eventPositioned: function(info){
-      var desc = info.event.extendedProps.description.replace(/<\/?(?!a)(?!p)(?!img)\w*\b[^>]*>/ig, '');
-      console.log(info.el.parentElement)
-      var newRow = info.el.parentElement.insertRow(info.el.rowIndex+1)
-      newRow.innerHTML = `
-      <td class="fc-list-item-time "></td>
-      <td class="fc-list-item-marker "></td>
-      <td class="fc-list-item-title ">${desc.slice(0,240)}</a></td>
-   `
-    },
-    // eventRender: function (info) {
-       //return categories.get(info.event.extendedProps.category)
-      //  if(Store.checkFavs(info.event)){ // el - is the anchor wrapper, div.fc-content > span.fc-time + span.fc-title
-      //   info.el.querySelector(".fc-title").innerHTML = `<i>${info.event.title}</i>`
-      //   // info.el.querySelector(".fc-title").style.border = "1px solid black"
-      //   info.el.style.backgroundColor  = "plum";
-      //   info.el.style.borderColor = "plum"
-      //   var heartEl = document.createElement("span")    // css.text see notejoy
-      //   heartEl.innerHTML = "<img class='heart' src='https://icon.now.sh/heart/ccc'/>"
-      //   var container = info.el.querySelector(".fc-content")
-      //   container.style.padding = "2px 18px"
-      //   container.style.backgroundImage = "url(https://icon.now.sh/heart/f00)"
-      //   container.style.backgroundPosition = "center left"
-      //   container.style.backgroundRepeat = "no-repeat"
-      //   var timex = info.el.querySelector(".fc-time")
-        // container.insertAfter(heartEl, timex)
-        
-        // var elem =  info.el.find(".fc-content") //.prepend("<i>F</i>");
-        //  console.log(info.el)
-        //  console.log(info.event._instance.range.start.getTime())
-      //  }
-    //  },
-    // eventClick: function({event, el, jsEvent, view}){
-    //   jsEvent.preventDefault()
-    //   el.style.borderColor = 'red' // animate this
+      // console.log(info.el.querySelector("h4"))
+      // info.el.querySelector(".col").setAttribute("data-target", `#LAB-${info.event.id}`) //IDS can't be numbers!
+      // info.el.querySelector(".card-text").id = `LAB-${info.event.id}`
 
-    //   openForm(event)
-  
-    // },
+    },
+    //eventRender: function (info) {
+     
+    //  },
+    eventClick: function({event, el, jsEvent, view}){
+      // console.log(jsEvent)
+      
+    },
     events: async function(fetchInfo, successCallback){
     let result = await getEvents()
     // printCheckboxes()

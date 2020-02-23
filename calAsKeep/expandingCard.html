@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Full Calendar Events</title>
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- fa -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <!-- <link href="../js/libs/fullcalendar/packages/daygrid/main.css" type="text/css" rel="stylesheet" />
+  <link href="../js/libs/fullcalendar/packages/timegrid/main.css" type="text/css" rel="stylesheet" />
+  <link href="../js/libs/fullcalendar/packages/list/main.css" type="text/css" rel="stylesheet" />
+  <link href="../js/libs/fullcalendar/packages/core/main.css"  type="text/css" rel="stylesheet" />
+  <link href="../js/libs/fullcalendar/packages/bootstrap/main.css"  type="text/css" rel="stylesheet" /> -->
+  <style>
+
+  
+/* .fc-list-item-time,
+.fc-list-item-marker,
+.fc-list-item-title {
+  padding: 0;
+} */
+
+
+/* .card {
+  width: 900px;
+}
+
+.card-body {
+  padding: 0;
+}
+
+.card-body > div {
+  padding: 1em;
+  font-size: 18px;
+  line-height: 1.5;
+  
+}
+
+.collapse[aria-expanded="false"] { 
+  display: block;
+  height: 42px !important;
+  overflow: hidden;
+}
+
+.collapsing [aria-expanded="false"] { 
+  height: 42px !important;
+} */
+/* 
+.eventTextCrunched p {
+  text-overflow: ellipsis; 
+  /* height: 3em;
+  max-width: 340px; 
+  white-space: nowrap;
+
+  overflow: hidden; 
+  border: 1px solid pink; */
+/*
+
+.eventTextExpanded {
+  height: auto; /* max-width: auto; text-overflow: ;  */
+  /*max-width: auto; 
+  overflow: visible; 
+  white-space: normal;
+*/
+
+
+
+
+/* #module {
+width: 500px;
+}
+
+#module p.collapse[aria-expanded="false"] {
+display: block;
+height: 40px !important;
+overflow: hidden;
+}
+
+#module p.collapsing[aria-expanded="false"] {
+height: 40px !important;
+}
+
+#module a.collapsed:after  {
+content: '+ Show More';
+}
+
+#module a:not(.collapsed):after {
+content: '- Show Less';
+} *//*
+#module {
+  width: 500px;
+}
+
+#module a.collapsed:after {
+  content: '+ Show More';
+}
+
+#module a:not(.collapsed):after {
+  content: '- Show Less';
+}
+
+#module #collapseExample.collapse:not(.show) {
+  display: block;
+  /* height = lineheight * no of lines to display * /
+  height: 4.5em;
+  overflow: hidden;
+}
+
+#module #collapseExample.collapsing {
+  height: 4.5em;
+}
+
+
+#cards {
+  width: 500px;
+}
+
+ #module a.collapsed:after {
+  content: '+ Show More';
+}
+
+#module a:not(.collapsed):after {
+  content: '- Show Less';
+} */
+
+/* .eventTextCrunched.collapse:not(.show) {
+  display: block;
+  /* height = lineheight * no of lines to display *
+  height: 4.5em;
+  overflow: hidden;
+} */
+/*
+ p:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 55%;
+  bottom: 0;
+   background: -webkit-linear-gradient(transparent, #FFF) left repeat;
+  background: linear-gradient(transparent, #FFF) left repeat; 
+}
+
+.show p:after{
+  background: none; 
+}
+
+.eventTextCrunched.collapsing {
+  height: 4.5em;
+}
+
+.eventTextCrunched p {
+  text-overflow: ellipsis; 
+}
+ */
+  </style>
+</head>
+<body>
+ 
+
+  <div class="container p-2">
+    <div class="row">
+      <div class="col-xs-12">
+
+
+    <div class="card flex-row flex-wrap mb-3">
+      <div class="card-header border-0">
+          <img src="//placehold.it/200" alt="">
+      </div>
+      <div class="card-block px-2">
+          <h4 class="card-title">Title</h4>
+          <p class="card-text">Description</p>
+          <a href="#" class="btn btn-primary">BUTTON</a>
+      </div>
+      <div class="w-100"></div>
+      <div class="card-footer w-100 text-muted">
+          FOOTER
+      </div>
+  </div>
+  <div class="card border-0 m-2">
+    <div class="row no-gutters">
+      <div class="col-auto">
+        <img src="//placehold.it/200" alt="">
+      </div>
+      <div class="col"><!-- <div class="eventTextCrunched collapse" data-parent="#cards" id="one"> -->
+        <div class="card-block px-2"><!-- <div data-toggle="collapse" data-target="#one"> -->
+            <h4 class="card-title" data-toggle="collapse" data-target="#two" aria-expanded="false">Tuesday 14th March 8:30pm</h4>
+            <p class="card-text collapse" id="two" >
+                   Bacon ipsum dolor amet doner picanha tri-tip biltong leberkas salami meatball tongue filet mignon landjaeger tail. Kielbasa salami tenderloin picanha spare ribs, beef ribs strip steak jerky cow. Pork chop chicken ham hock beef ribs turkey jerky. Shoulder beef capicola doner, tongue tail sausage short ribs andouille. Rump frankfurter landjaeger t-bone, kielbasa doner ham hock shankle venison. Cupim capicola kielbasa t-bone, ball tip chicken andouille venison pork chop doner bacon beef ribs kevin shankle. Short loin leberkas tenderloin ground round shank, brisket strip steak ham hock ham.
+
+                  Bacon ipsum dolor amet doner picanha tri-tip biltong leberkas salami meatball tongue filet mignon landjaeger tail. Kielbasa salami tenderloin picanha spare ribs, beef ribs strip steak jerky cow. Pork chop chicken ham hock beef ribs turkey jerky. Shoulder beef capicola doner, tongue tail sausage short ribs andouille. Rump frankfurter landjaeger t-bone, kielbasa doner ham hock shankle venison. Cupim capicola kielbasa t-bone, ball tip chicken andouille venison pork chop doner bacon beef ribs kevin shankle. Short loin leberkas tenderloin ground round shank, brisket strip steak ham hock ham.
+
+                  Card titles are used by adding .card-title to a </p>
+        </div>
+        <div class="card-footer">
+          <a href="#" class="btn btn-danger light"><i class="fa fa-ticket"></i> Buy Tickets</a>
+          <button class="btn btn-info addToFavourites">Add to Favourites</button>
+          <button class="btn btn-success addToFavourites">Share</button>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+        
+        <div class="row">
+          <div class="col-xs-12" id="cards">
+        <div class="card">
+          <div class="card-header rounded-0 clearer" data-toggle="collapse" data-target="#two" aria-expanded="false" >
+            <h4>Friday 14th March 8:30pm</h4>
+          </div>
+        <div class="eventTextCrunched collapse" id="two" data-parent="#cards">
+          <div class="card-body">
+              <div data-toggle="collapse" data-target="#two">
+        
+                <p>
+                  Bacon ipsum dolor amet doner picanha tri-tip biltong leberkas salami meatball tongue filet mignon landjaeger tail. Kielbasa salami tenderloin picanha spare ribs, beef ribs strip steak jerky cow. Pork chop chicken ham hock beef ribs turkey jerky. Shoulder beef capicola doner, tongue tail sausage short ribs andouille. Rump frankfurter landjaeger t-bone, kielbasa doner ham hock shankle venison. Cupim capicola kielbasa t-bone, ball tip chicken andouille venison pork chop doner bacon beef ribs kevin shankle. Short loin leberkas tenderloin ground round shank, brisket strip steak ham hock ham.
+
+                  Bacon ipsum dolor amet doner picanha tri-tip biltong leberkas salami meatball tongue filet mignon landjaeger tail. Kielbasa salami tenderloin picanha spare ribs, beef ribs strip steak jerky cow. Pork chop chicken ham hock beef ribs turkey jerky. Shoulder beef capicola doner, tongue tail sausage short ribs andouille. Rump frankfurter landjaeger t-bone, kielbasa doner ham hock shankle venison. Cupim capicola kielbasa t-bone, ball tip chicken andouille venison pork chop doner bacon beef ribs kevin shankle. Short loin leberkas tenderloin ground round shank, brisket strip steak ham hock ham.
+
+                  Card titles are used by adding .card-title to a <h*> tag. In the same way, links are added and placed next to each other by adding .card-link to an <a> tag.
+
+                  Subtitles are used by adding a .card-subtitle to a <h*> tag. If the .card-title and the .card-subtitle items are placed in a .card-body item, the card title and subtitle are aligned nicely.</p>
+              </div>
+          </div>
+          
+          <div class="card-footer">
+            <a href="#" class="btn btn-success"><i class="fa fa-ticket"></i> Buy Tickets</a>
+            <button class="btn btn-info addToFavourites">Add to Favourites</button>
+          </div>
+        </div>
+        </div>
+   
+
+
+
+        <div class="card">
+          <div class="card-header rounded-0  clearer" data-toggle="collapse" data-target="#three" aria-expanded="false" >
+            <h4>wEds 14th March 8:30pm</h4>
+          </div>
+        <div class="card-body eventTextCrunched collapse"  data-parent="#cards"  id="three" style="padding:0">
+            <div class="card-body">
+              <div data-toggle="collapse" data-target="#three"> 
+                
+                <p>Card titles are used by adding .card-title to a <h*> tag. In the same way, links are added and placed next to each other by adding .card-link to an <a> tag.
+
+                  Subtitles are used by adding a .card-subtitle to a <h*> tag. If the .card-title and the .card-subtitle items are placed in a .card-body item, the card title and subtitle are aligned nicely.</p>
+              </div>
+            </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-success"><i class="fa fa-ticket"></i> Buy Tickets</a>
+            <button class="btn btn-info addToFavourites">Add to Favourites</button>
+          </div>
+        </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header rounded-0  clearer"  data-toggle="collapse" data-target="#four" aria-expanded="false" >
+            <h4>Thursday 14th March 8:30pm</h4>
+          </div>
+          <div class="card-body eventTextCrunched collapse" data-parent="#cards" id="four"  style="padding:0" >
+            <div class="card-body">
+            <div data-toggle="collapse" data-target="#four">
+              <p>Card titles are used by adding .card-title to a <h*> tag. In the same way, links are added and placed next to each other by adding .card-link to an <a> tag.
+                Bacon ipsum dolor amet doner picanha tri-tip biltong leberkas salami meatball tongue filet mignon landjaeger tail. Kielbasa salami tenderloin picanha spare ribs, beef ribs strip steak jerky cow. Pork chop chicken ham hock beef ribs turkey jerky. Shoulder beef capicola doner, tongue tail sausage short ribs andouille. Rump frankfurter landjaeger t-bone, kielbasa doner ham hock shankle venison. Cupim capicola kielbasa t-bone, ball tip chicken andouille venison pork chop doner bacon beef ribs kevin shankle. Short loin leberkas tenderloin ground round shank, brisket strip steak ham hock ham.
+                Subtitles are used by adding a .card-subtitle to a <h*> tag. If the .card-title and the .card-subtitle items are placed in a .card-body item, the card title and subtitle are aligned nicely.</p>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="btn btn-success"><i class="fa fa-ticket"></i> Buy Tickets</a>
+              <button class="btn btn-info addToFavourites">Add to Favourites</button>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Vendor JS -->
+  <script src="../js/libs/jquery/jquery-3.4.1.js"></script>
+    <!-- FullCalendar.io -->
+  <!-- <script src="../js/libs/fullcalendar/packages/core/main.js"></script>
+  <script src="../js/libs/fullcalendar/packages/core/locales/en-gb.js"></script>
+  <script src="../js/libs/fullcalendar/packages/daygrid/main.js"></script>
+  <script src="../js/libs/fullcalendar/packages/timegrid/main.js"></script> 
+  <script src="../js/libs/fullcalendar/packages/list/main.js"></script>
+  <script src="../js/libs/fullcalendar/packages/interaction/main.js"></script>
+  
+  <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script> -->
+  <!-- <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script> -->
+
+  <script src="../js/libs/bootstrap-4.4.1/js/bootstrap.min.js"></script>
+  <!-- <script src="../js/libs/fullcalendar/packages/bootstrap/main.js"></script> -->
+   <!-- Tooltip -->
+  <!-- <script src="./js/libs/popper/popper.min.js"></script>
+  <script src="./js/libs/tooltip/tooltip-3.3.min.js"></script> -->
+
+
+
+   <!-- App JS -->
+  <!-- <script src="app.js" type="module"></script> -->
+  <!-- <script>
+  $('#color_selector').on('change', function() {
+        })  
+  </script> -->
+  <!-- <script src="js/test.js"></script> -->
+
+
+<script>
+  const $cards = document.querySelectorAll(".card") 
+  const $cardHeading = document.querySelector(".card-header > h1,h2,h3,h4,h5,h6")
+  const $cardBody = document.querySelector(".card-body")
+ 
+  function addEventListeners(){
+    [ ...$cards ].forEach(card => card.addEventListener("click", (e) => {
+      console.log(e.currentTarget.querySelector(".card-header").textContent)
+      
+      const cBody = event.target.querySelector(".card-body")
+      // cBody.classList.toggle("show")
+     
+   })) 
+ 
+ 
+ 
+  }
+ 
+ 
+  addEventListeners()
+ 
+ 
+ 
+ 
+ 
+ </script>
+
+</body>
+</html>
+
+
+
+
+<!-- <html>
+  <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500&display=swap" />
+    <link rel="stylesheet" href="style.css" />
+
+    <link href="../js/libs/bootstrap-4.4.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <!- fa ->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link href="../js/libs/fullcalendar/packages/daygrid/main.css" type="text/css" rel="stylesheet" />
+  <link href="../js/libs/fullcalendar/packages/timegrid/main.css" type="text/css" rel="stylesheet" />
+  <link href="../js/libs/fullcalendar/packages/list/main.css" type="text/css" rel="stylesheet" />
+  <link href="../js/libs/fullcalendar/packages/core/main.css"  type="text/css" rel="stylesheet" />
+  <link href="../js/libs/fullcalendar/packages/bootstrap/main.css"  type="text/css" rel="stylesheet" />
+
+  </head>
+  <body>
+    <main>
+      <header>
+        <img class="header-log" src="https://www.gstatic.com/images/branding/product/1x/keep_48dp.png" />
+        <h2 class="header-title">Keep</h2>
+      </header>
+      <div id="calendar">
+
+      </div>
+      <div id="form-container">
+        <form id="form" autocomplete="off">
+          <input id="note-title" placeholder="Title" type="text" />
+          <input id="note-text" placeholder="Take a note..." type="text" />
+          <div id="form-buttons">
+            <button type="submit" id="submit-button">Submit</button>
+            <button type="button" id="form-close-button">Close</button>
+          </div>
+        </form>
+      </div>
+      <div id="notes">
+      </div>
+      <div id="placeholder">
+        <img id="placeholder-logo" src="https://icon.now.sh/lightbulb_outline">
+        <p id="placeholder-text">Notes you add appear here.</p>
+      </div>
+    </main>
+
+  <!-Vendor JS ->
+  <script src="../js/libs/jquery/jquery-3.4.1.js"></script>
+  <!-- FullCalendar.io ->
+<script src="../js/libs/fullcalendar/packages/core/main.js"></script>
+<script src="../js/libs/fullcalendar/packages/core/locales/en-gb.js"></script>
+<script src="../js/libs/fullcalendar/packages/daygrid/main.js"></script>
+<script src="../js/libs/fullcalendar/packages/timegrid/main.js"></script> 
+<script src="../js/libs/fullcalendar/packages/list/main.js"></script>
+<script src="../js/libs/fullcalendar/packages/interaction/main.js"></script>
+
+<script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
+<!-- <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script> ->
+
+<script src="../js/libs/bootstrap-4.4.1/js/bootstrap.min.js"></script>
+<script src="../js/libs/fullcalendar/packages/bootstrap/main.js"></script>
+ <!-- Tooltip -->
+<!-- <script src="./js/libs/popper/popper.min.js"></script>
+<script src="./js/libs/tooltip/tooltip-3.3.min.js"></script> ->
+    <script src="app.js" type="module"></script>
+  </body>
+
+</html> -->

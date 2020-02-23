@@ -19,6 +19,77 @@
     white-space:pre-wrap;
 }
   
+/* .fc-list-item-time,
+.fc-list-item-marker,
+/*/
+.card {
+  font-size 0.75em;
+}
+.card h4 {
+  font-size: 1.25rem;
+}
+.card .img-left {
+  height: 200px;
+  width: 200px;
+}
+
+/* .card-text {
+  overflow: hidden;
+  height: 42px;
+} */
+
+.show  {
+  /* width: 400px;
+  background-color: pink;
+*/} 
+
+
+.event-card h4 small {
+  font-size: 0.85em;
+  font-weight: 500;
+}
+
+.card-text.show{
+  margin-bottom: 1em;
+}
+
+.card-text.collapse:not(.show) {
+  display: block;
+  /* height = lineheight * no of lines to display */
+  height: 65px;
+  overflow: hidden;
+}
+
+.card-text.collapsing {
+  height: 65px;
+}
+
+.card-text.collapse:after{
+  content: '';
+  display: block;
+  position: absolute;
+  width: 95%;
+  height: 25%;
+  bottom: 65px;
+  background: linear-gradient(transparent, #FFF) left repeat; 
+
+
+}
+
+
+/* pseudo-footer */
+.event-card {
+  background: linear-gradient(to top, #efefef 0px, #efefef 65px, transparent 65px) no-repeat;
+}
+
+.card-footer {
+  border: none;
+  background: transparent;
+}
+
+
+
+
   </style>
 </head>
 <body>
@@ -42,22 +113,29 @@
         <div id="calendar"></div>
       </div>
       <div class="col-md-4">
-        <div id="favCal">
-        </div>
+        <div id="favCal"></div>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-12">
         <table class="table table-striped mt-5">
           <thead>
-            <tr>
+            <tr class="clickable" data-toggle="collapse" data-target="#group-of-rows-1" aria-expanded="false" aria-controls="group-of-rows-1">
               <th>Event ID</th>
               <th>Event Title</th>
               <th>Event Date</th>
               <th></th>
             </tr>
           </thead>
-          <tbody id="event-list"></tbody>
+          <!-- <tbody > -->
+            <tr class="table-warning collapse" id="group-of-rows-1">
+              <td><i class="fa fa-folder-open"></i> child row</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+            </tr>
+          <!-- </tbody> -->
+              <tbody id="event-list"></tbody>
         </table>
       </div>
     </div>
@@ -117,6 +195,15 @@
         })  
   </script> -->
   <!-- <script src="js/test.js"></script> -->
+
+  <script>
+     [ ...document.querySelectorAll("#cards") ].forEach(card => {
+       card.addEventListener("click", (e) => {
+         console.log(e.currentTarget)
+       })
+     })
+  </script>
+
 </body>
 </html>
 

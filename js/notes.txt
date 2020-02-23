@@ -114,3 +114,12 @@ let unique = [...new Set(myArray)];
     //   checkFavourites(favourites, event) {  // returns T/F
     //     return favourites.some(favourite => favourite.id === event.id) // given story obj is in favs
     // }
+
+
+viewRender: function(view) {
+          if(view.type === 'basicWeek') {
+             $('#calendar').fullCalendar( 'removeEventSource', ev1 );
+             $('#calendar').fullCalendar( 'addEventSource', ev2 );
+             return; 
+           }  
+        },
