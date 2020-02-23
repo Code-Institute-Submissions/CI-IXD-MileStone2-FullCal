@@ -1,4 +1,5 @@
 import {default as getEvents, categories} from "../components/Events.js"
+import checkFavourites from "../utils/checkFavourites.js" // helper func
 import Store from "../js/store.js"
 
 
@@ -128,6 +129,8 @@ const sources = {
   },
 }
 
+const  favourites  = Store.getFavEvents()
+
 // document.addEventListener("DOMContentLoaded", function() {
 
   let $calendar = document.querySelector("#calendar")
@@ -184,19 +187,21 @@ const sources = {
 
     eventRender: function (info) {
      
-
-          
+    
+      
+      const isFavourited = checkFavourites(favourites, info.event)
+      console.log(isFavourited)
           var desc = info.event.extendedProps.description.replace(/<\/?(?!a)(?!p)(?!img)\w*\b[^>]*>/ig, '');
 
           info.el.innerHTML = `
             <td class="fc-list-item-title" colspan="3">
 
   <div class="card rounded-right m-2 border border-muted event-card">
-    <div class="row no-gutters">
+    <div class="row no-gutters" data-target="#show-${info.event.id}" data-toggle="collapse" aria-expanded="false">
       <div class="col-auto " style="z-index: 9;">
         <div class="img-left rounded-left" style="background:url(${info.event.extendedProps.images.medium}); background-size: cover; background-clip: border-box;"></div>
       </div>
-      <div class="col d-flex flex-column justify-content-between" data-target="#show-${info.event.id}" data-toggle="collapse" aria-expanded="false">
+      <div class="col d-flex flex-column justify-content-between">
         <div class="card-block py-1 px-3">
             <h4 class="card-title" >${(info.event.title).length >= 42? '<small>'+info.event.title+'</small>' : info.event.title}</h4>
             <h6>${info.event.start.getHours() >= 12? info.event.start.getHours()-12 : info.event.start.getHours()  }:${(info.event.start.getMinutes() === 0? '00': info.event.start.getMinutes()) + (info.event.start.getHours() >= 12? 'pm' : 'am')  }</h6>
@@ -204,7 +209,8 @@ const sources = {
         </div>
         <div class="card-footer d-flex flex-row justify-content-around" style=" z-index: 5">
           <a href="#" class="btn btn-danger text-light"><i class="fa fa-ticket"></i> Definitely !</a>
-          <button class="btn btn-info addToFavourites">Maybe</button>
+           <button class="btn btn-info addToFavourites">${isFavourited? "Remove from Favourites" : "Add to Favourites" }</button>
+          
           <button class="btn btn-success addToFavourites">Share</button>
         </div>
       </div>
@@ -213,23 +219,27 @@ const sources = {
 
             </td>
            `
+
+           // const { favourites } = Store.getFavEvents()
+
          
           
         },
     eventPositioned: function(info){
       // console.log(info.el.querySelector("h4"))
+      
       // info.el.querySelector(".col").setAttribute("data-target", `#LAB-${info.event.id}`) //IDS can't be numbers!
       // info.el.querySelector(".card-text").id = `LAB-${info.event.id}`
-
     },
     //eventRender: function (info) {
-     
-    //  },
-    eventClick: function({event, el, jsEvent, view}){
-      // console.log(jsEvent)
       
-    },
-    events: async function(fetchInfo, successCallback){
+      //  },
+      eventClick: function({event, el, jsEvent, view}){
+        // console.log(jsEvent)
+   
+        
+      },
+      events: async function(fetchInfo, successCallback){
     let result = await getEvents()
     // printCheckboxes()
     // intervalStart = calendar.view.currentStart
@@ -332,6 +342,8 @@ const sources = {
     $('#fullCalModal').modal()
 
 }
+
+
 
 
 async function nextEvent(){
