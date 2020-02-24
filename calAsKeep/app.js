@@ -43,11 +43,23 @@ class UI {
 
   }
 
-  static deleteEvent(el) {
+  static deleteEventByClick(el) {
     if(el.classList.contains('delete')) {
       el.parentElement.parentElement.remove(); // tr not just td
     }
 
+  }
+
+  static deleteEventFromList(eid){
+    const $list = document.querySelector("#event-list")
+    const cells = [ ...$list.querySelectorAll("td")]
+    cells.forEach(cell => {
+      if(cell.textContent === eid){
+        cell.parentElement.remove()
+      }
+    })
+    // if(el.classList.contains('delete')) {
+      // el.parentElement.parentElement.remove(); // tr not just td
   }
 
   static showAlert(message, className){
@@ -63,7 +75,7 @@ class UI {
 
   static clearFields() {
 
-    $('#fullCalModal').modal("toggle")
+    // $('#fullCalModal').modal("toggle")
 
 
 
@@ -78,43 +90,6 @@ class UI {
 // Events: Display Fav Cal
 document.addEventListener("DOMContentLoaded", UI.displayEvents)
 
-// Event to Add Event = UI and Storage
-document.querySelector(".favourite-text").addEventListener("click", (e) => {
-
-
-    const jdata = JSON.parse(document.querySelector(".favourite").getAttribute("data-event"))
-
-     const event = new Ent(jdata.title,jdata.start,jdata.id)
-
-    UI.addEventToList(event)
-  
-    Store.addEvent(event)
-
-    
-    calendar.rerenderEvents()
-    favCal.rerenderEvents()
-    UI.showAlert("Event Added to Favourites", "success")
-
-    UI.clearFields()
-
-
-})
-
-// Event to REmove a Book - UI and Storage
-document.querySelector("#event-list").addEventListener("click", e => { // event propagation (del - first one would be removed)
-  UI.deleteEvent(e.target) 
-  // console.log(e.target)
-
-  
-  let eid = e.target.parentElement.parentElement.firstElementChild.textContent
-  // console.log(eid)
-  Store.removeEvent(eid)
-  
-  UI.showAlert("Event Removed to Favourites", "warning")
-
-  calendar.rerenderEvents()
-
-})
 
 
 
@@ -137,8 +112,9 @@ const  favourites  = Store.getFavEvents()
   let calendar = new FullCalendar.Calendar($calendar, {
   
      locale: 'en-gb',
-     plugins: [ 'list', 'bootstrap'],
+     plugins: [ 'dayGrid', 'list', 'bootstrap'],
      defaultDate: '2020-02-16',
+    //  defaultView: 'dayGridMonth',
      defaultView: 'listWeek',
      themeSystem: 'bootstrap', // black table borders! 
    
@@ -153,6 +129,8 @@ const  favourites  = Store.getFavEvents()
     //    }
     //  },
      header: {
+       left: 'title, dayGridMonth, listWeek',
+       center: '',
        right: 'favourites, today, prev,next ',
       },
       // eventSources: [sources.favs],
@@ -185,40 +163,64 @@ const  favourites  = Store.getFavEvents()
 
 
 
-    eventRender: function (info) {
+
+
+    eventRender: function ({event, el, jsEvent, view}) {
      
-    
-      
-      const isFavourited = checkFavourites(favourites, info.event)
-      console.log(isFavourited)
-          var desc = info.event.extendedProps.description.replace(/<\/?(?!a)(?!p)(?!img)\w*\b[^>]*>/ig, '');
+      const isFavourited = Store.checkFavs(event.id)      
+      if(view.type === 'dayGridMonth') {
 
-          info.el.innerHTML = `
-            <td class="fc-list-item-title" colspan="3">
 
-  <div class="card rounded-right m-2 border border-muted event-card">
-    <div class="row no-gutters" data-target="#show-${info.event.id}" data-toggle="collapse" aria-expanded="false">
-      <div class="col-auto " style="z-index: 9;">
-        <div class="img-left rounded-left" style="background:url(${info.event.extendedProps.images.medium}); background-size: cover; background-clip: border-box;"></div>
-      </div>
-      <div class="col d-flex flex-column justify-content-between">
-        <div class="card-block py-1 px-3">
-            <h4 class="card-title" >${(info.event.title).length >= 42? '<small>'+info.event.title+'</small>' : info.event.title}</h4>
-            <h6>${info.event.start.getHours() >= 12? info.event.start.getHours()-12 : info.event.start.getHours()  }:${(info.event.start.getMinutes() === 0? '00': info.event.start.getMinutes()) + (info.event.start.getHours() >= 12? 'pm' : 'am')  }</h6>
-            <div id="show-${info.event.id}" class="card-text collapse">${desc}</div>
-        </div>
-        <div class="card-footer d-flex flex-row justify-content-around" style=" z-index: 5">
-          <a href="#" class="btn btn-danger text-light"><i class="fa fa-ticket"></i> Definitely !</a>
-           <button class="btn btn-info addToFavourites">${isFavourited? "Remove from Favourites" : "Add to Favourites" }</button>
+        //return categories.get(event.extendedProps.category)
+       if(isFavourited){ // el - is the anchor wrapper, div.fc-content > span.fc-time + span.fc-title
+        el.querySelector(".fc-title").innerHTML = `<i>${event.title}</i>`
+        // el.querySelector(".fc-title").style.border = "1px solid black"
+        el.style.backgroundColor  = "plum";
+        el.style.borderColor = "plum"
+        var heartEl = document.createElement("span")
+        heartEl.innerHTML = "<img class='heart' src='https://icon.now.sh/heart/ccc'/>"
+        var container = el.querySelector(".fc-content")
+        container.style.padding = "2px 18px"
+        container.style.backgroundImage = "url(https://icon.now.sh/heart/f00)"
+        container.style.backgroundPosition = "center left"
+        container.style.backgroundRepeat = "no-repeat"
+        var timex = el.querySelector(".fc-time")
+     
+       }
+
+
+
+      }else if(view.type === 'listWeek'){
+        
           
-          <button class="btn btn-success addToFavourites">Share</button>
+            el.innerHTML = `
+              <td class="fc-list-item-title" colspan="3">
+  
+    <div class="card rounded-right m-2 border border-muted event-card">
+      <div class="row no-gutters">
+        <div class="col-auto " style="z-index: 9;" data-target="#show-${event.id}" data-toggle="collapse" aria-expanded="false">
+          <div class="img-left rounded-left" style="background:url(${event.extendedProps.images.medium}); background-size: cover; background-clip: border-box;"></div>
+        </div>
+        <div class="col d-flex flex-column justify-content-between">
+          <div class="card-block py-1 px-3" data-target="#show-${event.id}" data-toggle="collapse" aria-expanded="false">
+              <h4 class="card-title" >${(event.title).length >= 42? '<small>'+event.title+'</small>' : event.title}</h4>
+              <h6>${event.start.getHours() >= 12? event.start.getHours()-12 : event.start.getHours()  }:${(event.start.getMinutes() === 0? '00': event.start.getMinutes()) + (event.start.getHours() >= 12? 'pm' : 'am')  }</h6>
+              <div id="show-${event.id}" class="card-text collapse">${event.extendedProps.description}</div>
+          </div>
+          <div class="card-footer d-flex flex-row justify-content-around" style=" z-index: 5">
+            <a href="#" class="btn btn-danger text-light"><i class="fa fa-ticket"></i> Definitely !</a>
+             <button class="btn btn-info favourite" type="button">${isFavourited? "Remove from Favourites" : "Add to Favourites" }</button>
+            
+            <button class="btn btn-success">Share</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  
+              </td>
+             `
 
-            </td>
-           `
+      }
 
            // const { favourites } = Store.getFavEvents()
 
@@ -226,10 +228,10 @@ const  favourites  = Store.getFavEvents()
           
         },
     eventPositioned: function(info){
-      // console.log(info.el.querySelector("h4"))
       
-      // info.el.querySelector(".col").setAttribute("data-target", `#LAB-${info.event.id}`) //IDS can't be numbers!
-      // info.el.querySelector(".card-text").id = `LAB-${info.event.id}`
+      info.el.querySelector(".favourite").setAttribute("data-show", `${info.event.extendedProps.jdata}`) //IDS can't be numbers!
+
+
     },
     //eventRender: function (info) {
       
@@ -237,6 +239,15 @@ const  favourites  = Store.getFavEvents()
       eventClick: function({event, el, jsEvent, view}){
         // console.log(jsEvent)
    
+
+        // if(view.type === 'listWeek'){
+        //   console.log("click")
+        // }
+
+        // if(view.type === 'dayGridMonth'){
+        //   jsEvent.preventDefault()
+        //   openForm(event)
+        // }
         
       },
       events: async function(fetchInfo, successCallback){
@@ -245,27 +256,9 @@ const  favourites  = Store.getFavEvents()
     // intervalStart = calendar.view.currentStart
     // favCal() // T/F flag if create
     successCallback(await result) 
+    addEventListeners()
     },
 
-//     events: [
-//   {
-//     "id": "873612415",
-//     "title": "After School Art Workshop",
-//     "start": "2020-02-07T15:00:00+00:00",
-//     "url": "https://wexfordartscentre.ticketsolve.com/shows/873612415/",
-//     "extendedProps": {
-//       "description": "\n          <p>After School Art Workshop- This series of art classes is a place where kids can explore their creative side - by having fun, learning new skills and building confidence! Small classes of 8 students, insures individual attention to each students progress when it comes to learning art.&nbsp;</p>\n<div>\n<div>&nbsp;Kids will explore different ways of creating art and mark makings through Paint, Collage, Charcoal, Drawing, Mix-media and Suminagashi. We will also at different artists through history as well as modern day children&apos;s illustrators such as Oliver Jeffers, Mae Besom and Isabelle Arsenault as inspiration.&nbsp;</div>\n<div>&nbsp;</div>\n<div>As places are limited book early through The Presentation Art Centre to avoid disappointment!&nbsp;</div>\n<div>Nadia Corridan is an artist based in Enniscorthy since 2016. She is a fine art painter with a BA Honours Degree from Limerick School of Art &amp; Design.&nbsp;</div>\n<div>She has developed&nbsp;her career as a figurative&nbsp;oil painter. She is also one of the founding members and project manager to the Enniscorthy Art Trail which runs over the August Bank Holiday weekend each year. Her artwork can be viewed through social media and her website (<a href=\"http://nadiacorridan.weebly.com/\" target=\"_blank\" data-saferedirecturl=\"https://www.google.com/url?q=http://nadiacorridan.weebly.com/&source=gmail&ust=1579278434105000&usg=AFQjCNGyGMUzeHxpyFWzoLkGLS101aCu5w\">nadiacorridan.weebly.com</a>)</div>\n</div>\n<div>&nbsp;</div>\n<div>Tckets &euro;10 -pay as you go</div>\n<div>&euro;50 for 6 classes&nbsp;</div>\n<div>Running from 6th February - 12th March</div>\n<div>3pm - 4:30pm</div>\n        ",
-//       "category": "Children",
-//       "images": {
-//         "thumb": "https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/MQ4NVjpNd47FMzAbqehoZ78z/42108e2ccaa9cbeaed96ff70f4f71abb3e953a28352072c0afd65721f1c07e2b",
-//         "medium": "https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/MQ4NVjpNd47FMzAbqehoZ78z/db985b134426e3a0a042b6dc139e02b7924a669da4f6434c9c9c4b9553d63a33",
-//         "large": "https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/MQ4NVjpNd47FMzAbqehoZ78z/d82b4c5034021c15162868846a860fc142237fb62f146ef228d6181ef8a17941"
-//       },
-//       "jdata": "{\"id\":\"873612415\",\"title\":\"After School Art Workshop\",\"start\":\"2020-02-06T15:00:00+00:00\",\"url\":\"https://wexfordartscentre.ticketsolve.com/shows/873612415/\",\"extendedProps\":{\"description\":\"\\n          <p>After School Art Workshop- This series of art classes is a place where kids can explore their creative side - by having fun, learning new skills and building confidence! Small classes of 8 students, insures individual attention to each students progress when it comes to learning art.&nbsp;</p>\\n<div>\\n<div>&nbsp;Kids will explore different ways of creating art and mark makings through Paint, Collage, Charcoal, Drawing, Mix-media and Suminagashi. We will also at different artists through history as well as modern day children&apos;s illustrators such as Oliver Jeffers, Mae Besom and Isabelle Arsenault as inspiration.&nbsp;</div>\\n<div>&nbsp;</div>\\n<div>As places are limited book early through The Presentation Art Centre to avoid disappointment!&nbsp;</div>\\n<div>Nadia Corridan is an artist based in Enniscorthy since 2016. She is a fine art painter with a BA Honours Degree from Limerick School of Art &amp; Design.&nbsp;</div>\\n<div>She has developed&nbsp;her career as a figurative&nbsp;oil painter. She is also one of the founding members and project manager to the Enniscorthy Art Trail which runs over the August Bank Holiday weekend each year. Her artwork can be viewed through social media and her website (<a href=\\\"http://nadiacorridan.weebly.com/\\\" target=\\\"_blank\\\" data-saferedirecturl=\\\"https://www.google.com/url?q=http://nadiacorridan.weebly.com/&source=gmail&ust=1579278434105000&usg=AFQjCNGyGMUzeHxpyFWzoLkGLS101aCu5w\\\">nadiacorridan.weebly.com</a>)</div>\\n</div>\\n<div>&nbsp;</div>\\n<div>Tckets &euro;10 -pay as you go</div>\\n<div>&euro;50 for 6 classes&nbsp;</div>\\n<div>Running from 6th February - 12th March</div>\\n<div>3pm - 4:30pm</div>\\n        \",\"category\":\"Children\",\"images\":{\"thumb\":\"https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/MQ4NVjpNd47FMzAbqehoZ78z/42108e2ccaa9cbeaed96ff70f4f71abb3e953a28352072c0afd65721f1c07e2b\",\"medium\":\"https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/MQ4NVjpNd47FMzAbqehoZ78z/db985b134426e3a0a042b6dc139e02b7924a669da4f6434c9c9c4b9553d63a33\",\"large\":\"https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/MQ4NVjpNd47FMzAbqehoZ78z/d82b4c5034021c15162868846a860fc142237fb62f146ef228d6181ef8a17941\"}}}"
-//     }
-//   },
- 
-// ]
      
    })
 
@@ -317,34 +310,92 @@ const  favourites  = Store.getFavEvents()
 
 
  
-   calendar.render()
 
 
 
-   function openForm(event){
-    //  console.log(event.extendedProps.jdata)
+
+//    function openForm(event){
+//     //  console.log(event.extendedProps.jdata)
     
-    $('#modalTitle').html(event.title)
-    $('#modalBody').html(`
-      <p class="edate">${event.start}</p>
-      <p class="eid">${event.id}</p>
-    `)
-    // $('#modalBody').html(`
-    //   <img src="${info.event.extendedProps.images.medium}" style="object-fit: cover; object-position: 20% 10%;" alt="${info.event.title}" />
-    //   <div class="card-body">
-    //   ${info.event.extendedProps.description} 
-    //   </div>
-    // `);
-    $('.favourite').attr('data-event', event.extendedProps.jdata )
-    Store.checkFavs(event)
-    // $('.favourite-text').html(`${isFavourited? "Remove from Favourites" : "Add to Favourites" }`)
-    $('#eventUrl').attr('href',event.url)
-    $('#fullCalModal').modal()
+//     $('#modalTitle').html(event.title)
+//     $('#modalBody').html(`
+//       <p class="edate">${event.start}</p>
+//       <p class="eid">${event.id}</p>
+//     `)
+//     $('#modalBody').html(`
+//       <img src="${event.extendedProps.images.medium}" style="object-fit: cover; object-position: 20% 10%;" alt="${event.title}" />
+//       <div class="card-body">
+//       ${event.extendedProps.description} 
+//       </div>
+//     `);
+//     $('.favourite').attr('data-event', event.extendedProps.jdata )
+//     const isFavourited = Store.checkFavs(event.id)
+//     $('.favourite-text').html(`${isFavourited? "Remove from Favourites" : "Add to Favourites" }`)  // Event Added Msg on both
+//     $('#eventUrl').attr('href',event.url)
+//     $('#fullCalModal').modal()
+//   // document.querySelector("#form").classList.add("form-open")
+//   //     document.querySelector("#note-title").style.display = "block"
+//   //     document.querySelector("#note-title").value = info.event.title
+//   //     document.querySelector("#note-text").value = info.event.extendedProps.description
+//   //     document.querySelector("#form-buttons").style.display = "block"
+// }
+
+function addEventListeners() {
+// JSON.parse(document.querySelector(".favourite").getAttribute("data-event"))
+const $favourites = [...document.querySelectorAll(".favourite")]
+console.log($favourites)
+$favourites.forEach(favourite => {
+  favourite.addEventListener("click", (e) => {
+
+    const event = JSON.parse(e.target.dataset.show)
+    const isFavourited = Store.checkFavs(event.id);
+    console.lof(isFavourited)
+    if(isFavourited) {
+      Store.removeEvent(event.id)
+      UI.showAlert("Event Removed to Favourites", "warning")
+      UI.deleteEventFromList(event.id)
+      // calendar.rerenderEvents()
+    }else{
+
+      
+          UI.addEventToList(event)
+        
+          Store.addEvent(event)
+      
+          
+          calendar.rerenderEvents()
+          // favCal.rerenderEvents()
+          UI.showAlert("Event Added to Favourites", "success")
+      
+          UI.clearFields()
+    }
+  }
+  )
+})
+
+
+  // Event to Add Event = UI and Storage
+
+
+  // Event to REmove a Book - UI and Storage
+  document.querySelector("#event-list").addEventListener("click", e => { // event propagation (del - first one would be removed)
+    UI.deleteEventByClick(e.target) 
+    // console.log(e.target)
+
+    
+    let eid = e.target.parentElement.parentElement.firstElementChild.textContent
+    // console.log(eid)
+    Store.removeEvent(eid)
+    
+    UI.showAlert("Event Removed to Favourites", "warning")
+
+    //
+
+  })
+
+  calendar.render()
 
 }
-
-
-
 
 async function nextEvent(){
   await favCal.render()
@@ -369,5 +420,6 @@ async function nextEvent(){
 
   }
 }
-
+calendar.render()
 nextEvent()
+

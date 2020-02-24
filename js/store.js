@@ -19,9 +19,9 @@ export default class Store {
         return
     }
 
-    static checkFavs(show){
+    static checkFavs(eid){
         let favourites = Store.getFavEvents()
-        return favourites.some(fav => Number(fav.id) === Number(show.id) ) 
+        return favourites.some(fav => Number(fav.id) === Number(eid) ) 
         // console.log("it's " + favourites.some(fav => Number(fav.id) === Number(show.id) ) + " that this is a fav")
     }
 

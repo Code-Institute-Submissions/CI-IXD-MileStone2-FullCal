@@ -30,7 +30,7 @@ export default async function getEvents(){
            url: show.querySelector("url").textContent.split("event")[0],
            // classNames: [...tags],
            extendedProps: {
-             description: show.querySelector("description").textContent,
+             description: show.querySelector("description").textContent.replace("<![CDATA[", "").replace(/<\/?\w*\b[^>]*>/ig, '').replace("]]>", ""),
              category, // k+v
              images: {
                thumb: show.querySelector("url[size='thumb']").innerHTML,
@@ -41,6 +41,7 @@ export default async function getEvents(){
          }
          let jdata = JSON.stringify(showObj)
          showObj.extendedProps.jdata = jdata
+        //  console.log(showObj.extendedProps.description)
      events.push(showObj)
      })
      console.log(events)
