@@ -1,5 +1,6 @@
 import {categories} from "./Events.js"
-import {calendar} from "../js/main.js"
+// import {calendar} from "../js/main.js"
+import {calendar} from "../calAsKeep/app.js"
 
 let printedCheckboxes = false
 

@@ -25,6 +25,12 @@ export default class Store {
         // console.log("it's " + favourites.some(fav => Number(fav.id) === Number(show.id) ) + " that this is a fav")
     }
 
+    static oldestFavEvent(){
+        let favourites = Store.getFavEvents()
+        return favourites.reduce( (a,b) => b.start < a.start ? b : a)
+        // reduce(  )
+    }
+
 
 
 }
