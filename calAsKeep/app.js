@@ -1,5 +1,6 @@
 import {default as getEvents, categories} from "../components/Events.js"
-import {printCheckboxes, checkboxListeners} from "../components/Checkboxes.js"
+import {Category} from "../components/CBSclass.js"
+import UI from "../components/Ui.js"
 import Store from "../js/store.js"
 
 // Event Class: Represents an Event
@@ -13,103 +14,21 @@ class Ent {
 }
 
 
-// UI Class: Hanle UI Tasks
-/* event displays/removed show an alert */
-class UI {
-  static displayEvents() {
 
 
-      const events = Store.getFavEvents() //StoredEvents
-
-      // console.log(events)
-
-      events.forEach( event => UI.addEventToList(event))
-  }
-
-  static addEventToList(event) {
-    const $list = document.querySelector("#event-list")
-
-    const row = document.createElement("tr")
-    row.innerHTML = `
-    <td>${event.id}</td>
-    <td>${event.title}</td>
-    <td>${event.start}</td>
-    <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>
-    `
-
-    $list.appendChild(row)
-
-  }
-
-  static deleteEventByClick(el) {
-    if(el.classList.contains('delete')) {
-      el.parentElement.parentElement.remove(); // tr not just td
-    }
-
-  }
-
-  static deleteEventFromList(eid){
-    const $list = document.querySelector("#event-list")
-    const cells = [ ...$list.querySelectorAll("td")]
-    cells.forEach(cell => {
-      if(cell.textContent === eid){
-        cell.parentElement.remove()
-      }
-    })
-
-  }
-
-  static showAlert(message, className){
-    const div = document.createElement("div")
-    div.className = `alert alert-${className}`
-    div.appendChild(document.createTextNode(message))
-    const container = document.querySelector(".fc-view-container") // parent
-    const table = document.querySelector(".fc-view") // before this child
-    container.insertBefore(div, table)
-    // Vanish alert < 3secs
-    setTimeout( () => document.querySelector(".alert").remove(), 2400 )
-    // setTimeout( () => [ ...document.querySelectorAll(".alert")].forEach(alert => alert.remove()), 2400 )
-  }
-
-  static clearFields() {
-
-    // $('#fullCalModal').modal("toggle")
-
-  }
-
-
-  static openModal(event, isFavourited=false) {
-    
-    $('#modalTitle').html(event.title)
-    $('#modalBody').html(`
-    <img src="${event.extendedProps.images.medium}" style="object-fit: cover; object-position: 20% 10%;" alt="${event.title}" />
-    <div class="card-body">
-    ${event.extendedProps.description} 
-    </div>
-    `);
-    $('.favourite').attr('data-event', event.extendedProps.jdata )
-    
-    $('.favourite-text').html(`${isFavourited? "Remove from Favourites" : "Add to Favourites" }`)
-    $('#eventUrl').attr('href',event.url)
-    $('#fullCalModal').modal()
-  
- 
-
- }
-}
-// Store Class - localStorage
 
 // Events: Display Fav Cal
 document.addEventListener("DOMContentLoaded", UI.displayEvents)
-
+document.addEventListener("DOMContentLoaded", UI.favsButton)
 
 
 
 let favToggle = false
+let cbToggle = false
 let closest = Infinity
 // const favourites  = Store.getFavEvents()
 
-const eventSource = {
+export const eventSource = {
 test : {
    events: 
    [{"id":"873612231","title":"Besties, Dark Waters & What Next Mother- Film Premiere","start":"2020-02-17T19:30:00+00:00","url":"https://wexfordartscentre.ticketsolve.com/shows/873612231/","classNames":["presentationcentre","wexfordartscentre"],"extendedProps":{"description":"\n          <p><span>Three New Short Wexford Films to be screened in aid of FOCUS Ireland. The World Premiere of a new short film,&nbsp;<strong>BESTIES</strong>, featuring members of the Enniscorthy Drama Group, will be shown in the Presentation Centre, on Friday 7<sup>th</sup>&nbsp;of February, at 7.30pm in aid of FOCUS Ireland.The cast includes, Karen Franklin, Jennafer Boyd, Fintan Kelly, Maeve Ennis, Summer Keane and Jennifer Kelly. Written and directed by Dick Donaghue and produced by Jer Ennis. Filmed in Enniscorthy.</span></p>\n<p><span>Two other short films will also be premiered. </span><strong><span>DARK WATERS</span></strong><span>, starring Sharon Griffiths with David Parsons which was filmed in Bridgetown. </span><strong><span>WHAT NEXT MOTHER</span></strong><span>, a comedy, filmed in Bunclody. Starring Mary Gibson, Elaine Jordan, Niall Kennedy and Lauren Jordan, will feature on the night also.</span></p>\n<p><span>All proceeds will be donated to FOCUS Ireland, the aim of the night is to shine a light on the homelessness issue, raise much needed funds and also to show off the writing and acting talent in our locality</span></p>\n<p><strong>&nbsp;</strong></p>\n<p><strong>&nbsp;</strong></p>\n        ","category":"Film","images":{"thumb":"https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/LXoGhVKjEdUogGVvXQNMp1UB/42108e2ccaa9cbeaed96ff70f4f71abb3e953a28352072c0afd65721f1c07e2b","medium":"https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/LXoGhVKjEdUogGVvXQNMp1UB/db985b134426e3a0a042b6dc139e02b7924a669da4f6434c9c9c4b9553d63a33","large":"https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/LXoGhVKjEdUogGVvXQNMp1UB/d82b4c5034021c15162868846a860fc142237fb62f146ef228d6181ef8a17941"}}}],
@@ -124,7 +43,7 @@ test : {
 wxac: {
    events: async function(fetchInfo, successCallback){
      let result = await getEvents()
-     printCheckboxes()
+     cbs()
      // intervalStart = calendar.view.currentStart
      // favCal() // T/F flag if create
      successCallback(await result)
@@ -143,25 +62,25 @@ export let calendar = new FullCalendar.Calendar($calendar, {
      defaultView: 'listWeek',
      themeSystem: 'bootstrap', // black table borders! 
     customButtons: {
-      favsButton: {
-        text: 'Favs',
-        click: function(){
+      // favsButton: {
+      //   text: 'Favs',
+      //   click: function(){
           
-          var eventSources = calendar.getEventSources()
-          eventSources[0].remove()
-          if(favToggle == false){
-            favToggle = true
-            calendar.addEventSource(eventSource.favs)
-            calendar.changeView('favsView')
-          }else{
-            favToggle = false
-            calendar.today()
-            calendar.changeView('listWeek')
-            calendar.addEventSource(eventSource.wxac)  //calendar.getEventSourceById(3)
-          }
+      //     var eventSources = calendar.getEventSources()
+      //     eventSources[0].remove()
+      //     if(favToggle == false){
+      //       favToggle = true
+      //       calendar.addEventSource(eventSource.favs)
+      //       calendar.changeView('favsView')
+      //     }else{
+      //       favToggle = false
+      //       calendar.today()
+      //       calendar.changeView('listWeek')
+      //       calendar.addEventSource(eventSource.wxac)  //calendar.getEventSourceById(3)
+      //     }
           
-        }
-      }
+      //   }
+      // }
     },
      header: {
        left: 'title, dayGridMonth, listWeek',
@@ -332,7 +251,19 @@ function addEventListeners() {
 
 
 calendar.render()
-checkboxListeners()
+
+
+// Category.checkboxListeners()
+let printed = false
+function cbs()
+{
+  if(printed == false){
+    let cbx = new Category
+    printed = true
+    cbx.checkboxListeners()
+  }
+}
+
 addEventListeners()
 
 

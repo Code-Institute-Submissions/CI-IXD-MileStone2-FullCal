@@ -161,3 +161,43 @@ viewRender: function(view) {
 "{&quot;id&quot;:&quot;873609386&quot;,&quot;title&quot;:&quot;\&quot;Heal Your Hole\&quot; with Norma Sheahan&quot;,&quot;start&quot;:&quot;2020-03-06T20:00:00+00:00&quot;,&quot;url&quot;:&quot;https://wexfordartscentre.ticketsolve.com/shows/873609386/&quot;,&quot;extendedProps&quot;:{&quot;description&quot;:&quot;\n          Norma Sheahan's hilarious comedy night promises to heal every hole in your life, one laugh at a time.&nbsp;\n&nbsp;\nAs seen in… The Clinic, Bridget &amp; Eamon, Mooneboy, Damo &amp; Ivor, Finding Joy, Women on the Verge, Vagina Monologues, and hanging over the Liffey in Celebrity Ireland's Fittest Family. Plus much more….\n&nbsp;\n&quot;The Comedy Chops of Norma Sheahan are there in spades…&quot; (The Sunday World)\n&nbsp;\n&quot;Sheahan, whose extensive CV includes roles on Bridget &amp; Eamon, Can't Cope Won't Cope, and A Date for Mad Mary, is in danger of stealing the show…&quot; (<a href=\&quot;http://rte.ie/\&quot; target=\&quot;_blank\&quot; data-saferedirecturl=\&quot;https://www.google.com/url?q=http://RTE.ie&amp;source=gmail&amp;ust=1571822054614000&amp;usg=AFQjCNFh_pTcljwiLK1xvMf1ihJyazKXLA\&quot;>RTE.ie</a>)\n<p>&nbsp;</p>\n        &quot;,&quot;category&quot;:&quot;Comedy&quot;,&quot;images&quot;:{&quot;thumb&quot;:&quot;https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/7kdud1uADjabe9T6obsdp3jM/42108e2ccaa9cbeaed96ff70f4f71abb3e953a28352072c0afd65721f1c07e2b&quot;,&quot;medium&quot;:&quot;https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/7kdud1uADjabe9T6obsdp3jM/db985b134426e3a0a042b6dc139e02b7924a669da4f6434c9c9c4b9553d63a33&quot;,&quot;large&quot;:&quot;https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/7kdud1uADjabe9T6obsdp3jM/d82b4c5034021c15162868846a860fc142237fb62f146ef228d6181ef8a17941&quot;}}}"
 526
 "{&quot;id&quot;:&quot;873611836&quot;,&quot;title&quot;:&quot;Wild In the Country by Enniscorthy Drama Group&quot;,&quot;start&quot;:&quot;2020-03-05T20:00:00+00:00&quot;,&quot;url&quot;:&quot;https://wexfordartscentre.ticketsolve.com/shows/873611836/&quot;,&quot;extendedProps&quot;:{&quot;description&quot;:&quot;\n          <p>When it is suggested to Rose that her favourite superstar, Elvis Presley, is coming to town to perform in the local hall, she gives it her all to get ready for this great event. But when her plans to meet and seduce Elvis get interrupted by her Mozart loving husband, a washing machine, a local election, and Mother time herself, she decides she must take matters into her own hands if she is to fulfil her destiny.&quot; A play set in Enniscorthy, by an Enniscorthy Author, with an Enniscorthy Cast, for an Enniscorthy audience. Enniscorthy Drama Group proudly present this 3 act play by Paul O Reilly, starring Julie Fox, Kate Breen, Fergal Kelly, Pat Murphy, Niall Holohan and Alan Kinsella, and directed by Fintan Kelly.</p>\n<p>Preview Tickets €10 on 4th and €15 on 5th, 6th and 7th March</p>\n        &quot;,&quot;category&quot;:&quot;Amateur Drama&quot;,&quot;images&quot;:{&quot;thumb&quot;:&quot;https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/cPR5Rh6TuPCwvj4Q1YxsTtc4/42108e2ccaa9cbeaed96ff70f4f71abb3e953a28352072c0afd65721f1c07e2b&quot;,&quot;medium&quot;:&quot;https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/cPR5Rh6TuPCwvj4Q1YxsTtc4/db985b134426e3a0a042b6dc139e02b7924a669da4f6434c9c9c4b9553d63a33&quot;,&quot;large&quot;:&quot;https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/cPR5Rh6TuPCwvj4Q1YxsTtc4/d82b4c5034021c15162868846a860fc142237fb62f146ef228d6181ef8a17941&quot;}}}"
+
+
+
+static favsButton(){
+
+
+
+  const favToggleButton = document.createElement("input")
+  favToggleButton.setAttribute("type", "checkbox")
+  favToggleButton.setAttribute("data-toggle", "toggle")
+  favToggleButton.setAttribute("data-on", "<i class='fa fa-heart'></i> Favs")
+  favToggleButton.setAttribute("data-onstyle", "danger")
+  favToggleButton.setAttribute("data-off", "Show All")
+  /favToggleButton.setAttribute("data-offstyle", "primary")
+  favToggleButton.id="favToggleButton"
+  // document.querySelector(".fc-favsButton-button")
+  
+  // html body div.container div.row div.col-md-8 div#calendar.fc.fc-ltr.fc-bootstrap div.fc-toolbar.fc-header-toolbar div.fc-right div.btn-group
+  const container = document.querySelector("div.fc-toolbar.fc-header-toolbar div.fc-right") // parent
+  const prevButton = document.querySelector("div.btn-group") // before this child
+  container.insertBefore(favToggleButton, prevButton)
+  // const $favToggleButton = document.querySelector("#favToggleButton")
+  $("#favToggleButton").bootstrapToggle('off')
+  $("#favToggleButton").change(function () {
+    var eventSources = calendar.getEventSources()
+        eventSources[0].remove()
+    if($(this).prop('checked') == true){
+      calendar.addEventSource(eventSource.favs)
+      calendar.changeView('favsView')
+      $("input:checkbox").prop("checked", true)
+    }else{
+      calendar.today()
+      calendar.changeView('listWeek')
+      calendar.addEventSource(eventSource.wxac)  //calendar.getEventSourceById(3)
+    }
+  })
+
+ }
+// End UI Class
+}

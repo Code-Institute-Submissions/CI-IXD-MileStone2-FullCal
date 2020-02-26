@@ -1,5 +1,4 @@
 export const categories = new Map
-
 export default async function getEvents(){
   let URL = window.location.href
   let local = URL.substring(0, URL.lastIndexOf("/") + 1) + "shows.xml"; 
@@ -47,6 +46,7 @@ export default async function getEvents(){
      console.log(events)
    })
    // .catch()
+
    return events
  }
 

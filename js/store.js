@@ -32,30 +32,4 @@ export default class Store {
         // reduce(  )
     }
 
-
-
 }
-
-/*
-import getEvents from "./requests.js"
-
-class Store {
-    constructor() {
-        this.favourites = JSON.parse(localStorage.getItem("favourites")) || []
-        this.events = JSON.parse(sessionStorage.getItem("events")) || getEvents()  // you can await constructor
-    }
-    add(show){
-        this.favourites = [...this.favourites, show]
-    }
-    remove(showId){
-        this.favourites = this.favourites.filter( favourite => favourite.id !== showId)
-    }
-    save() {
-        localStorage.setItem("favourites", JSON.stringify(this.favourites))
-    }
-    checkFavs(showId) {
-        return this.favourites.some(favourite => Number(favourite.id) === Number(showId)) // show obj is in favs ?
-    }
-}
-
-*/
