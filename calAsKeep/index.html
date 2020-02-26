@@ -56,7 +56,7 @@
 .card-text.collapse:not(.show) {
   display: block;
   /* height = lineheight * no of lines to display */
-  height: 65px;
+  height: 66px;
   overflow: hidden;
 }
 
@@ -87,6 +87,7 @@
 .card-footer {
   border: none;
   background: transparent;
+  cursor: default;
 }
 
 
@@ -145,8 +146,8 @@
 
 
   <!-- Modal -->
-  <div id="fullCalModal" class="modal fade">
-    <div class="modal-dialog">
+  <div id="fullCalModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullCalModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
               <h4 id="modalTitle" class="modal-title"></h4>  
@@ -160,7 +161,7 @@
             <div class="modal-footer">
               <span class="favourite btn">
                 <img class="heart" src="https://icon.now.sh/heart/ccc">
-                <span class="favourite-text">Add Event</span>
+                <span class="favourite-text"></span>
               </span>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <a class="btn btn-success" id="eventUrl" target="_blank">Event Page</a>

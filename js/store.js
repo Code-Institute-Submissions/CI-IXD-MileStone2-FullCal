@@ -6,6 +6,7 @@ export default class Store {
     }
 
     static addEvent(show){
+        if(Store.checkFavs(show.id) == true) return
         let favourites = Store.getFavEvents()
         favourites = [...favourites, show]
         localStorage.setItem("favourites", JSON.stringify(favourites))

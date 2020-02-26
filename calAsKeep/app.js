@@ -68,6 +68,7 @@ class UI {
     container.insertBefore(div, table)
     // Vanish alert < 3secs
     setTimeout( () => document.querySelector(".alert").remove(), 2400 )
+    // setTimeout( () => [ ...document.querySelectorAll(".alert")].forEach(alert => alert.remove()), 2400 )
   }
 
   static clearFields() {
@@ -77,29 +78,7 @@ class UI {
   }
 
 
-  static openModal(event) {
-
-    const isFavourited = Store.checkFavs(event.id)
-    const $favIcon = document.querySelector(".favourite")
-  
-    $favIcon.addEventListener('click', async function() {
-      // const event = JSON.parse(event.extendedProps.jdata)
-      
-     
-      // console.log(showObj)
-      if(isFavourited){
-        Store.removeEvent(event.id)
-        UI.showAlert("Event Removed to Favourites", "warning")
-        UI.deleteEventFromList(event.id)
-      } else {
-        const show = JSON.parse(event.extendedProps.jdata)
-        UI.addEventToList(show)
-        Store.addEvent(show)
-        UI.showAlert("Event Added to Favourites", "success")  
-      }
-      openModal(event)
-      calendar.rerenderEvents()
-    })
+  static openModal(event, isFavourited=false) {
     
     $('#modalTitle').html(event.title)
     $('#modalBody').html(`
@@ -114,13 +93,10 @@ class UI {
     $('#eventUrl').attr('href',event.url)
     $('#fullCalModal').modal()
   
-    
-    
-    
-  }
+ 
 
+ }
 }
-
 // Store Class - localStorage
 
 // Events: Display Fav Cal
@@ -157,8 +133,8 @@ wxac: {
 }
 
 
-  let $calendar = document.querySelector("#calendar")
-  let calendar = new FullCalendar.Calendar($calendar, {
+let $calendar = document.querySelector("#calendar")
+export let calendar = new FullCalendar.Calendar($calendar, {
   
      locale: 'en-gb',
      plugins: [ 'dayGrid', 'list', 'bootstrap'],
@@ -265,59 +241,51 @@ wxac: {
                 `
 
           }
-        }else{
-          return false
-        }
+        }else{ return false } // else dont render event
          
           
         },
     eventPositioned: function(info){
-    //   if(info.view.type === 'listWeek'){
-    //   // info.el.querySelector(".favourite").setAttribute("data-show", `${info.event.extendedProps.jdata}`) //IDS can't be numbers!
-    //   info.el.querySelector(".favourite").addEventListener("click", e => {
-    //     // const show = JSON.parse(e.target.dataset.show)
-    //     const show = JSON.parse(info.event.extendedProps.jdata)
-    //     console.log(show)
-    //     const isFavourited = Store.checkFavs(show.id);
-    //         console.log(isFavourited)
-    //         if(isFavourited) {
-    //           Store.removeEvent(show.id)
-    //           UI.showAlert("Event Removed to Favourites", "warning")
-    //           UI.deleteEventFromList(show.id)
-    //           // calendar.rerenderEvents()
-    //         }else{
-    //               UI.addEventToList(show)
-    //               Store.addEvent(show)
-    //               // calendar.rerenderEvents()
-    //               // favCal.rerenderEvents()
-    //               UI.showAlert("Event Added to Favourites", "success")  
-    //               // UI.clearFields()
-    //         }
-    //       calendar.rerenderEvents()
-        
-    //     })
-    //  }
-
+      if(info.view.type === 'listWeek'){
+        info.el.querySelector(".favourite").addEventListener("click", e => {
+          const show = JSON.parse(info.event.extendedProps.jdata)
+          const isFavourited = Store.checkFavs(show.id)
+          if(isFavourited) {
+            Store.removeEvent(show.id)
+            UI.showAlert("Event Removed to Favourites", "warning")
+            UI.deleteEventFromList(show.id)
+          }else{
+            UI.addEventToList(show)
+            Store.addEvent(show)
+            UI.showAlert("Event Added to Favourites", "success")
+          }
+          calendar.rerenderEvents() 
+        })
+      }
+    
     },
-    //eventRender: function (info) {
-      
-      //  },
-      eventClick: function({event, el, jsEvent, view}){
+    eventClick: function(info){
         // console.log(jsEvent)
-   
-
-        if(view.type === 'listWeek'){
-          el.querySelector(".card-footer").addEventListener("click", e => {
-            if(e.target.classList.contains("favourite")){
-              UI.openModal(event)
+        if(info.view.type === 'dayGridMonth'){
+          info.jsEvent.preventDefault()
+          const isFavourited = Store.checkFavs(info.event.id)
+          const show = JSON.parse(info.event.extendedProps.jdata)
+          UI.openModal(show, isFavourited)
+          document.querySelector("span.favourite").addEventListener("click", e => {
+            // console.log(e.target.classList)
+            if(isFavourited) {
+              Store.removeEvent(show.id)
+              UI.showAlert("Event Removed to Favourites", "warning")
+              UI.deleteEventFromList(show.id)
+              UI.openModal(show)
+            }else{
+              UI.addEventToList(show)
+              Store.addEvent(show)
+              UI.showAlert("Event Added to Favourites", "success")
+              UI.openModal(show, true)
             }
+            calendar.rerenderEvents()
           })
-        }
-
-        if(view.type === 'dayGridMonth'){
-          jsEvent.preventDefault()
-          UI.openModal(event)
-         
         }
         
       },
@@ -367,7 +335,7 @@ calendar.render()
 checkboxListeners()
 addEventListeners()
 
-export { calendar }
+
 
 
 
