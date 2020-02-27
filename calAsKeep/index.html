@@ -17,6 +17,13 @@
   <!-- bootstrap Toggle Button -->
   <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
   <style>
+
+:root {
+	--gray: #6c757d;
+	--gray-dark: #343a40;
+
+}
+
 .tooltip-inner {
     white-space:pre-wrap;
 }
@@ -92,8 +99,51 @@
   cursor: default;
 }
 
+/* Share Button Tooltips */ 
+.tooltip-inner {background-color: goldenrod !important;}
+.bs-tooltip-auto[x-placement^=top] .arrow::before, .bs-tooltip-top .arrow::before {
+    border-top-color: goldenrod !important;
+}
+
+/* td {
+  border: 1px solid #ccc;
+}
+ */
+
+ // <link href="../fullcalendar/fullcalendar-custom.css" rel="stylesheet">
+
+ .fc-view .fc-listWeek-view .fc-list-view .card .card-primary {}
+
+.fc-view-container{
+   border-top: 1px solid var(--gray);
+ }
+
+.btn-danger {
+  background-color:  #a03030;
+  border-color:  #a03030;
+}
 
 
+div.fc-toolbar.fc-header-toolbar {
+  margin-bottom: 0;
+  padding-bottom: 20px;
+  background:  #a03030; //linear-gradient(to top, #f00 0px, #efefef 65px, transparent 65px) no-repeat;
+}
+
+
+
+ .fc-list-view,
+table, 
+table.fc-list-table,
+tr.fc-list-item:nth-child(even) td,
+td.table-active,
+td {
+  border: none;
+}
+
+td.table-active {
+  padding: 2px 5px;
+}
 
   </style>
 </head>
@@ -101,7 +151,7 @@
  
   <div class="container">
     <div class="row">
-      <h1>Calendar Test</h1>
+      <h1 data-toogle="tooltip" title="Test tooltip">Calendar Test</h1>
       <!-- <select id="color_selector">
         <option value="all">All Venues</option>
         <option value="presentationcentre">Presentation Centre <smaller>Enniscorthy</smaller></option>
@@ -171,7 +221,8 @@
         </div>
     </div>
   </div>
-
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v6.0"></script>
   <!-- Vendor JS -->
   <script src="../js/libs/jquery/jquery-3.4.1.js"></script>
     <!-- FullCalendar.io -->
@@ -183,13 +234,13 @@
   <script src="../js/libs/fullcalendar/packages/interaction/main.js"></script>
   
   <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
-  <!-- <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script> -->
+  <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
+
 
   <script src="../js/libs/bootstrap-4.4.1/js/bootstrap.min.js"></script>
   <script src="../js/libs/fullcalendar/packages/bootstrap/main.js"></script>
    <!-- Tooltip -->
-  <!-- <script src="./js/libs/popper/popper.min.js"></script>
-  <script src="./js/libs/tooltip/tooltip-3.3.min.js"></script> -->
+
 <!-- Boostrap Toggle -->
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
@@ -201,7 +252,13 @@
   $('#color_selector').on('change', function() {
         })  
   </script> -->
-  <!-- <script src="js/test.js"></script> -->
+  <script>
+
+// $(function () {
+//   $('[data-toggle="tooltip"]').tooltip()
+// })
+
+  </script>
 
   <!-- <script>
      [ ...document.querySelectorAll("#cards") ].forEach(card => {

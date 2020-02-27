@@ -74,7 +74,7 @@ export class Category{
       checkboxes.forEach(x => _this.categories.set(x.value, false) )
     }  
     
-    calendar.rerenderEvents()  
+    calendar.rerenderEvents()  // Manual trigger untriggered?
   
   })
   }

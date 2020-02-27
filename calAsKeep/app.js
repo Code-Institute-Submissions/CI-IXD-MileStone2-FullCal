@@ -149,8 +149,23 @@ export let calendar = new FullCalendar.Calendar($calendar, {
                         <div class="card-footer d-flex flex-row justify-content-around" style=" z-index: 5">
                           <a href="#" class="btn btn-danger text-light"><i class="fa fa-ticket"></i> Definitely !</a>
                           <button class="btn btn-info favourite" type="button">${isFavourited? "Remove from Favourites" : "Add to Favourites" }</button>
-                          
-                          <button class="btn btn-success">Share</button>
+                          <!-- split share button -->
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-success copylinkA" data-href="${event.url}" data-toggle="tooltip" data-trigger="click" data-placement="top" title="Link Copied to Clipboard"><i class="fa fa-link"></i>&nbsp;Share</button>
+                            <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="sr-only">Toggle Dropdown</span></button>
+                            <div class="dropdown-menu">
+                              <a class="dropdown-item" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURI(event.url)}&amp;src=sdkpreparse"
+                                onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+                                class="fb-xfbml-parse-ignore"><img src="https://icon.now.sh/facebook/4267b2"/>&nbsp;Facebook</a>
+                              <a class="dropdown-item" href="https://api.whatsapp.com/send?text=${encodeURI(event.url)}" 
+                                onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"><img src="https://icon.now.sh/whatsapp/007e33/" />&nbsp;WhatsApp</a>
+                              <div class="dropdown-divider"></div>
+                              <a class="dropdown-item copylinkB" data-href="${event.url}" data-toggle="tooltip" data-trigger="click" title="Link Copied to Clipboard"
+                              data-template='<div class="tooltip" role="tooltip"><div class="tooltip-inner"></div></div>'
+                                href="${event.url}" onclick="pre><img src="https://icon.now.sh/link/333"/>&nbsp;Copy link</a>
+                            </div>
+                          </div>
+                          <!-- //.card-footer -->
                         </div>
                       </div>
                     </div>
@@ -180,8 +195,12 @@ export let calendar = new FullCalendar.Calendar($calendar, {
           }
           calendar.rerenderEvents() 
         })
+      
+      // share button
+      info.el.querySelector(".copylinkA").addEventListener("click", e => copyLink(e))
+      info.el.querySelector(".copylinkB").addEventListener("click", e => copyLink(e))
       }
-    
+      $('[data-toggle="tooltip"]').tooltip()
     },
     eventClick: function(info){
         // console.log(jsEvent)
@@ -268,7 +287,19 @@ addEventListeners()
 
 
 
+function copyLink(jsevent){
+  jsevent.preventDefault();
+  const copyText = jsevent.target.dataset.href
+  let textarea = document.createElement("textarea") // ref: https://stackoverflow.com/questions/55065316/copy-text-present-in-button-attribute-to-clipboard
+  textarea.textContent = copyText
+  textarea.style.position = "fixed" // Prevent scrolling to bottom of page in MS Edge.
+  document.body.appendChild(textarea)
+  textarea.select()
+  document.execCommand("copy")
+  document.body.removeChild(textarea)
+  setTimeout(function(){$('[data-toggle="tooltip"]').tooltip('hide')}, 750);
 
+}
 
 
 
