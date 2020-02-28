@@ -1,0 +1,397 @@
+:root {
+	--gray: #6c757d;
+	--gray-dark: #343a40;
+
+}
+
+#wrapper {
+  width: 96%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.tooltip-inner {
+    white-space:pre-wrap;
+}
+  
+
+.card {
+  font-size 0.75em;
+}
+.card h4 {
+  font-size: 1.25rem;
+}
+.card .img-left {
+  height: 200px;
+  width: 200px;
+}
+
+
+
+.event-card h4 small {
+  font-size: 0.85em;
+  font-weight: 500;
+}
+
+.card-text.show{
+  margin-bottom: 1em;
+}
+
+.card-text.collapse:not(.show) {
+  display: block;
+  /* height = lineheight * no of lines to display */
+  height: 66px;
+  overflow: hidden;
+}
+
+.card-text.collapsing {
+  height: 65px;
+}
+
+.card-text.collapse:after{
+  content: '';
+  display: block;
+  position: absolute;
+  width: 95%;
+  height: 25%;
+  bottom: 65px;
+  background: linear-gradient(transparent, #FFF) left repeat; 
+}
+
+.card-text.collapse.show:after{
+  background: transparent; 
+}
+
+
+/* pseudo-footer */
+.event-card {
+  background: linear-gradient(to top, #efefef 0px, #efefef 65px, transparent 65px) no-repeat;
+}
+
+.card-footer {
+  border: none;
+  background: transparent;
+  cursor: default;
+}
+
+/* Share Button Tooltips */ 
+.tooltip-inner {background-color: goldenrod !important;}
+.bs-tooltip-auto[x-placement^=top] .arrow::before, .bs-tooltip-top .arrow::before {
+    border-top-color: goldenrod !important;
+}
+
+
+
+
+
+ /* Bootstrap */
+
+#my-header > h1 {
+  float: right;
+  position: relative;
+  top: 0.5rem;
+}
+
+.navbar-brand img{
+  width: 90%;
+}
+
+
+.btn-danger {
+  background-color:  #a03030;
+  border-color:  #a03030;
+}
+
+.btn-primary {
+  background-color:  #6c757d;
+  border-color:  #6c757d;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle,
+.btn-primary.btn-active{
+  background-color:  #444;
+  border-color:  #444;
+}
+
+.btn-primary:hover{
+  background-color: orange;
+  border-color: orange;
+}
+
+/* Fav Tooggle Button */
+#favToggleButton {
+  display: block;
+  border: 1px dotted pink;
+}
+
+.btn-secondary {
+  background-color: orangered;
+  border-color: orangered;
+}
+.btn-secondary:hover {
+  background-color: rgb(255, 0, 140);
+  border-color: rgb(255, 0, 140);
+}
+
+
+
+.btn-Children {
+background-color: orangered;
+}
+
+.btn-Film {
+  background-color: green;
+}
+
+.btn-Music {
+  background-color: darkblue;
+}
+
+.btn-Amateur {
+  background-color: darkorchid;
+}
+
+.btn-Jazz {
+  background-color: darkslateblue;
+}
+
+.btn-Comedy {
+  background-color: rgb(236, 76, 76);
+}
+
+.btn-Theatre {
+  background-color: purple;
+}
+
+
+/* FC */
+
+.fc-scroller {height:100% !important;}
+
+.fc-left {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  width: 66%;
+}
+
+
+div.fc-left h2, div.fc-right h2{
+  color: white;
+}
+
+.fc-left h2 {
+  float:right;
+}
+
+.fc-right h2 {
+  display: none;
+}
+
+ .fc-view .fc-listWeek-view .fc-list-view .card .card-primary {}
+
+.fc-view-container{
+   border-top: 1px solid var(--gray);
+ }
+
+
+.fc-toolbar.fc-header-toolbar {
+  margin-bottom: 0;
+  padding: 10px 20px 20px;
+  background:  #a03030; //linear-gradient(to top, #f00 0px, #efefef 65px, transparent 65px) no-repeat;
+}
+
+
+
+ .fc-list-view,
+table,
+.fc th,
+.fc td,
+table.fc-list-table,
+tr.fc-list-item:nth-child(even) td,
+td.table-active,
+td {
+  border: none;
+  border-bottom: 1px solid #ececec;
+}
+
+td.table-active {
+  padding: 2px 5px;
+}
+div#checkboxes {
+  margin-bottom: 0;
+}
+
+#checkboxes label {
+  color: white;
+  margin-bottom: 0;
+
+}
+
+/* Custom Category Buttons */
+/* //ref: https://bootsnipp.com/snippets/n8XVQ */
+/* Hiding the checkbox, but allowing it to be focused */
+.badgebox
+{
+    opacity: 0;
+}
+
+.badgebox + .badge
+{
+    /* Move the check mark away when unchecked */
+    text-indent: -999999px;
+    /* Makes the badge's width stay the same checked and unchecked */
+	min-width: 15px;
+  /* flex-basis: 15%; */
+}
+
+.badgebox:focus + .badge
+{
+    /* Set something to make the badge looks focused */
+    /* This really depends on the application, in my case it was: */
+    
+    /* Adding a light border */
+    box-shadow: inset 0px 0px 5px;
+    /* Taking the difference out of the padding */
+}
+
+.badgebox:checked + .badge
+{
+    /* Move the check mark back when checked */
+	text-indent: 0;
+}
+
+@media(max-width: 900px){
+
+div#checkboxes {
+  margin-bottom: 0;
+  border-bottom: 1px solid #ececec;
+}
+
+
+
+div#checkboxes.btn-group {
+    font-size: 0.8em;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+.btn-sm {
+  margin-bottom: 0;
+  font-size: 0.25rem;
+  width: 33%;
+  flex-basis: 120px;
+}
+
+ 
+
+#my-header > h1 {
+  float: none;
+  position: relative;
+  top: 0;
+  text-align: center;
+}
+
+.fc-toolbar {
+  padding-top: 2px;
+  background-color: var(--gray-dark);
+}
+
+.fc-toolbar.fc-header-toolbar {
+  padding: 4px;
+}
+
+.fc-header-toolbar {
+  font-size: 0.65em;
+  display: flex;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  padding: 1px;
+}
+
+
+.fc-left {
+  justify-self: start;
+  width: auto;
+  margin-bottom: 4px;
+}
+
+.fc-left .fc-dayGridMonth-button {
+  display: none;
+}
+
+.fc-left h2 {
+  display: none;
+}
+
+.fc-toolbar > * > :not(:first-child){
+  margin-left: 0;
+}
+
+
+.fc-center{
+  position: relative;
+  top: -2px;
+}
+
+
+.fc-right{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  flex-basis: 800px;
+  /* width: 100%; */
+}
+
+.fc-right h2 {
+ display: inline-block;
+ margin-left: 6px;
+}
+
+.fc-right.btn-group{
+ display: flex;
+}
+
+
+.col-auto {
+  width: 100%;
+}
+
+.card .img-left {
+  width: 100%;
+  border-radius: 5px 5px 0px 0px !important;
+}
+
+.card.card-footer{
+  z-index: 99;
+}
+
+  
+@media (max-width: 500px){
+  label.btn.btn-Amateur {
+  letter-spacing: -0.0125rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  padding-left: 2px;
+
+ }
+
+ label.btn.btn-Amateur > span.badge {
+  position: absolute;
+  top: 8px;
+  right: 6px;
+  background-color: purple;
+  overflow: visible;
+  z-index: 10;
+ }
+
+}
+
+}

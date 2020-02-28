@@ -8,47 +8,61 @@
   <!-- Vendor CSS -->
   <link href="./js/libs/bootstrap-4.4.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
     <!-- fa -->
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <link href="./js/libs/fullcalendar/packages/daygrid/main.css" type="text/css" rel="stylesheet" />
   <link href="./js/libs/fullcalendar/packages/timegrid/main.css" type="text/css" rel="stylesheet" />
   <link href="./js/libs/fullcalendar/packages/list/main.css" type="text/css" rel="stylesheet" />
   <link href="./js/libs/fullcalendar/packages/core/main.css"  type="text/css" rel="stylesheet" />
   <link href="./js/libs/fullcalendar/packages/bootstrap/main.css"  type="text/css" rel="stylesheet" />
+  <!-- bootstrap Toggle Button -->
+  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+  <link href="./css/fullcalendar-customised.css" rel="stylesheet">
   <style>
-.tooltip-inner {
-    white-space:pre-wrap;
-}
-  
+    /* LOCAL STYLES :: test */
   </style>
 </head>
 <body>
  
-  <div class="container">
-    <div class="row">
-      <h1>Calendar Test</h1>
-      <!-- <select id="color_selector">
-        <option value="all">All Venues</option>
-        <option value="presentationcentre">Presentation Centre <smaller>Enniscorthy</smaller></option>
-        <option value="wexfordartscentre">Wexford Arts Centre</option> -->
-        <!-- <option value="orange">Orange schools</option>
-        <option value="green">Green schools</option> -->
-      <!-- </select> -->
-      <form id="checkboxes">
-        <label class="mr-2"><input id="checkAll" type="checkbox" value="all" checked><span class="ml-2">ALL</span></label>  
-      </form>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-          <div id="calendar"></div>
+  <div id="wrapper" class="container no-gutters">
+    <div class="row no-gutters">
+      <div class="col-sm-12 no-gutters">
+        <div id="my-header">
+          <div class="navbar-brand"><img src="https://dc40ra2rfm3rp.cloudfront.net/as-assets/BUzQPx63YKrU1pecDd6TXyiN"></div>
+          <h1 class="text-secondary">Event Calendar</h1>
         </div>
+          <div id="checkboxes" class="btn-group btn-group-sm d-flex mb-0">
+            <label for="checkAll" class="btn btn-sm btn-warning">ALL <input type="checkbox" id="checkAll" value="all" class="badgebox"><span class="badge">&check;</span></label>
+        </div>
+        <div id="calendar"></div>
       </div>
     </div>
-  </div>
-
-
+   <!-- <div class="row">
+      <div class="col-xs-12">
+        <table class="table table-striped mt-5">
+          <thead>
+            <tr class="clickable" data-toggle="collapse" data-target="#group-of-rows-1" aria-expanded="false" aria-controls="group-of-rows-1">
+              <th>Event ID</th>
+              <th>Event Title</th>
+              <th>Event Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <!-- <tbody> ->
+            <tr class="table-warning collapse" id="group-of-rows-1">
+              <td><i class="fa fa-folder-open"></i> child row</td>
+              <td>data 1</td>
+              <td>data 1</td>
+              <td>data 1</td>
+            </tr>
+          <!-- </tbody> ->
+              <tbody id="event-list"></tbody>
+        </table>
+      </div> -->
+    </div>
+  </div> 
   <!-- Modal -->
-  <div id="fullCalModal" class="modal fade">
-    <div class="modal-dialog">
+  <div id="fullCalModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullCalModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
               <h4 id="modalTitle" class="modal-title"></h4>  
@@ -60,44 +74,35 @@
             <div id="modalBody" class="modal-body card">
             </div>
             <div class="modal-footer">
-              <span class="favourite btn">
-                <img class="heart" src="https://icon.now.sh/heart/ccc">
-                <span class="favourite-text"></span>
-              </span>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <a class="btn btn-success" id="eventUrl" target="_blank">Event Page</a>
+              <span class="favourite btn"></span>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <a class="btn btn-danger" id="eventUrl" target="_blank"><i class="fa fa-ticket"></i> Buy Tickets</a>
             </div>
         </div>
     </div>
   </div>
+  <div id="fb-root"></div>
+<!-- Vendor JS -->
+<script src="./js/libs/jquery/jquery-3.4.1.js"></script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v6.0"></script>
+<!-- FullCalendar.io -->
+<script src="./js/libs/fullcalendar/packages/core/main.js"></script>
+<script src="./js/libs/fullcalendar/packages/core/locales/en-gb.js"></script>
+<script src="./js/libs/fullcalendar/packages/daygrid/main.js"></script>
+<script src="./js/libs/fullcalendar/packages/timegrid/main.js"></script> 
+<script src="./js/libs/fullcalendar/packages/list/main.js"></script>
+<script src="./js/libs/fullcalendar/packages/interaction/main.js"></script>
+<!-- Tooltip -->
+<script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
+<script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
+<!-- Bootstrap -->
+<script src="./js/libs/bootstrap-4.4.1/js/bootstrap.min.js"></script>
+<script src="./js/libs/fullcalendar/packages/bootstrap/main.js"></script>
+<!-- Boostrap Toggle -->
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
-  <!-- Vendor JS -->
-  <script src="js/libs/jquery/jquery-3.4.1.js"></script>
-    <!-- FullCalendar.io -->
-  <script src="./js/libs/fullcalendar/packages/core/main.js"></script>
-  <script src="./js/libs/fullcalendar/packages/core/locales/en-gb.js"></script>
-  <script src="./js/libs/fullcalendar/packages/daygrid/main.js"></script>
-  <script src="./js/libs/fullcalendar/packages/timegrid/main.js"></script> 
-  <script src="./js/libs/fullcalendar/packages/list/main.js"></script>
-  <script src="./js/libs/fullcalendar/packages/interaction/main.js"></script>
-  
-  <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
-  <!-- <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script> -->
-
-  <script src="./js/libs/bootstrap-4.4.1/js/bootstrap.min.js"></script>
-  <script src="./js/libs/fullcalendar/packages/bootstrap/main.js"></script>
-   <!-- Tooltip -->
-  <!-- <script src="./js/libs/popper/popper.min.js"></script>
-  <script src="./js/libs/tooltip/tooltip-3.3.min.js"></script> -->
-
-
-
-   <!-- App JS -->
-  <script src="js/main.js" type="module"></script>
-  <script>
-  $('#color_selector').on('change', function() {
-        })  
-  </script>
-  <!-- <script src="js/test.js"></script> -->
+<!-- App JS -->
+<script src="app.js" type="module"></script>
+<!-- // /body+/html -->
 </body>
 </html>

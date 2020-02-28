@@ -1,5 +1,5 @@
 import Store from "../js/store.js"
-import {calendar, eventSource} from "../calAsKeep/app.js"
+import {calendar, eventSource} from "../app.js/index.js"
 
 export default class UI {
   // UI Class: Handles UI Tasks
@@ -69,7 +69,7 @@ export default class UI {
     `);
     $('.favourite').attr('data-event', event.extendedProps.jdata )
     
-    $('.favourite-text').html(`${isFavourited? "Remove from Favourites" : "Add to Favourites" }`)
+    $('.favourite.btn').html(`${isFavourited? '<i class="fa fa-heart" aria-hidden="true"></i> Favourited' : '<i class="fa fa-heart-o" aria-hidden="true"></i> Favourite' }`)
     $('#eventUrl').attr('href',event.url)
     $('#fullCalModal').modal()
 
@@ -79,7 +79,12 @@ static favsButton(){
 
 
   const fcleft = document.querySelector("div.fc-toolbar.fc-header-toolbar div.fc-left") // parent
-  const btns = [ ...fcleft.querySelectorAll(".btn") ]
+  let btns = [ ...fcleft.querySelectorAll(".btn") ]
+  const innerWidth = window.innerWidth
+  if(innerWidth < 765){
+   btns = btns.filter(btn => !btn.classList.contains("fc-dayGridMonth-button"))
+  }
+  console.log(btns)
   const bwrap = document.createElement("div")
   bwrap.classList.add('btn-group')
   btns.forEach(btn => bwrap.append(btn))
@@ -89,7 +94,6 @@ static favsButton(){
   document.querySelector(".fc-listWeek-button").textContent = 'Week'
   document.querySelector(".fc-listMonth-button").textContent = 'List'
 
-
   const favToggleButton = document.createElement("input")
   favToggleButton.setAttribute("type", "checkbox")
   favToggleButton.setAttribute("data-toggle", "toggle")
@@ -98,21 +102,16 @@ static favsButton(){
   favToggleButton.setAttribute("data-off", "Events")
   favToggleButton.setAttribute("data-offstyle", "primary")
   favToggleButton.id="favToggleButton"
-  // document.querySelector(".fc-favsButton-button")
-  
-  // html body div.container div.row div.col-md-8 div#calendar.fc.fc-ltr.fc-bootstrap div.fc-toolbar.fc-header-toolbar div.fc-right div.btn-group
+
   const container = document.querySelector("div.fc-toolbar.fc-header-toolbar div.fc-center") // parent
-  // const before = document.querySelector("div.fc-center > h2") // before this child
-  // container.insertBefore(favToggleButton, before)
   container.appendChild(favToggleButton)
-  // const $favToggleButton = document.querySelector("#favToggleButton")
   $("#favToggleButton").bootstrapToggle('off')
   $("#favToggleButton").change(function () {
-    var eventSources = calendar.getEventSources()
+    let eventSources = calendar.getEventSources()
         eventSources[0].remove()
     if($(this).prop('checked') == true){
       calendar.addEventSource(eventSource.favs)
-      calendar.changeView('favsView')
+      calendar.changeView('listMonth')
       if(!$("#checkAll").is(':checked')){
         $("#checkAll").trigger("click") // turn on categories for Favs
       }else{
@@ -120,18 +119,18 @@ static favsButton(){
         $("#checkAll").trigger("click")
       }
     }else{
-    //if($(this).prop('checked') == false){
       calendar.today()
       calendar.changeView('listWeek')
-      calendar.addEventSource(eventSource.wxac)  //calendar.getEventSourceById(3)
+      $(".fc-listMonth-button").remove("btn-active")
+      calendar.addEventSource(eventSource.wxac) 
       if($("#checkAll").prop('indeterminate') == true){
         const cboxdiv = document.querySelector("#checkboxes")
         const cboxes = [...cboxdiv.querySelectorAll("input[type=checkbox]")].slice(1)
         cboxes.filter(checkbox => !checkbox.checked).forEach(unchecked => $(unchecked).trigger("click"))
-        // event.stopPropagation();
         $("#favToggleButton").bootstrapToggle('off')
       }
     }
+    
   })
 
  }  
