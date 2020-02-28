@@ -78,21 +78,33 @@ export default class UI {
 static favsButton(){
 
 
+  const fcleft = document.querySelector("div.fc-toolbar.fc-header-toolbar div.fc-left") // parent
+  const btns = [ ...fcleft.querySelectorAll(".btn") ]
+  const bwrap = document.createElement("div")
+  bwrap.classList.add('btn-group')
+  btns.forEach(btn => bwrap.append(btn))
+  fcleft.appendChild(bwrap)
+
+  document.querySelector(".fc-dayGridMonth-button").textContent = 'Month'
+  document.querySelector(".fc-listWeek-button").textContent = 'Week'
+  document.querySelector(".fc-listMonth-button").textContent = 'List'
+
 
   const favToggleButton = document.createElement("input")
   favToggleButton.setAttribute("type", "checkbox")
   favToggleButton.setAttribute("data-toggle", "toggle")
   favToggleButton.setAttribute("data-on", "<i class='fa fa-heart'></i> Favs")
-  favToggleButton.setAttribute("data-onstyle", "danger")
+  favToggleButton.setAttribute("data-onstyle", "secondary")
   favToggleButton.setAttribute("data-off", "Events")
   favToggleButton.setAttribute("data-offstyle", "primary")
   favToggleButton.id="favToggleButton"
   // document.querySelector(".fc-favsButton-button")
   
   // html body div.container div.row div.col-md-8 div#calendar.fc.fc-ltr.fc-bootstrap div.fc-toolbar.fc-header-toolbar div.fc-right div.btn-group
-  const container = document.querySelector("div.fc-toolbar.fc-header-toolbar div.fc-right") // parent
-  const prevButton = document.querySelector("div.btn-group") // before this child
-  container.insertBefore(favToggleButton, prevButton)
+  const container = document.querySelector("div.fc-toolbar.fc-header-toolbar div.fc-center") // parent
+  // const before = document.querySelector("div.fc-center > h2") // before this child
+  // container.insertBefore(favToggleButton, before)
+  container.appendChild(favToggleButton)
   // const $favToggleButton = document.querySelector("#favToggleButton")
   $("#favToggleButton").bootstrapToggle('off')
   $("#favToggleButton").change(function () {

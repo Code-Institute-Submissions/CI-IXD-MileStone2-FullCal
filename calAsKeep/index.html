@@ -24,6 +24,14 @@
 
 }
 
+
+#wrapper {
+  width: 96%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0;
+}
+
 .tooltip-inner {
     white-space:pre-wrap;
 }
@@ -110,7 +118,131 @@
 }
  */
 
- // <link href="../fullcalendar/fullcalendar-custom.css" rel="stylesheet">
+ /* <link href="../fullcalendar/fullcalendar-custom.css" rel="stylesheet"> */
+
+
+ /* Bootstrap */
+
+#my-header > h1 {
+  float: right;
+  position: relative;
+  top: 0.5rem;
+}
+
+.navbar-brand img{
+  width: 100%;
+}
+
+
+.btn-danger {
+  background-color:  #a03030;
+  border-color:  #a03030;
+}
+
+.btn-primary {
+  background-color:  #6c757d;
+  border-color:  #6c757d;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle{
+  background-color:  #444;
+  border-color:  #444;
+}
+
+.btn-primary:hover{
+  background-color: orange;
+  border-color: orange;
+}
+/* Fav Tooggle Button */
+
+/* .fc-center {
+  display: flex !important;
+  flex-direction: row;
+}
+
+.fc-center h2 {
+  border: 1px solid pink;
+display: inline-block;
+/* order: -1; * /
+} */
+
+#favToggleButton {
+  display: block;
+  border: 1px dotted pink;
+}
+
+.btn-secondary {
+  background-color: orangered;
+  border-color: orangered;
+}
+.btn-secondary:hover {
+  background-color: rgb(255, 0, 140);
+  border-color: rgb(255, 0, 140);
+}
+
+
+
+.btn-Children {
+background-color: orangered;
+}
+
+.btn-Film {
+  background-color: green;
+}
+
+.btn-Music {
+  background-color: darkblue;
+}
+
+.btn-Amateur {
+  background-color: darkorchid;
+}
+
+.btn-Jazz {
+  background-color: darkslateblue;
+}
+
+.btn-Comedy {
+  background-color: firebrick;
+}
+
+.btn-Theatre {
+  background-color: purple;
+}
+
+
+
+
+
+/* FC */
+
+.fc-scroller {height:100% !important;}
+
+.fc-left {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  width: 66%;
+  /* border: 1px solid black; */
+}
+
+div.fc-left.btn-group {
+
+}
+
+
+div.fc-left h2, div.fc-right h2{
+  color: white;
+}
+
+.fc-left h2 {
+  float:right;
+}
+
+.fc-right h2 {
+  display: none;
+}
 
  .fc-view .fc-listWeek-view .fc-list-view .card .card-primary {}
 
@@ -118,15 +250,10 @@
    border-top: 1px solid var(--gray);
  }
 
-.btn-danger {
-  background-color:  #a03030;
-  border-color:  #a03030;
-}
 
-
-div.fc-toolbar.fc-header-toolbar {
+.fc-toolbar.fc-header-toolbar {
   margin-bottom: 0;
-  padding-bottom: 20px;
+  padding: 10px 20px 20px;
   background:  #a03030; //linear-gradient(to top, #f00 0px, #efefef 65px, transparent 65px) no-repeat;
 }
 
@@ -145,13 +272,174 @@ td.table-active {
   padding: 2px 5px;
 }
 
+#checkboxes label {
+  color: white;
+}
+
+/* Custom Category Buttons */
+/* //ref: https://bootsnipp.com/snippets/n8XVQ */
+/* Hiding the checkbox, but allowing it to be focused */
+.badgebox
+{
+    opacity: 0;
+}
+
+.badgebox + .badge
+{
+    /* Move the check mark away when unchecked */
+    text-indent: -999999px;
+    /* Makes the badge's width stay the same checked and unchecked */
+	width: 15px;
+}
+
+.badgebox:focus + .badge
+{
+    /* Set something to make the badge looks focused */
+    /* This really depends on the application, in my case it was: */
+    
+    /* Adding a light border */
+    box-shadow: inset 0px 0px 5px;
+    /* Taking the difference out of the padding */
+}
+
+.badgebox:checked + .badge
+{
+    /* Move the check mark back when checked */
+	text-indent: 0;
+}
+
+@media(max-width: 900px){
+
+div#checkboxes.btn-group {
+    font-size: 0.8em;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+.btn-sm {
+  margin-bottom: 0;
+  font-size: 0.25rem;
+  width:33%;
+}
+
+ label.btn.btn-Amateur {
+  letter-spacing: -0.0125rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  padding-left: 2px;
+
+ }
+
+ label.btn.btn-Amateur > span.badge {
+  position: absolute;
+  top: 8px;
+  right: 6px;
+  background-color: purple;
+  overflow: visible;
+  z-index: 10;
+ }
+
+  .btn-sm {
+
+  }
+
+
+#my-header > h1 {
+  float: none;
+  position: relative;
+  top: 0;
+  text-align: center;
+}
+
+.fc-toolbar.fc-header-toolbar {
+  padding: 4px;
+}
+
+.fc-header-toolbar {
+  font-size: 0.65em;
+  display: flex;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  padding: 1px;
+}
+
+.fc-header-toolbar > div {
+  /* float: left !important; */
+  border: 1px solid pink;
+}
+
+.fc-left {
+  justify-self: start;
+  width: auto;
+  margin-bottom: 4px;
+}
+
+
+
+.fc-left h2 {
+  display: none;
+}
+
+.fc-toolbar > * > :not(:first-child){
+  margin-left: 0;
+}
+
+
+.fc-center{
+  position: relative;
+  top: -2px;
+
+}
+
+.fc-center h2 {
+  text-align: center;
+}
+
+.fc-center.toggle {
+  
+}
+
+.fc-right{
+  display: flex;
+  /* flex-direction: row; */
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  flex: 1 1 0;
+  width: 100%;
+}
+
+.fc-right h2 {
+ display: inline-block;
+}
+
+.fc-right.btn-group{
+ display: flex;
+  /* justify-self: flex-end; */
+}
+
+
+
+
+}
+/* @media (max-width: 768px){
+    .fc-toolbar .fc-left, .fc-toolbar .fc-center, .fc-toolbar .fc-right {
+        display: inline-block;
+        float: none !important;
+    }
+} */
+
   </style>
 </head>
 <body>
  
-  <div class="container">
-    <div class="row">
-      <h1 data-toogle="tooltip" title="Test tooltip">Calendar Test</h1>
+  <div id="wrapper" class="container no-gutters">
+        <div class="row">
+          
+          <!-- <label for="success" class="btn btn-success">Success <input type="checkbox" id="success" class="badgebox"><span class="badge">&check;</span></label> -->
+
       <!-- <select id="color_selector">
         <option value="all">All Venues</option>
         <option value="presentationcentre">Presentation Centre <smaller>Enniscorthy</smaller></option>
@@ -159,19 +447,22 @@ td.table-active {
         <!-- <option value="orange">Orange schools</option>
         <option value="green">Green schools</option> -->
       <!-- </select> -->
-      <form id="checkboxes">
-        <label class="mr-2"><input id="checkAll" type="checkbox" value="all" checked><span class="ml-2">ALL</span></label>  
-      </form>
+
+        <div id="checkboxes" class="btn-group btn-group-sm">
+          <label for="checkAll" class="btn btn-sm btn-warning">ALL <input type="checkbox" id="checkAll" value="all" class="badgebox"><span class="badge">&check;</span></label>
+      </div>
+        <!-- <label class="mr-2"><input id="checkAll" type="checkbox" value="all" checked><span class="ml-2">ALL</span></label>   -->
     </div>
-    <div class="row">
-      <div class="col-md-8">
+    <div class="row no-gutters">
+      <div class="col-sm-12 no-gutters">
+        <div id="my-header" class="clearfix">
+          <div class="navbar-brand"><img src="https://dc40ra2rfm3rp.cloudfront.net/as-assets/BUzQPx63YKrU1pecDd6TXyiN"></div>
+          <h1 class="text-secondary">Event Calendar</h1>
+        </div>
         <div id="calendar"></div>
       </div>
-      <div class="col-md-4">
-        <div id="favCal"></div>
-      </div>
     </div>
-    <div class="row">
+   <!-- <div class="row">
       <div class="col-xs-12">
         <table class="table table-striped mt-5">
           <thead>
@@ -182,19 +473,19 @@ td.table-active {
               <th></th>
             </tr>
           </thead>
-          <!-- <tbody > -->
+          <!-- <tbody> ->
             <tr class="table-warning collapse" id="group-of-rows-1">
               <td><i class="fa fa-folder-open"></i> child row</td>
               <td>data 1</td>
               <td>data 1</td>
               <td>data 1</td>
             </tr>
-          <!-- </tbody> -->
+          <!-- </tbody> ->
               <tbody id="event-list"></tbody>
         </table>
-      </div>
+      </div> -->
     </div>
-  </div>
+  </div> 
 
 
   <!-- Modal -->

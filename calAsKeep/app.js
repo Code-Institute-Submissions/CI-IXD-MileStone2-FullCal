@@ -18,7 +18,7 @@ class Ent {
 
 
 // Events: Display Fav Cal
-document.addEventListener("DOMContentLoaded", UI.displayEvents)
+// document.addEventListener("DOMContentLoaded", UI.displayEvents)
 document.addEventListener("DOMContentLoaded", UI.favsButton)
 
 
@@ -29,10 +29,10 @@ let closest = Infinity
 // const favourites  = Store.getFavEvents()
 
 export const eventSource = {
-test : {
-   events: 
-   [{"id":"873612231","title":"Besties, Dark Waters & What Next Mother- Film Premiere","start":"2020-02-17T19:30:00+00:00","url":"https://wexfordartscentre.ticketsolve.com/shows/873612231/","classNames":["presentationcentre","wexfordartscentre"],"extendedProps":{"description":"\n          <p><span>Three New Short Wexford Films to be screened in aid of FOCUS Ireland. The World Premiere of a new short film,&nbsp;<strong>BESTIES</strong>, featuring members of the Enniscorthy Drama Group, will be shown in the Presentation Centre, on Friday 7<sup>th</sup>&nbsp;of February, at 7.30pm in aid of FOCUS Ireland.The cast includes, Karen Franklin, Jennafer Boyd, Fintan Kelly, Maeve Ennis, Summer Keane and Jennifer Kelly. Written and directed by Dick Donaghue and produced by Jer Ennis. Filmed in Enniscorthy.</span></p>\n<p><span>Two other short films will also be premiered. </span><strong><span>DARK WATERS</span></strong><span>, starring Sharon Griffiths with David Parsons which was filmed in Bridgetown. </span><strong><span>WHAT NEXT MOTHER</span></strong><span>, a comedy, filmed in Bunclody. Starring Mary Gibson, Elaine Jordan, Niall Kennedy and Lauren Jordan, will feature on the night also.</span></p>\n<p><span>All proceeds will be donated to FOCUS Ireland, the aim of the night is to shine a light on the homelessness issue, raise much needed funds and also to show off the writing and acting talent in our locality</span></p>\n<p><strong>&nbsp;</strong></p>\n<p><strong>&nbsp;</strong></p>\n        ","category":"Film","images":{"thumb":"https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/LXoGhVKjEdUogGVvXQNMp1UB/42108e2ccaa9cbeaed96ff70f4f71abb3e953a28352072c0afd65721f1c07e2b","medium":"https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/LXoGhVKjEdUogGVvXQNMp1UB/db985b134426e3a0a042b6dc139e02b7924a669da4f6434c9c9c4b9553d63a33","large":"https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/LXoGhVKjEdUogGVvXQNMp1UB/d82b4c5034021c15162868846a860fc142237fb62f146ef228d6181ef8a17941"}}}],
- },
+// test : {
+//    events: 
+//    [{"id":"873612231","title":"Besties, Dark Waters & What Next Mother- Film Premiere","start":"2020-02-17T19:30:00+00:00","url":"https://wexfordartscentre.ticketsolve.com/shows/873612231/","classNames":["presentationcentre","wexfordartscentre"],"extendedProps":{"description":"\n          <p><span>Three New Short Wexford Films to be screened in aid of FOCUS Ireland. The World Premiere of a new short film,&nbsp;<strong>BESTIES</strong>, featuring members of the Enniscorthy Drama Group, will be shown in the Presentation Centre, on Friday 7<sup>th</sup>&nbsp;of February, at 7.30pm in aid of FOCUS Ireland.The cast includes, Karen Franklin, Jennafer Boyd, Fintan Kelly, Maeve Ennis, Summer Keane and Jennifer Kelly. Written and directed by Dick Donaghue and produced by Jer Ennis. Filmed in Enniscorthy.</span></p>\n<p><span>Two other short films will also be premiered. </span><strong><span>DARK WATERS</span></strong><span>, starring Sharon Griffiths with David Parsons which was filmed in Bridgetown. </span><strong><span>WHAT NEXT MOTHER</span></strong><span>, a comedy, filmed in Bunclody. Starring Mary Gibson, Elaine Jordan, Niall Kennedy and Lauren Jordan, will feature on the night also.</span></p>\n<p><span>All proceeds will be donated to FOCUS Ireland, the aim of the night is to shine a light on the homelessness issue, raise much needed funds and also to show off the writing and acting talent in our locality</span></p>\n<p><strong>&nbsp;</strong></p>\n<p><strong>&nbsp;</strong></p>\n        ","category":"Film","images":{"thumb":"https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/LXoGhVKjEdUogGVvXQNMp1UB/42108e2ccaa9cbeaed96ff70f4f71abb3e953a28352072c0afd65721f1c07e2b","medium":"https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/LXoGhVKjEdUogGVvXQNMp1UB/db985b134426e3a0a042b6dc139e02b7924a669da4f6434c9c9c4b9553d63a33","large":"https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/LXoGhVKjEdUogGVvXQNMp1UB/d82b4c5034021c15162868846a860fc142237fb62f146ef228d6181ef8a17941"}}}],
+//  },
 
  favs: {
    events: function(fetchInfo, successCallback){
@@ -62,6 +62,8 @@ export let calendar = new FullCalendar.Calendar($calendar, {
      defaultView: 'listWeek',
      themeSystem: 'bootstrap', // black table borders! 
     customButtons: {
+
+
       // favsButton: {
       //   text: 'Favs',
       //   click: function(){
@@ -83,9 +85,9 @@ export let calendar = new FullCalendar.Calendar($calendar, {
       // }
     },
      header: {
-       left: 'title, dayGridMonth, listWeek',
-       center: '',
-       right: 'favsButton, prev,next ',
+       left: 'dayGridMonth, listWeek, listMonth, title',
+       center: 'favsButton',
+       right: 'title, prev,next ',
       },
   
      views: {
@@ -162,7 +164,7 @@ export let calendar = new FullCalendar.Calendar($calendar, {
                               <div class="dropdown-divider"></div>
                               <a class="dropdown-item copylinkB" data-href="${event.url}" data-toggle="tooltip" data-trigger="click" title="Link Copied to Clipboard"
                               data-template='<div class="tooltip" role="tooltip"><div class="tooltip-inner"></div></div>'
-                                href="${event.url}" onclick="pre><img src="https://icon.now.sh/link/333"/>&nbsp;Copy link</a>
+                                href="${event.url}" ><img src="https://icon.now.sh/link/333/" />&nbsp;Copy link</a>
                             </div>
                           </div>
                           <!-- //.card-footer -->
@@ -236,37 +238,37 @@ export let calendar = new FullCalendar.Calendar($calendar, {
    })
 
 
-function addEventListeners() {
+// function addEventListeners() {
 
-// const $favourites = [...document.querySelectorAll(".favourite")]
-// for(const $favourite of $favourites){
+// // const $favourites = [...document.querySelectorAll(".favourite")]
+// // for(const $favourite of $favourites){
 
  
 
 
 
-  // Event to Add Event = UI and Storage
+//   // Event to Add Event = UI and Storage
 
 
-  // Event to REmove a Book - UI and Storage
-  document.querySelector("#event-list").addEventListener("click", e => { // event propagation (del - first one would be removed)
-    UI.deleteEventByClick(e.target) 
-    // console.log(e.target)
+//   // Event to REmove a Book - UI and Storage
+//   document.querySelector("#event-list").addEventListener("click", e => { // event propagation (del - first one would be removed)
+//     UI.deleteEventByClick(e.target) 
+//     // console.log(e.target)
 
     
-    let eid = e.target.parentElement.parentElement.firstElementChild.textContent
-    // console.log(eid)
-    Store.removeEvent(eid)
+//     let eid = e.target.parentElement.parentElement.firstElementChild.textContent
+//     // console.log(eid)
+//     Store.removeEvent(eid)
     
-    UI.showAlert("Event Removed to Favourites", "warning")
+//     UI.showAlert("Event Removed to Favourites", "warning")
 
-    //
+//     //
 
-    calendar.rerenderEvents()
-  })
+//     calendar.rerenderEvents()
+//   })
 
 
-}
+// }
 
 
 calendar.render()
@@ -283,7 +285,7 @@ function cbs()
   }
 }
 
-addEventListeners()
+// addEventListeners()
 
 
 

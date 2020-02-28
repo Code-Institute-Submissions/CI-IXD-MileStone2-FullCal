@@ -18,18 +18,22 @@ export class Category{
       $('<input />', {
         'type': 'checkbox',
         'value': k,
+        'id' : k,
+        'class' : 'badgebox',
         'name': 'someName'
       })
       .prop("checked", v) 
-      .wrap('<label class="mr-2"></label>')
+      .wrap(`<label class="btn btn-sm btn-${k}" for="${k}"></label>`)
       .closest('label')
-      .append('<span class="ml-2">'+k+'</span>')
+      .prepend(`${k}`)
+      .append(`</span><span class="badge">&check;</span>`)
       .appendTo(this.$checkboxes);
       })
       this.printed = true
     // }
   }
-
+//<input type="checkbox" id="default" class="badgebox">  //<span class="badge">&check;</span></label>
+// <label for="default" class="btn btn-default">Default 
 
 
  checkboxListeners(){
