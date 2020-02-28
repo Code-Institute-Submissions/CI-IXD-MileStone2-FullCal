@@ -1,10 +1,13 @@
 export const categories = new Map
 export default async function getEvents(){
   let URL = window.location.href
-  console.log(URL)
+  /* CORS proxy needed for LIVE Ticketsolve XML feed - liable to break category buttons */
+  // let origin = "https://wexfordartscentre.ticketsolve.com/shows.xml"
+  // let proxy = "https://cors.x7.workers.dev/"
+  //let proxyAlt  = "https://cors-anywhere.herokuapp.com/"
   let local = URL.substring(0, URL.lastIndexOf("/") + 1) + "shows.xml"; 
   const events = []
-  //  await fetch(this.proxy+this.origin)
+  // await fetch(proxy+origin)
   await fetch(local)
        .then( response => response.text())
        .then( function(data){
