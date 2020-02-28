@@ -1,11 +1,10 @@
-import {default as getEvents, categories} from "./components/Events.js"
-import {Category} from "./components/Checkboxes.js"
-import UI from "./components/Ui.js"
-import Store from "./js/store.js"
+import {default as getEvents, categories} from "../components/Events.js"
+import {Category} from "../components/Checkboxes.js"
+import UI from "../components/Ui.js"
+import Store from "./store.js"
 
 
 export const eventSource = {
-  
   favs: {
     events: function(fetchInfo, successCallback){
       let result = Store.getFavEvents()
@@ -15,16 +14,10 @@ export const eventSource = {
   wxac: {
     events: async function(fetchInfo, successCallback){
       let result = await getEvents()
-      cbs()
-      // intervalStart = calendar.view.currentStart
-      // favCal() // T/F flag if create
+      cboxes()
       successCallback(await result)
     }
   }
-  // test : {
-  //    events: 
-  //    [{"id":"873612231","title":"Besties, Dark Waters & What Next Mother- Film Premiere","start":"2020-02-17T19:30:00+00:00","url":"https://wexfordartscentre.ticketsolve.com/shows/873612231/","classNames":["presentationcentre","wexfordartscentre"],"extendedProps":{"description":"\n          <p><span>Three New Short Wexford Films to be screened in aid of FOCUS Ireland. The World Premiere of a new short film,&nbsp;<strong>BESTIES</strong>, featuring members of the Enniscorthy Drama Group, will be shown in the Presentation Centre, on Friday 7<sup>th</sup>&nbsp;of February, at 7.30pm in aid of FOCUS Ireland.The cast includes, Karen Franklin, Jennafer Boyd, Fintan Kelly, Maeve Ennis, Summer Keane and Jennifer Kelly. Written and directed by Dick Donaghue and produced by Jer Ennis. Filmed in Enniscorthy.</span></p>\n<p><span>Two other short films will also be premiered. </span><strong><span>DARK WATERS</span></strong><span>, starring Sharon Griffiths with David Parsons which was filmed in Bridgetown. </span><strong><span>WHAT NEXT MOTHER</span></strong><span>, a comedy, filmed in Bunclody. Starring Mary Gibson, Elaine Jordan, Niall Kennedy and Lauren Jordan, will feature on the night also.</span></p>\n<p><span>All proceeds will be donated to FOCUS Ireland, the aim of the night is to shine a light on the homelessness issue, raise much needed funds and also to show off the writing and acting talent in our locality</span></p>\n<p><strong>&nbsp;</strong></p>\n<p><strong>&nbsp;</strong></p>\n        ","category":"Film","images":{"thumb":"https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/LXoGhVKjEdUogGVvXQNMp1UB/42108e2ccaa9cbeaed96ff70f4f71abb3e953a28352072c0afd65721f1c07e2b","medium":"https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/LXoGhVKjEdUogGVvXQNMp1UB/db985b134426e3a0a042b6dc139e02b7924a669da4f6434c9c9c4b9553d63a33","large":"https://dc40ra2rfm3rp.cloudfront.net/as-assets/variants/LXoGhVKjEdUogGVvXQNMp1UB/d82b4c5034021c15162868846a860fc142237fb62f146ef228d6181ef8a17941"}}}],
-  //  },
 }
 
 
@@ -33,8 +26,6 @@ export let calendar = new FullCalendar.Calendar($calendar, {
   
      locale: 'en-gb',
      plugins: [ 'dayGrid', 'list', 'bootstrap'],
-    //  defaultDate: '2020-02-16',
-    //  defaultView: 'dayGridMonth',
      defaultView:  'listWeek',
      themeSystem: 'bootstrap', 
      header: {
@@ -45,12 +36,10 @@ export let calendar = new FullCalendar.Calendar($calendar, {
   
      views: {
         listWeek: {
-
             eventTimeFormat: {
             hour: 'numeric',
             minute: '2-digit',
             meridiem: true,
-            // omitZeroMinute: true,
             hour12: true
         }
       },
@@ -65,7 +54,6 @@ export let calendar = new FullCalendar.Calendar($calendar, {
       if(categories.get(event.extendedProps.category) == true) {
         const isFavourited = Store.checkFavs(event.id)      
         if(view.type === 'dayGridMonth') {
-          //return categories.get(event.extendedProps.category)
           if(isFavourited){ // el - is the anchor wrapper, div.fc-content > span.fc-time + span.fc-title
             el.querySelector(".fc-title").innerHTML = `<i>${event.title}</i>`
             el.style.backgroundColor  = "plum";
@@ -85,10 +73,9 @@ export let calendar = new FullCalendar.Calendar($calendar, {
           })
 
         }else if(view.type === 'listWeek'){
-            
-              
+            /* this should probably be a component - Share Button functionality bulked it up */  
                 el.innerHTML = `
-                  <td class="fc-list-item-title" colspan="3">
+                  <td class="fc-list-item" colspan="3">
       
                   <div class="card rounded-right m-2 border border-muted event-card">
                     <div class="row no-gutters">
@@ -130,12 +117,8 @@ export let calendar = new FullCalendar.Calendar($calendar, {
                 `
 
           }
-
-
         }else{ return false } // else dont render event
-         
-          
-        },
+    },
     eventPositioned: function(info){
       if(info.view.type === 'listWeek'){
         info.el.querySelector(".favourite").addEventListener("click", e => {
@@ -144,9 +127,7 @@ export let calendar = new FullCalendar.Calendar($calendar, {
           if(isFavourited) {
             Store.removeEvent(show.id)
             UI.showAlert("Event Removed to Favourites", "warning")
-            // UI.deleteEventFromList(show.id) // test
           }else{
-            // UI.addEventToList(show) // test
             Store.addEvent(show)
             UI.showAlert("Event Added to Favourites", "success")
           }
@@ -168,10 +149,8 @@ export let calendar = new FullCalendar.Calendar($calendar, {
             if(isFavourited) {
               Store.removeEvent(show.id)
               UI.showAlert("Event Removed to Favourites", "warning")
-              // UI.deleteEventFromList(show.id) //table test
               UI.openModal(show)
             }else{
-              // UI.addEventToList(show)  // table test
               Store.addEvent(show)
               UI.showAlert("Event Added to Favourites", "success")
               UI.openModal(show, true)
@@ -186,19 +165,18 @@ export let calendar = new FullCalendar.Calendar($calendar, {
    })
    
 // Events: Display Fav Cal   
-   calendar.render()
+calendar.render()
 
 // Category.checkboxListeners()
-   let printed = false
-   function cbs()
-   {
-     if(printed == false){
-       let cbx = new Category
-       printed = true
-       cbx.checkboxListeners()
-      }
-    }
-   
+let printed = false
+function cboxes()
+{
+  if(printed == false){
+    let cbx = new Category
+    printed = true
+    cbx.checkboxListeners()
+  }
+}
 
 document.addEventListener("DOMContentLoaded", UI.favsButton)
    
@@ -219,44 +197,5 @@ function copyLink(jsevent){
   setTimeout(function(){$('[data-toggle="tooltip"]').tooltip('hide')}, 750);
 }
     
-    
-/* Table Testing 
-   Commented out in index.html
 
-// Flags - unused 
-let favToggle = false
-let cbToggle = false
-let closest = Infinity
-// const favourites  = Store.getFavEvents()
-
-// Event Class: Represents an Event
-// consturctir of Book - properties??
-class Ent {
-  constructor(title, date, eid){
-    this.title = title;
-    this.start = date;
-    this.id = eid;
-  }
-} 
-
-// addEventListeners()   
-function addEventListeners() {
-
-// Event to Add Event = UI and Storage
-
-// Event to REmove a Book - UI and Storage
-  document.querySelector("#event-list").addEventListener("click", e => { // event propagation (del - first one would be removed)
-    UI.deleteEventByClick(e.target) 
-    
-    let eid = e.target.parentElement.parentElement.firstElementChild.textContent
-    // console.log(eid)
-    Store.removeEvent(eid)
-    
-    UI.showAlert("Event Removed to Favourites", "warning")
-
-      calendar.rerenderEvents()
-    })
-
-
-  } */
     

@@ -22,7 +22,7 @@
   </style>
 </head>
 <body>
- 
+ <!-- Main -->
   <div id="wrapper" class="container no-gutters">
     <div class="row no-gutters">
       <div class="col-sm-12 no-gutters">
@@ -36,52 +36,30 @@
         <div id="calendar"></div>
       </div>
     </div>
-   <!-- <div class="row">
-      <div class="col-xs-12">
-        <table class="table table-striped mt-5">
-          <thead>
-            <tr class="clickable" data-toggle="collapse" data-target="#group-of-rows-1" aria-expanded="false" aria-controls="group-of-rows-1">
-              <th>Event ID</th>
-              <th>Event Title</th>
-              <th>Event Date</th>
-              <th></th>
-            </tr>
-          </thead>
-          <!-- <tbody> ->
-            <tr class="table-warning collapse" id="group-of-rows-1">
-              <td><i class="fa fa-folder-open"></i> child row</td>
-              <td>data 1</td>
-              <td>data 1</td>
-              <td>data 1</td>
-            </tr>
-          <!-- </tbody> ->
-              <tbody id="event-list"></tbody>
-        </table>
-      </div> -->
-    </div>
-  </div> 
+  </div>
   <!-- Modal -->
   <div id="fullCalModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullCalModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-              <h4 id="modalTitle" class="modal-title"></h4>  
-              <button type="button" class="close" data-dismiss="modal">
-                <span aria-hidden="true">×</span>
-                <span class="sr-only">close</span>
-              </button>
-            </div>
-            <div id="modalBody" class="modal-body card">
-            </div>
-            <div class="modal-footer">
-              <span class="favourite btn"></span>
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <a class="btn btn-danger" id="eventUrl" target="_blank"><i class="fa fa-ticket"></i> Buy Tickets</a>
-            </div>
+          <div class="modal-header">
+            <h4 id="modalTitle" class="modal-title"></h4>  
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">×</span>
+              <span class="sr-only">close</span>
+            </button>
+          </div>
+          <div id="modalBody" class="modal-body card">
+          </div>
+          <div class="modal-footer">
+            <span class="favourite btn"></span>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <a class="btn btn-danger" id="eventUrl" target="_blank"><i class="fa fa-ticket"></i> Buy Tickets</a>
+          </div>
         </div>
+      </div>
     </div>
-  </div>
-  <div id="fb-root"></div>
+<!-- Vendor -->
+<div id="fb-root"></div>
 <!-- Vendor JS -->
 <script src="./js/libs/jquery/jquery-3.4.1.js"></script>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v6.0"></script>
@@ -102,7 +80,7 @@
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
 <!-- App JS -->
-<script src="app.js" type="module"></script>
+<script src="./app/index.js" type="module"></script>
 <!-- // /body+/html -->
 </body>
 </html>

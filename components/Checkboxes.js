@@ -1,5 +1,5 @@
 import {categories} from "./Events.js"
-import {calendar} from "../app.js"
+import {calendar} from "../app/index.js"
 
 
 export class Category{

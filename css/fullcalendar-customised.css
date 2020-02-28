@@ -12,10 +12,9 @@
 }
 
 .tooltip-inner {
-    white-space:pre-wrap;
+  white-space:pre-wrap;
 }
   
-
 .card {
   font-size 0.75em;
 }
@@ -26,7 +25,6 @@
   height: 200px;
   width: 200px;
 }
-
 
 
 .event-card h4 small {
@@ -40,8 +38,7 @@
 
 .card-text.collapse:not(.show) {
   display: block;
-  /* height = lineheight * no of lines to display */
-  height: 66px;
+  height: 66px; /* height = lineheight * no of lines to display */
   overflow: hidden;
 }
 
@@ -80,12 +77,6 @@
 .bs-tooltip-auto[x-placement^=top] .arrow::before, .bs-tooltip-top .arrow::before {
     border-top-color: goldenrod !important;
 }
-
-
-
-
-
- /* Bootstrap */
 
 #my-header > h1 {
   float: right;
@@ -136,8 +127,6 @@
   border-color: rgb(255, 0, 140);
 }
 
-
-
 .btn-Children {
 background-color: orangered;
 }
@@ -150,7 +139,7 @@ background-color: orangered;
   background-color: darkblue;
 }
 
-.btn-Amateur {
+.btn-Workshops {
   background-color: darkorchid;
 }
 
@@ -192,8 +181,6 @@ div.fc-left h2, div.fc-right h2{
   display: none;
 }
 
- .fc-view .fc-listWeek-view .fc-list-view .card .card-primary {}
-
 .fc-view-container{
    border-top: 1px solid var(--gray);
  }
@@ -205,23 +192,32 @@ div.fc-left h2, div.fc-right h2{
   background:  #a03030; //linear-gradient(to top, #f00 0px, #efefef 65px, transparent 65px) no-repeat;
 }
 
-
-
- .fc-list-view,
+.fc-list-view,
 table,
-.fc th,
-.fc td,
-table.fc-list-table,
-tr.fc-list-item:nth-child(even) td,
-td.table-active,
-td {
+.table,
+.table th,
+.table td
+{
+  border: none;
+}
+
+td.fc-list-item-title,
+td.fc-list-item-marker,
+td.fc-list-item-time
+{
   border: none;
   border-bottom: 1px solid #ececec;
-}
+} 
 
 td.table-active {
   padding: 2px 5px;
 }
+
+.fc-dayGridMonth-view td.fc-day  {
+  border: 1px solid #ececec;
+}
+
+
 div#checkboxes {
   margin-bottom: 0;
 }
@@ -245,8 +241,9 @@ div#checkboxes {
     /* Move the check mark away when unchecked */
     text-indent: -999999px;
     /* Makes the badge's width stay the same checked and unchecked */
-	min-width: 15px;
-  /* flex-basis: 15%; */
+  /* min-width: 15px; */
+  /* width: 33%; */
+  flex-basis: 50%;
 }
 
 .badgebox:focus + .badge
@@ -267,131 +264,144 @@ div#checkboxes {
 
 @media(max-width: 900px){
 
-div#checkboxes {
-  margin-bottom: 0;
-  border-bottom: 1px solid #ececec;
-}
-
-
-
-div#checkboxes.btn-group {
-    font-size: 0.8em;
-    display: flex;
-    flex-wrap: wrap;
+  div#checkboxes {
+    margin-bottom: 0;
+    border-bottom: 1px solid #ececec;
   }
 
-.btn-sm {
-  margin-bottom: 0;
-  font-size: 0.25rem;
-  width: 33%;
-  flex-basis: 120px;
-}
-
- 
-
-#my-header > h1 {
-  float: none;
-  position: relative;
-  top: 0;
-  text-align: center;
-}
-
-.fc-toolbar {
-  padding-top: 2px;
-  background-color: var(--gray-dark);
-}
-
-.fc-toolbar.fc-header-toolbar {
-  padding: 4px;
-}
-
-.fc-header-toolbar {
-  font-size: 0.65em;
-  display: flex;
-  flex-grow: 1;
-  flex-wrap: wrap;
-  padding: 1px;
-}
 
 
-.fc-left {
-  justify-self: start;
-  width: auto;
-  margin-bottom: 4px;
-}
+  div#checkboxes.btn-group {
+      font-size: 0.8em;
+      display: flex;
+      flex-wrap: wrap;
+    }
 
-.fc-left .fc-dayGridMonth-button {
-  display: none;
-}
+  div#checkboxes.btn-group.btn-sm {
+      margin-bottom: 0;
+      font-size: 0.25rem;
+      flex-basis: 44px;
+    }
 
-.fc-left h2 {
-  display: none;
-}
-
-.fc-toolbar > * > :not(:first-child){
-  margin-left: 0;
-}
-
-
-.fc-center{
-  position: relative;
-  top: -2px;
-}
+    div#checkboxes.btn-group.#checkAll.btn-sm {
+      flex-grow: 2;
+      flex-basis: 120px;
+    }
 
 
-.fc-right{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: nowrap;
-  flex-basis: 800px;
-  /* width: 100%; */
-}
-
-.fc-right h2 {
- display: inline-block;
- margin-left: 6px;
-}
-
-.fc-right.btn-group{
- display: flex;
-}
-
-
-.col-auto {
-  width: 100%;
-}
-
-.card .img-left {
-  width: 100%;
-  border-radius: 5px 5px 0px 0px !important;
-}
-
-.card.card-footer{
-  z-index: 99;
-}
+  .fc-header-toolbar.btn-sm {
+    margin-bottom: 0;
+    font-size: 0.25rem;
+    width: 33%;
+    flex-basis: 120px;
+  }
 
   
-@media (max-width: 500px){
-  label.btn.btn-Amateur {
-  letter-spacing: -0.0125rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  position: relative;
-  padding-left: 2px;
 
- }
+  #my-header > h1 {
+    float: none;
+    position: relative;
+    top: 0;
+    text-align: center;
+  }
 
- label.btn.btn-Amateur > span.badge {
-  position: absolute;
-  top: 8px;
-  right: 6px;
-  background-color: purple;
-  overflow: visible;
-  z-index: 10;
- }
+  .fc-toolbar {
+    padding-top: 2px;
+    background-color: var(--gray-dark);
+  }
 
-}
+  .fc-toolbar.fc-header-toolbar {
+    padding: 4px;
+  }
+
+  .fc-header-toolbar {
+    font-size: 0.65em;
+    display: flex;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    padding: 1px;
+  }
+
+
+  .fc-left {
+    justify-self: start;
+    width: auto;
+    margin-bottom: 4px;
+  }
+
+  .fc-left .fc-dayGridMonth-button {
+    display: none;
+  }
+
+  .fc-left h2 {
+    display: none;
+  }
+
+  .fc-toolbar > * > :not(:first-child){
+    margin-left: 0;
+  }
+
+
+  .fc-center{
+    position: relative;
+    top: -2px;
+  }
+
+
+  .fc-right{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-basis: 800px;
+    /* width: 100%; */
+  }
+
+  .fc-right h2 {
+  display: inline-block;
+  margin-left: 6px;
+  }
+
+  .fc-right.btn-group{
+  display: flex;
+  }
+
+
+  .col-auto {
+    width: 100%;
+  }
+
+  .card .img-left {
+    width: 100%;
+    border-radius: 5px 5px 0px 0px !important;
+  }
+
+  .card-footer{
+    z-index: 99;
+    background-color: #efefef;
+  }
+
+  
+  @media (max-width: 500px){
+    label.btn.btn-Amateur {
+    letter-spacing: -0.0125rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+    padding-left: 2px;
+
+  }
+
+  label.btn.btn-Amateur > span.badge {
+    position: absolute;
+    top: 8px;
+    right: 6px;
+    background-color: purple;
+    overflow: visible;
+    z-index: 10;
+  }
+
+  }
 
 }

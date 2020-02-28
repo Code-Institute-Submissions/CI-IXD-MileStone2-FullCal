@@ -1,5 +1,5 @@
-import Store from "../js/store.js"
-import {calendar, eventSource} from "../app.js/index.js"
+import Store from "../app/store.js"
+import {calendar, eventSource} from "../app/index.js"
 
 export default class UI {
   // UI Class: Handles UI Tasks
