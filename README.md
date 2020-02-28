@@ -60,7 +60,7 @@ The App features were extensively tested during development - storing and readin
 <b>*</b>NB: This brings me to the point raised above about a single source of truth - Ticketsolve allows users great flexibility in creating and tagging event types when I have saved the latest version of the XML file I discovered that new event categories had been created and so the 'categories checkboxes' increased so I decided to cleanse the data somewhat an reduce the categories - this would be a consideration if implementing as a feed or website component.
 
 ## Deployment
-The project is simply deployed on GitHub pages using a <b>gh-pages<b> branch. I hope to start using <abbr title="Javascript">JS</abbr> package managers to create a package.json dependencies file soon.
+The project is simply deployed on GitHub pages using a <b>gh-pages</b> branch. I hope to start using <abbr title="Javascript">JS</abbr> package managers to create a package.json dependencies file soon.
 
 To run locally, you can of course clone the repository and access the 'index.html' file.
 
