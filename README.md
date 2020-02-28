@@ -16,7 +16,7 @@ A live demo can be found [here](https://rozzah.github.io/CI-IXD-MileStone2-FullC
 
 - As a regular customer, I know I can simply check the website and will quickly find out what's on this week. I know I can filter events by category to find something of interest. If I find something I like I have links to Buy Tickets, share with friends or save and review later.
 
-- As a Box Office receptionist I know the events calendar is up to date and this weeks listing is displayed as Ticketsolve acts as a 'Single Source of Truth' <sup>*</sup>
+- As a Box Office receptionist I know the events calendar is up to date and this weeks listing is displayed as Ticketsolve acts as a 'Single Source of Truth' <b>*</b>
 
 <small>Component sketches:</small>
 1. [Card Sketch A](./docs/cardA.jpg)
@@ -57,7 +57,7 @@ The Month Listing view is quite pared back, I would like to experiment whether '
 The App features were extensively tested during development - storing and reading 'favourite' events from localStorage proved unreliable - I'm not sure if it was because of caching on my local Live Server (VS Code), but I decided to test by displaying on a table below the calendar (now removed). I concentrated on functionality but used Developer tools to get the UI into shape - this helped enormously track down the competing, or compounding, css statements when dealing with both Bootstrap and FullCalendar.
 <abbr title="Cross-Origin Resource Sharing">CORS</abbr> proved to be a bit of a headache and in 2020 you can't really fool the browser or the resource server by sending a edited Header Request so I have tested using a CORS proxy but I commented this out in the <b>Events.js</b> module and instead the App points to a local file saved from the [XML feed](https://wexfordartscentre.ticketsolve.com/shows.xml) on Friday 28<sup>th</sup> February 2020.
 
-<b><sup>*</sup></b>NB: This brings me to the point raised above about a single source of truth - Ticketsolve allows users great flexibility in creating and tagging event types when I have saved the latest version of the XML file I discovered that new event categories had been created and so the 'categories checkboxes' increased so I decided to cleanse the data somewhat an reduce the categories - this would be a consideration if implementing as a feed or website component.
+<b>*</b>NB: This brings me to the point raised above about a single source of truth - Ticketsolve allows users great flexibility in creating and tagging event types when I have saved the latest version of the XML file I discovered that new event categories had been created and so the 'categories checkboxes' increased so I decided to cleanse the data somewhat an reduce the categories - this would be a consideration if implementing as a feed or website component.
 
 ## Deployment
 The project is simply deployed on GitHub pages using a <b>gh-pages<b> branch. I hope to start using <abbr title="Javascript">JS</abbr> package managers to create a package.json dependencies file soon.
